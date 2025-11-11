@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Truck, Shield, CreditCard } from "lucide-react";
+import { Link } from "wouter";
 import heroBannerImage from "@assets/generated_images/Hero_banner_smartphones_collection_6141ec3a.png";
 
 export default function HeroBanner() {
@@ -24,12 +25,16 @@ export default function HeroBanner() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3">
-              <Button size="lg" className="text-base" data-testid="button-explore-offers">
-                Explorar Ofertas
-              </Button>
-              <Button size="lg" variant="outline" className="text-base backdrop-blur-sm" data-testid="button-view-catalog">
-                Ver Catálogo
-              </Button>
+              <Link href="/productos">
+                <Button size="lg" className="text-base w-full sm:w-auto" data-testid="button-explore-offers">
+                  Explorar Ofertas
+                </Button>
+              </Link>
+              <Link href="/productos">
+                <Button size="lg" variant="outline" className="text-base backdrop-blur-sm w-full sm:w-auto" data-testid="button-view-catalog">
+                  Ver Catálogo
+                </Button>
+              </Link>
             </div>
 
             <div className="grid grid-cols-3 gap-4 pt-4">

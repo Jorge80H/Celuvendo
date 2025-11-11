@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { SiSamsung, SiXiaomi } from "react-icons/si";
 import { Smartphone } from "lucide-react";
+import { Link } from "wouter";
 
 const categories = [
   { id: "samsung", name: "Samsung", icon: SiSamsung },
@@ -19,17 +20,17 @@ export default function CategoryNav() {
           {categories.map((category) => {
             const Icon = category.icon;
             return (
-              <Button
-                key={category.id}
-                variant={category.id === "ofertas" ? "default" : "ghost"}
-                size="sm"
-                className="flex-shrink-0 hover-elevate active-elevate-2"
-                data-testid={`button-category-${category.id}`}
-                onClick={() => console.log(`Navigate to ${category.name}`)}
-              >
-                {Icon && <Icon className="h-4 w-4 mr-2" />}
-                {category.name}
-              </Button>
+              <Link key={category.id} href="/productos">
+                <Button
+                  variant={category.id === "ofertas" ? "default" : "ghost"}
+                  size="sm"
+                  className="flex-shrink-0 hover-elevate active-elevate-2"
+                  data-testid={`button-category-${category.id}`}
+                >
+                  {Icon && <Icon className="h-4 w-4 mr-2" />}
+                  {category.name}
+                </Button>
+              </Link>
             );
           })}
         </div>

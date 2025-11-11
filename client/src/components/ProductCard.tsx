@@ -4,6 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Heart, Star } from "lucide-react";
 import { formatCOP, calculateDiscount } from "@/lib/utils";
 import { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { addToCart } from "@/lib/api";
+import { useToast } from "@/hooks/use-toast";
 
 interface ProductCardProps {
   id: string;
@@ -32,6 +35,26 @@ export default function ProductCard({
 }: ProductCardProps) {
   const [isFavorite, setIsFavorite] = useState(false);
   const discount = compareAtPrice ? calculateDiscount(price, compareAtPrice) : 0;
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+
+  const addToCartMutation = useMutation({
+    mutationFn: () => addToCart(id, 1),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/cart'] });
+      toast({
+        title: "Producto agregado",
+        description: `${name} fue agregado al carrito`,
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "No se pudo agregar el producto al carrito",
+        variant: "destructive",
+      });
+    },
+  });
 
   return (
     <Card className="overflow-hidden hover-elevate transition-transform duration-200 hover:scale-105 group">
@@ -105,11 +128,11 @@ export default function ProductCard({
 
         <Button
           className="w-full"
-          disabled={stock === 0}
-          onClick={() => console.log(`Add to cart: ${id}`)}
+          disabled={stock === 0 || addToCartMutation.isPending}
+          onClick={() => addToCartMutation.mutate()}
           data-testid={`button-add-cart-${id}`}
         >
-          {stock === 0 ? 'Agotado' : 'Agregar al Carrito'}
+          {stock === 0 ? 'Agotado' : addToCartMutation.isPending ? 'Agregando...' : 'Agregar al Carrito'}
         </Button>
       </div>
     </Card>

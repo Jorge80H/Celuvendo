@@ -1,9 +1,14 @@
 import Header from "@/components/Header";
 import CategoryNav from "@/components/CategoryNav";
-import FilterSidebar from "@/components/FilterSidebar";
 import ProductCard from "@/components/ProductCard";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
+import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Select,
   SelectContent,
@@ -11,15 +16,36 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { SlidersHorizontal } from "lucide-react";
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getProducts, type ProductFilters } from "@/lib/api";
+import { formatCOP } from "@/lib/utils";
 import samsungImage from "@assets/generated_images/Samsung_flagship_phone_product_aa170b09.png";
 import xiaomiImage from "@assets/generated_images/Xiaomi_phone_product_shot_0705b3ea.png";
 import motorolaImage from "@assets/generated_images/Motorola_phone_product_shot_9bac3b5d.png";
 import oppoImage from "@assets/generated_images/Oppo_phone_product_shot_6e272c5d.png";
 import infinixImage from "@assets/generated_images/Infinix_phone_product_shot_8860d3cb.png";
 
-const mockProducts = [
+const brandImages: Record<string, string> = {
+  "Samsung": samsungImage,
+  "Xiaomi": xiaomiImage,
+  "Motorola": motorolaImage,
+  "Oppo": oppoImage,
+  "Infinix": infinixImage,
+};
+
+const brands = ["Samsung", "Xiaomi", "Motorola", "Oppo", "Infinix"];
+const ramOptions = ["4GB", "6GB", "8GB", "12GB"];
+const storageOptions = ["64GB", "128GB", "256GB", "512GB"];
+
+const oldMockProducts = [
   {
     id: "1",
     name: "Samsung Galaxy S24 Ultra 5G 256GB",
@@ -169,6 +195,41 @@ const mockProducts = [
 export default function Products() {
   const [showFilters, setShowFilters] = useState(false);
   const [sortBy, setSortBy] = useState("recommended");
+  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
+  const [selectedRam, setSelectedRam] = useState<string[]>([]);
+  const [selectedStorage, setSelectedStorage] = useState<string[]>([]);
+  const [priceRange, setPriceRange] = useState([200000, 4000000]);
+
+  const filters: ProductFilters = {
+    brand: selectedBrands.length > 0 ? selectedBrands : undefined,
+    ram: selectedRam.length > 0 ? selectedRam : undefined,
+    storage: selectedStorage.length > 0 ? selectedStorage : undefined,
+    minPrice: priceRange[0],
+    maxPrice: priceRange[1],
+    sortBy,
+  };
+
+  const { data: products, isLoading } = useQuery({
+    queryKey: ['/api/products', filters],
+    queryFn: () => getProducts(filters),
+  });
+
+  const toggleSelection = (item: string, list: string[], setList: (list: string[]) => void) => {
+    if (list.includes(item)) {
+      setList(list.filter((i) => i !== item));
+    } else {
+      setList([...list, item]);
+    }
+  };
+
+  const clearFilters = () => {
+    setSelectedBrands([]);
+    setSelectedRam([]);
+    setSelectedStorage([]);
+    setPriceRange([200000, 4000000]);
+  };
+
+  const activeFiltersCount = selectedBrands.length + selectedRam.length + selectedStorage.length;
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -183,7 +244,7 @@ export default function Products() {
                 Todos los Celulares
               </h1>
               <p className="text-muted-foreground" data-testid="text-product-count">
-                {mockProducts.length} productos encontrados
+                {products?.length || 0} productos encontrados
               </p>
             </div>
 
@@ -216,15 +277,157 @@ export default function Products() {
 
           <div className="grid lg:grid-cols-4 gap-6">
             <aside className={`lg:block ${showFilters ? 'block' : 'hidden'}`}>
-              <FilterSidebar />
+              <Card className="p-6 sticky top-20">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-lg font-semibold">Filtros</h3>
+                  {activeFiltersCount > 0 && (
+                    <Badge variant="secondary" data-testid="badge-active-filters">
+                      {activeFiltersCount}
+                    </Badge>
+                  )}
+                </div>
+
+                <Accordion type="multiple" defaultValue={["brand", "price", "ram", "storage"]} className="space-y-4">
+                  <AccordionItem value="brand" className="border-none">
+                    <AccordionTrigger className="text-sm font-semibold hover:no-underline py-2">
+                      Marca
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <div className="space-y-3 pt-2">
+                        {brands.map((brand) => (
+                          <div key={brand} className="flex items-center space-x-2">
+                            <Checkbox
+                              id={`brand-${brand}`}
+                              checked={selectedBrands.includes(brand)}
+                              onCheckedChange={() => toggleSelection(brand, selectedBrands, setSelectedBrands)}
+                              data-testid={`checkbox-brand-${brand.toLowerCase()}`}
+                            />
+                            <Label htmlFor={`brand-${brand}`} className="text-sm cursor-pointer">
+                              {brand}
+                            </Label>
+                          </div>
+                        ))}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="price" className="border-none">
+                    <AccordionTrigger className="text-sm font-semibold hover:no-underline py-2">
+                      Rango de Precio
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <div className="space-y-4 pt-2">
+                        <Slider
+                          value={priceRange}
+                          onValueChange={setPriceRange}
+                          min={200000}
+                          max={4000000}
+                          step={100000}
+                          className="w-full"
+                          data-testid="slider-price-range"
+                        />
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-muted-foreground" data-testid="text-price-min">
+                            {formatCOP(priceRange[0])}
+                          </span>
+                          <span className="text-muted-foreground" data-testid="text-price-max">
+                            {formatCOP(priceRange[1])}
+                          </span>
+                        </div>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="ram" className="border-none">
+                    <AccordionTrigger className="text-sm font-semibold hover:no-underline py-2">
+                      Memoria RAM
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <div className="space-y-3 pt-2">
+                        {ramOptions.map((ram) => (
+                          <div key={ram} className="flex items-center space-x-2">
+                            <Checkbox
+                              id={`ram-${ram}`}
+                              checked={selectedRam.includes(ram)}
+                              onCheckedChange={() => toggleSelection(ram, selectedRam, setSelectedRam)}
+                              data-testid={`checkbox-ram-${ram.toLowerCase()}`}
+                            />
+                            <Label htmlFor={`ram-${ram}`} className="text-sm cursor-pointer">
+                              {ram}
+                            </Label>
+                          </div>
+                        ))}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="storage" className="border-none">
+                    <AccordionTrigger className="text-sm font-semibold hover:no-underline py-2">
+                      Almacenamiento
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <div className="space-y-3 pt-2">
+                        {storageOptions.map((storage) => (
+                          <div key={storage} className="flex items-center space-x-2">
+                            <Checkbox
+                              id={`storage-${storage}`}
+                              checked={selectedStorage.includes(storage)}
+                              onCheckedChange={() => toggleSelection(storage, selectedStorage, setSelectedStorage)}
+                              data-testid={`checkbox-storage-${storage.toLowerCase()}`}
+                            />
+                            <Label htmlFor={`storage-${storage}`} className="text-sm cursor-pointer">
+                              {storage}
+                            </Label>
+                          </div>
+                        ))}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+
+                {activeFiltersCount > 0 && (
+                  <Button
+                    variant="outline"
+                    className="w-full mt-6"
+                    onClick={clearFilters}
+                    data-testid="button-clear-filters"
+                  >
+                    Limpiar Filtros
+                  </Button>
+                )}
+              </Card>
             </aside>
 
             <div className="lg:col-span-3">
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-                {mockProducts.map((product) => (
-                  <ProductCard key={product.id} {...product} />
-                ))}
-              </div>
+              {isLoading ? (
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+                  {Array.from({ length: 6 }).map((_, i) => (
+                    <div key={i} className="space-y-4">
+                      <Skeleton className="aspect-square" />
+                      <Skeleton className="h-4 w-3/4" />
+                      <Skeleton className="h-4 w-1/2" />
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+                  {products?.map((product) => (
+                    <ProductCard
+                      key={product.id}
+                      id={product.id}
+                      name={product.name}
+                      brand={product.brand}
+                      price={parseFloat(product.price)}
+                      compareAtPrice={product.compareAtPrice ? parseFloat(product.compareAtPrice) : undefined}
+                      image={brandImages[product.brand] || samsungImage}
+                      rating={product.rating ? parseFloat(product.rating) : undefined}
+                      reviewCount={product.reviewCount}
+                      freeShipping={parseFloat(product.price) >= 100000}
+                      stock={product.stock}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
