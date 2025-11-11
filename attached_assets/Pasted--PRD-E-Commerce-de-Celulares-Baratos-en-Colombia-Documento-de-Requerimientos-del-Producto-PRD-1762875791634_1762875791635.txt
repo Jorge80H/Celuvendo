@@ -1,0 +1,1336 @@
+# PRD: E-Commerce de Celulares Baratos en Colombia
+## Documento de Requerimientos del Producto (PRD)
+
+**Versión:** 1.0  
+**Fecha:** Noviembre 2025  
+**Cliente:** Empleados Digitales / Jorge  
+**Desarrollo con:** Claude Code
+
+---
+
+## 1. RESUMEN EJECUTIVO
+
+### 1.1 Visión del Producto
+Crear una plataforma e-commerce moderna y eficiente para la venta de celulares nuevos y originales a precios competitivos en Colombia, enfocada en marcas populares como Samsung, Xiaomi, Motorola, Oppo e Infinix.
+
+### 1.2 Objetivo Principal
+Desarrollar una web app responsive que permita a los colombianos comprar celulares baratos y originales con garantía, ofreciendo una experiencia de compra simple, segura y confiable.
+
+### 1.3 Mercado Objetivo
+- **Primario:** Consumidores colombianos de estratos 2-4 buscando celulares nuevos a precios accesibles
+- **Secundario:** Pequeños comerciantes que buscan proveedores confiables
+- **Geográfico:** Inicialmente Bogotá, Medellín, Cali y Barranquilla, con expansión nacional
+
+### 1.4 Propuesta de Valor
+- Celulares 100% originales con garantía oficial
+- Precios competitivos (8-12% margen sobre costo mayorista)
+- Financiación disponible con múltiples opciones de pago
+- Envío gratis en compras superiores a $100,000 COP
+- Soporte en español 24/7 vía chat y WhatsApp
+
+---
+
+## 2. STACK TECNOLÓGICO RECOMENDADO
+
+### 2.1 Frontend
+```javascript
+// Framework Principal
+- Next.js 14+ (React con SSR/SSG)
+- TypeScript para type safety
+- Tailwind CSS + shadcn/ui para diseño
+- Zustand para state management
+- React Query para data fetching
+- Framer Motion para animaciones
+
+// Librerías Específicas
+- react-image-gallery (galería de productos)
+- react-hook-form + zod (validación de formularios)
+- react-hot-toast (notificaciones)
+- dayjs (manejo de fechas)
+- react-number-format (formateo de precios COP)
+```
+
+### 2.2 Backend
+```javascript
+// API y Servidor
+- Node.js con Express o Fastify
+- TypeScript
+- Prisma ORM (PostgreSQL)
+- Redis (caché y sesiones)
+- JWT para autenticación
+
+// Base de Datos
+- PostgreSQL (principal)
+- Redis (caché, carritos temporales)
+- Cloudinary o AWS S3 (imágenes)
+```
+
+### 2.3 Integraciones Esenciales
+```javascript
+// Pagos
+- Stripe Connect (tarjetas internacionales)
+- Wompi (pagos locales Colombia: PSE, Efecty, Nequi)
+- Conekta (backup)
+
+// Envíos
+- Coordinadora API
+- Servientrega API
+- WhatsApp Business API
+- SendGrid (emails transaccionales)
+```
+
+---
+
+## 3. ARQUITECTURA DEL PROYECTO
+
+```
+/ecommerce-celulares-colombia
+├── /frontend
+│   ├── /app                    # Next.js App Router
+│   │   ├── /(auth)            # Rutas de autenticación
+│   │   ├── /(shop)            # Rutas de tienda
+│   │   │   ├── /page.tsx      # Homepage
+│   │   │   ├── /productos     # Catálogo
+│   │   │   ├── /producto      # Detalle
+│   │   │   ├── /carrito       # Carrito
+│   │   │   └── /checkout      # Checkout
+│   │   ├── /admin             # Panel administrativo
+│   │   └── /api               # API routes
+│   ├── /components
+│   │   ├── /ui               # Componentes base (shadcn)
+│   │   ├── /layouts          # Layouts reutilizables
+│   │   ├── /product          # Componentes de producto
+│   │   ├── /cart             # Componentes de carrito
+│   │   └── /checkout         # Componentes de checkout
+│   ├── /lib
+│   │   ├── /api              # Cliente API
+│   │   ├── /utils            # Utilidades
+│   │   └── /hooks            # Custom hooks
+│   └── /public
+│       └── /images           # Imágenes estáticas
+│
+├── /backend
+│   ├── /src
+│   │   ├── /controllers      # Controladores
+│   │   ├── /models          # Modelos Prisma
+│   │   ├── /routes          # Rutas API
+│   │   ├── /services        # Lógica de negocio
+│   │   ├── /middlewares     # Middlewares
+│   │   └── /utils           # Utilidades
+│   ├── /prisma
+│   │   ├── schema.prisma    # Schema de base de datos
+│   │   └── /migrations      # Migraciones
+│   └── /tests               # Pruebas
+│
+└── /shared
+    └── /types               # Tipos TypeScript compartidos
+```
+
+---
+
+## 4. MODELOS DE DATOS
+
+### 4.1 Schema de Base de Datos (Prisma)
+
+```prisma
+// Usuario
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  password      String
+  firstName     String
+  lastName      String
+  phone         String
+  role          Role      @default(CUSTOMER)
+  verified      Boolean   @default(false)
+  addresses     Address[]
+  orders        Order[]
+  cart          Cart?
+  wishlist      Wishlist?
+  reviews       Review[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+enum Role {
+  CUSTOMER
+  ADMIN
+  VENDOR
+}
+
+// Producto
+model Product {
+  id              String    @id @default(cuid())
+  sku             String    @unique
+  name            String
+  slug            String    @unique
+  description     String    @db.Text
+  brand           Brand     @relation(fields: [brandId], references: [id])
+  brandId         String
+  category        Category  @relation(fields: [categoryId], references: [id])
+  categoryId      String
+  price           Decimal   @db.Decimal(10, 2)
+  compareAtPrice  Decimal?  @db.Decimal(10, 2)
+  cost            Decimal   @db.Decimal(10, 2)
+  currency        String    @default("COP")
+  images          ProductImage[]
+  variants        ProductVariant[]
+  specifications  Json      // RAM, storage, screen, battery, etc.
+  features        String[]
+  tags            String[]
+  stock           Int       @default(0)
+  lowStockAlert   Int       @default(5)
+  isActive        Boolean   @default(true)
+  isFeatured      Boolean   @default(false)
+  reviews         Review[]
+  orderItems      OrderItem[]
+  cartItems       CartItem[]
+  wishlistItems   WishlistItem[]
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  @@index([slug])
+  @@index([brand])
+  @@index([category])
+  @@fulltext([name, description])
+}
+
+// Variantes de Producto (Color, Almacenamiento)
+model ProductVariant {
+  id          String    @id @default(cuid())
+  product     Product   @relation(fields: [productId], references: [id])
+  productId   String
+  sku         String    @unique
+  color       String?
+  storage     String?
+  price       Decimal   @db.Decimal(10, 2)
+  stock       Int       @default(0)
+  image       String?
+  isDefault   Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  @@index([productId])
+}
+
+// Orden
+model Order {
+  id              String        @id @default(cuid())
+  orderNumber     String        @unique
+  user            User          @relation(fields: [userId], references: [id])
+  userId          String
+  items           OrderItem[]
+  subtotal        Decimal       @db.Decimal(10, 2)
+  tax             Decimal       @db.Decimal(10, 2)
+  shipping        Decimal       @db.Decimal(10, 2)
+  discount        Decimal       @db.Decimal(10, 2) @default(0)
+  total           Decimal       @db.Decimal(10, 2)
+  currency        String        @default("COP")
+  status          OrderStatus   @default(PENDING)
+  paymentMethod   PaymentMethod
+  paymentStatus   PaymentStatus @default(PENDING)
+  paymentId       String?       // Stripe/Wompi payment ID
+  shippingAddress Address       @relation(fields: [addressId], references: [id])
+  addressId       String
+  trackingNumber  String?
+  notes           String?       @db.Text
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  
+  @@index([userId])
+  @@index([status])
+  @@index([orderNumber])
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  CONFIRMED
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUNDED
+}
+
+enum PaymentMethod {
+  CREDIT_CARD
+  DEBIT_CARD
+  PSE
+  EFECTY
+  NEQUI
+  DAVIPLATA
+  CASH_ON_DELIVERY
+}
+
+enum PaymentStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+```
+
+---
+
+## 5. ESPECIFICACIONES FUNCIONALES
+
+### 5.1 Homepage
+
+**Componentes Principales:**
+
+```typescript
+// Hero Banner
+interface HeroBanner {
+  title: string;              // "Celulares originales con garantía en Colombia"
+  subtitle: string;           // "Envío gratis en compras > $100,000"
+  primaryCTA: {
+    text: string;            // "Explorar Ofertas"
+    link: string;            // "/ofertas"
+  };
+  backgroundImage: string;   // Imagen rotativa de productos destacados
+  autoRotate: boolean;       // Cambio cada 5 segundos
+}
+
+// Categorías Principales
+interface MainCategories {
+  categories: Array<{
+    id: string;
+    name: string;            // "Samsung", "Xiaomi", "Motorola", etc.
+    icon: string;            // URL del icono/logo
+    link: string;            // "/categoria/{slug}"
+    productCount: number;     // Cantidad de productos
+  }>;
+  layout: 'grid' | 'carousel';
+  maxVisible: number;        // 6-8 categorías
+}
+
+// Flash Sales / Ofertas del Día
+interface FlashSales {
+  title: string;              // "Ofertas Flash ⚡"
+  countdown: {
+    enabled: boolean;
+    endTime: Date;
+  };
+  products: Product[];        // 5-8 productos en oferta
+  showDiscountBadge: boolean; // Mostrar % descuento
+}
+```
+
+### 5.2 Catálogo y Filtros
+
+```typescript
+// Sistema de Filtros
+interface ProductFilters {
+  brand: string[];           // Samsung, Xiaomi, Motorola, Oppo, Infinix, Tecno
+  priceRange: {
+    min: number;            // 200000 COP
+    max: number;            // 2000000 COP
+  };
+  ram: number[];            // [4, 6, 8, 12, 16] GB
+  storage: number[];        // [64, 128, 256, 512] GB
+  screenSize: number[];     // [5.0, 5.5, 6.1, 6.7, 7.0+] pulgadas
+  battery: number[];        // [3000, 4000, 5000, 6000+] mAh
+  network: string[];        // ["4G", "5G"]
+  inStock: boolean;
+}
+
+// Ordenamiento
+enum SortOptions {
+  RECOMMENDED = "recommended",
+  PRICE_LOW_TO_HIGH = "price_asc",
+  PRICE_HIGH_TO_LOW = "price_desc",
+  NEWEST = "newest",
+  BEST_RATED = "rating",
+  MOST_SOLD = "popular"
+}
+
+// Paginación
+interface Pagination {
+  page: number;
+  limit: number;           // 12, 24, 48 productos
+  total: number;
+  hasNext: boolean;
+  hasPrev: boolean;
+}
+```
+
+### 5.3 Página de Producto
+
+```typescript
+// Información del Producto
+interface ProductDetail {
+  // Información básica
+  id: string;
+  sku: string;
+  name: string;
+  brand: Brand;
+  
+  // Precios
+  price: number;
+  compareAtPrice?: number;    // Precio anterior (tachado)
+  discount?: number;           // Porcentaje de descuento
+  
+  // Imágenes
+  images: Array<{
+    url: string;
+    alt: string;
+    isPrimary: boolean;
+  }>;
+  
+  // Variantes
+  variants: Array<{
+    id: string;
+    color?: string;
+    storage?: string;
+    price: number;
+    stock: number;
+    image?: string;
+  }>;
+  
+  // Especificaciones
+  specifications: {
+    screen: {
+      size: string;           // "6.8 pulgadas"
+      type: string;           // "AMOLED"
+      resolution: string;     // "1080 x 2400"
+      refreshRate: string;    // "120Hz"
+    };
+    processor: string;        // "Snapdragon 8 Gen 3"
+    ram: string;             // "12GB"
+    storage: string;         // "256GB"
+    camera: {
+      main: string;          // "50MP"
+      front: string;         // "13MP"
+      features: string[];    // ["HDR", "Night Mode", etc.]
+    };
+    battery: {
+      capacity: string;      // "5000mAh"
+      charging: string;      // "45W carga rápida"
+    };
+    connectivity: string[];  // ["5G", "WiFi 6", "Bluetooth 5.3"]
+    os: string;             // "Android 15"
+  };
+  
+  // Disponibilidad
+  stock: number;
+  availability: 'in_stock' | 'pre_order' | 'out_of_stock';
+  
+  // Reviews
+  rating: number;           // 4.5
+  reviewCount: number;      // 324
+  
+  // Envío
+  shipping: {
+    free: boolean;
+    estimatedDays: number;  // 2-3 días
+    methods: ShippingMethod[];
+  };
+  
+  // Financiación
+  financing: Array<{
+    months: number;         // 12, 24
+    monthlyPayment: number;
+    interestRate: number;
+  }>;
+}
+```
+
+### 5.4 Carrito de Compras
+
+```typescript
+interface Cart {
+  id: string;
+  userId?: string;          // null para usuarios no autenticados
+  items: Array<{
+    productId: string;
+    variantId?: string;
+    product: Product;
+    variant?: ProductVariant;
+    quantity: number;
+    price: number;
+    subtotal: number;
+  }>;
+  subtotal: number;
+  tax: number;              // IVA 19%
+  shipping: number;
+  discount: number;
+  total: number;
+  couponCode?: string;
+  
+  // Métodos
+  addItem(productId: string, variantId?: string, quantity?: number): void;
+  updateQuantity(itemId: string, quantity: number): void;
+  removeItem(itemId: string): void;
+  clear(): void;
+  applyCoupon(code: string): void;
+  calculateShipping(address: Address): void;
+}
+
+// Persistencia
+// - localStorage para usuarios no autenticados
+// - Redis + DB para usuarios autenticados
+// - Sincronización al hacer login
+```
+
+### 5.5 Checkout
+
+```typescript
+interface CheckoutProcess {
+  steps: [
+    {
+      id: 'shipping',
+      title: 'Dirección de Envío',
+      fields: {
+        firstName: string;
+        lastName: string;
+        email: string;
+        phone: string;
+        address: string;
+        city: string;         // Dropdown con ciudades de Colombia
+        department: string;   // Dropdown con departamentos
+        postalCode?: string;
+        notes?: string;
+      };
+    },
+    {
+      id: 'payment',
+      title: 'Método de Pago',
+      options: [
+        { method: 'CREDIT_CARD', provider: 'stripe' },
+        { method: 'PSE', provider: 'wompi' },
+        { method: 'EFECTY', provider: 'wompi' },
+        { method: 'NEQUI', provider: 'wompi' },
+        { method: 'CASH_ON_DELIVERY', fee: 10000 }
+      ];
+    },
+    {
+      id: 'review',
+      title: 'Revisión del Pedido',
+      summary: {
+        items: CartItem[];
+        shipping: ShippingMethod;
+        payment: PaymentMethod;
+        total: number;
+      };
+    }
+  ];
+  
+  // Validaciones
+  validation: {
+    email: z.string().email(),
+    phone: z.string().regex(/^3\d{9}$/), // Formato Colombia
+    document: z.string().regex(/^\d{6,10}$/), // CC Colombia
+  };
+}
+```
+
+---
+
+## 6. CATÁLOGO DE PRODUCTOS INICIAL
+
+Basado en el documento de Logistikos Group, estos son los modelos disponibles para lanzamiento:
+
+### 6.1 Samsung
+```javascript
+const samsungProducts = [
+  { model: "Galaxy A06", ram: 4, storage: 128, price: 550000 },
+  { model: "Galaxy A07", ram: 6, storage: 128, price: 650000 },
+  { model: "Galaxy A16", ram: 4, storage: 128, price: 750000 },
+  { model: "Galaxy A16 5G", ram: 8, storage: 256, price: 900000 },
+  { model: "Galaxy M55 5G", ram: 8, storage: 256, price: 950000 }
+];
+```
+
+### 6.2 Xiaomi/Redmi
+```javascript
+const xiaomiProducts = [
+  { model: "Redmi 14C", ram: 8, storage: 256, price: 450000 },
+  { model: "Redmi Note 14 Pro", ram: 8, storage: 256, price: 699000 }
+];
+```
+
+### 6.3 Motorola
+```javascript
+const motorolaProducts = [
+  { model: "Moto G06", ram: 4, storage: 256, price: 479000 },
+  { model: "Moto G55 5G", ram: 8, storage: 256, price: 599000 }
+];
+```
+
+### 6.4 Otras Marcas
+```javascript
+const otherBrands = [
+  { brand: "CAMON", model: "40", ram: 8, storage: 256, price: 399000 },
+  { brand: "CAMON", model: "40 PRO", ram: 8, storage: 256, price: 499000 },
+  { brand: "Infinix", model: "NOTE 50S 5G", ram: 8, storage: 256, price: 529000 },
+  { brand: "Oppo", model: "A5 5G", ram: 8, storage: 256, price: 549000 },
+  { brand: "Oppo", model: "A60", ram: 8, storage: 256, price: 499000 }
+];
+```
+
+---
+
+## 7. INTEGRACIONES DE PAGO Y ENVÍO
+
+### 7.1 Integración con Wompi (Pagos Colombia)
+
+```javascript
+// Configuración Wompi
+const wompiConfig = {
+  publicKey: process.env.WOMPI_PUBLIC_KEY,
+  privateKey: process.env.WOMPI_PRIVATE_KEY,
+  environment: process.env.NODE_ENV === 'production' ? 'production' : 'sandbox',
+  currency: 'COP',
+  paymentMethods: ['PSE', 'CARD', 'NEQUI', 'EFECTY']
+};
+
+// Proceso de pago
+async function processWompiPayment(orderData) {
+  const { amount, customer, paymentMethod } = orderData;
+  
+  const paymentRequest = {
+    amount_in_cents: amount * 100,
+    currency: 'COP',
+    customer_email: customer.email,
+    payment_method: {
+      type: paymentMethod,
+      // Configuración específica según método
+    },
+    redirect_url: `${BASE_URL}/checkout/confirmation`,
+    reference: generateOrderReference()
+  };
+  
+  const response = await wompiAPI.createTransaction(paymentRequest);
+  return response;
+}
+```
+
+### 7.2 Integración con Coordinadora (Envíos)
+
+```javascript
+// API Coordinadora
+const coordinadoraConfig = {
+  apiKey: process.env.COORDINADORA_API_KEY,
+  clientId: process.env.COORDINADORA_CLIENT_ID,
+  baseUrl: 'https://api.coordinadora.com/v1'
+};
+
+// Cálculo de envío
+async function calculateShipping(destination) {
+  const { city, weight, dimensions } = destination;
+  
+  const request = {
+    origen: 'BOGOTA',
+    destino: city.toUpperCase(),
+    peso: weight, // en kg
+    largo: dimensions.length,
+    ancho: dimensions.width,
+    alto: dimensions.height,
+    valorDeclarado: orderValue
+  };
+  
+  const quote = await coordinadoraAPI.cotizar(request);
+  return {
+    price: quote.valor,
+    estimatedDays: quote.diasEntrega,
+    service: quote.tipoServicio
+  };
+}
+```
+
+---
+
+## 8. PANEL ADMINISTRATIVO
+
+### 8.1 Dashboard Principal
+
+```typescript
+interface AdminDashboard {
+  metrics: {
+    todaySales: number;
+    weekSales: number;
+    monthSales: number;
+    totalOrders: number;
+    pendingOrders: number;
+    lowStockProducts: Product[];
+    conversionRate: number;
+    averageOrderValue: number;
+  };
+  
+  charts: {
+    salesByDay: ChartData;
+    topProducts: ChartData;
+    salesByCategory: ChartData;
+    customersByCity: ChartData;
+  };
+  
+  recentOrders: Order[];
+  recentReviews: Review[];
+}
+```
+
+### 8.2 Gestión de Productos
+
+```typescript
+interface ProductManagement {
+  // CRUD Operations
+  createProduct(data: ProductInput): Promise<Product>;
+  updateProduct(id: string, data: ProductInput): Promise<Product>;
+  deleteProduct(id: string): Promise<boolean>;
+  bulkUpdatePrices(updates: PriceUpdate[]): Promise<boolean>;
+  
+  // Inventory
+  updateStock(productId: string, variantId: string, quantity: number): void;
+  getLowStockProducts(): Product[];
+  
+  // Import/Export
+  importFromCSV(file: File): Promise<ImportResult>;
+  exportToCSV(filters?: ProductFilters): Promise<Blob>;
+}
+```
+
+### 8.3 Gestión de Órdenes
+
+```typescript
+interface OrderManagement {
+  getOrders(filters: OrderFilters): Promise<Order[]>;
+  updateOrderStatus(orderId: string, status: OrderStatus): Promise<Order>;
+  generateInvoice(orderId: string): Promise<PDF>;
+  generateShippingLabel(orderId: string): Promise<PDF>;
+  refundOrder(orderId: string, amount?: number): Promise<RefundResult>;
+  
+  // Bulk operations
+  bulkUpdateStatus(orderIds: string[], status: OrderStatus): Promise<boolean>;
+  exportOrders(dateRange: DateRange): Promise<CSV>;
+}
+```
+
+---
+
+## 9. CARACTERÍSTICAS DE MARKETING
+
+### 9.1 Sistema de Cupones
+
+```typescript
+interface Coupon {
+  code: string;              // "BIENVENIDO10"
+  type: 'percentage' | 'fixed_amount';
+  value: number;             // 10 (%) o 50000 (COP)
+  minPurchase?: number;      // Compra mínima requerida
+  maxDiscount?: number;      // Descuento máximo (para %)
+  validFrom: Date;
+  validUntil: Date;
+  usageLimit?: number;       // Límite total de usos
+  usagePerCustomer?: number; // Límite por cliente
+  products?: string[];       // IDs de productos aplicables
+  categories?: string[];     // Categorías aplicables
+  isActive: boolean;
+}
+```
+
+### 9.2 Programa de Referidos
+
+```typescript
+interface ReferralProgram {
+  referrer: {
+    userId: string;
+    code: string;           // Código único del referidor
+    reward: number;         // 50000 COP en crédito
+    totalReferrals: number;
+    totalEarned: number;
+  };
+  
+  referred: {
+    discount: number;       // 10% primera compra
+    minPurchase: number;    // 200000 COP
+  };
+  
+  tracking: {
+    source: 'email' | 'whatsapp' | 'social' | 'direct';
+    conversionRate: number;
+  };
+}
+```
+
+### 9.3 Email Marketing
+
+```typescript
+interface EmailCampaigns {
+  templates: {
+    welcome: EmailTemplate;          // Bienvenida + cupón
+    orderConfirmation: EmailTemplate; // Confirmación de pedido
+    shipping: EmailTemplate;          // Notificación de envío
+    delivered: EmailTemplate;         // Entrega + solicitud review
+    abandoned: EmailTemplate;         // Carrito abandonado
+    newsletter: EmailTemplate;        // Newsletter semanal
+  };
+  
+  automation: {
+    abandonedCart: {
+      delay: number;        // 2 horas
+      discount: number;     // 5% descuento
+    };
+    
+    postPurchase: {
+      reviewRequest: number; // 7 días después
+      crossSell: number;     // 14 días después
+    };
+  };
+}
+```
+
+---
+
+## 10. SEO Y OPTIMIZACIÓN
+
+### 10.1 Estructura de URLs
+
+```
+/                                    # Homepage
+/celulares                          # Catálogo principal
+/marca/{brand}                      # Por marca (samsung, xiaomi, etc.)
+/celular/{slug}                     # Detalle producto
+/ofertas                            # Ofertas especiales
+/buscar?q={query}                   # Búsqueda
+/carrito                            # Carrito
+/checkout                           # Proceso de pago
+/cuenta                             # Mi cuenta
+/cuenta/pedidos                     # Mis pedidos
+/cuenta/direcciones                 # Mis direcciones
+/ayuda                              # Centro de ayuda
+/blog                               # Blog (contenido SEO)
+/blog/{slug}                        # Artículo del blog
+```
+
+### 10.2 Meta Tags y Schema.org
+
+```html
+<!-- Ejemplo para página de producto -->
+<head>
+  <title>Samsung Galaxy S24 256GB - Comprar en Colombia | TuTienda</title>
+  <meta name="description" content="Compra Samsung Galaxy S24 256GB original con garantía. Envío gratis en Colombia. 12 cuotas sin interés. Precio: $899.000 COP">
+  <meta name="keywords" content="samsung galaxy s24, celular samsung, smartphone colombia, galaxy s24 precio">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Samsung Galaxy S24 256GB - $899.000 COP">
+  <meta property="og:description" content="Celular original con garantía. Envío gratis en Colombia.">
+  <meta property="og:image" content="https://tutienda.co/images/samsung-s24.jpg">
+  <meta property="og:price:amount" content="899000">
+  <meta property="og:price:currency" content="COP">
+  
+  <!-- Schema.org Product -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Samsung Galaxy S24 256GB",
+    "image": "https://tutienda.co/images/samsung-s24.jpg",
+    "description": "Smartphone Samsung Galaxy S24 con 256GB de almacenamiento",
+    "brand": {
+      "@type": "Brand",
+      "name": "Samsung"
+    },
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "COP",
+      "price": "899000",
+      "availability": "https://schema.org/InStock",
+      "seller": {
+        "@type": "Organization",
+        "name": "TuTienda"
+      }
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.5",
+      "reviewCount": "324"
+    }
+  }
+  </script>
+</head>
+```
+
+### 10.3 Sitemap.xml y Robots.txt
+
+```xml
+<!-- sitemap.xml -->
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://tutienda.co/</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://tutienda.co/celulares</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Productos dinámicos -->
+  ${products.map(product => `
+  <url>
+    <loc>https://tutienda.co/celular/${product.slug}</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <lastmod>${product.updatedAt}</lastmod>
+  </url>
+  `)}
+</urlset>
+```
+
+---
+
+## 11. PERFORMANCE Y OPTIMIZACIÓN
+
+### 11.1 Core Web Vitals Targets
+
+```javascript
+const performanceTargets = {
+  LCP: 2.5,    // Largest Contentful Paint < 2.5s
+  FID: 100,    // First Input Delay < 100ms
+  CLS: 0.1,    // Cumulative Layout Shift < 0.1
+  TTFB: 600,   // Time to First Byte < 600ms
+  FCP: 1.8,    // First Contentful Paint < 1.8s
+};
+```
+
+### 11.2 Optimización de Imágenes
+
+```javascript
+// Configuración de next/image
+const imageOptimization = {
+  formats: ['webp', 'avif'],
+  deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+  imageSizes: [16, 32, 48, 64, 96, 128, 256],
+  
+  // Lazy loading nativo
+  loading: 'lazy',
+  
+  // Placeholder blur
+  placeholder: 'blur',
+  
+  // CDN con Cloudinary
+  loader: 'cloudinary',
+  path: 'https://res.cloudinary.com/tutienda/'
+};
+```
+
+### 11.3 Caché Strategy
+
+```javascript
+// Redis Cache Configuration
+const cacheStrategy = {
+  // Productos populares (1 hora)
+  products: {
+    ttl: 3600,
+    tags: ['products'],
+    invalidateOn: ['product:update', 'product:delete']
+  },
+  
+  // Búsquedas frecuentes (30 minutos)
+  search: {
+    ttl: 1800,
+    maxSize: 1000,
+    algorithm: 'LRU'
+  },
+  
+  // Carritos temporales (24 horas)
+  carts: {
+    ttl: 86400,
+    persist: true
+  },
+  
+  // Sesiones (2 horas)
+  sessions: {
+    ttl: 7200,
+    rolling: true
+  }
+};
+```
+
+---
+
+## 12. SEGURIDAD
+
+### 12.1 Autenticación y Autorización
+
+```javascript
+// JWT Configuration
+const authConfig = {
+  accessToken: {
+    secret: process.env.JWT_ACCESS_SECRET,
+    expiresIn: '15m'
+  },
+  refreshToken: {
+    secret: process.env.JWT_REFRESH_SECRET,
+    expiresIn: '7d'
+  },
+  
+  // Rate limiting
+  rateLimiting: {
+    windowMs: 15 * 60 * 1000, // 15 minutos
+    max: 5, // 5 intentos de login
+    message: 'Demasiados intentos, intente más tarde'
+  },
+  
+  // Password policy
+  passwordPolicy: {
+    minLength: 8,
+    requireUppercase: true,
+    requireLowercase: true,
+    requireNumbers: true,
+    requireSpecialChars: false
+  }
+};
+```
+
+### 12.2 Protección contra ataques
+
+```javascript
+// Security Headers
+const securityHeaders = {
+  'X-Content-Type-Options': 'nosniff',
+  'X-Frame-Options': 'DENY',
+  'X-XSS-Protection': '1; mode=block',
+  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+  'Content-Security-Policy': "default-src 'self'",
+  'Referrer-Policy': 'strict-origin-when-cross-origin'
+};
+
+// CORS Configuration
+const corsOptions = {
+  origin: process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:3000'],
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+
+// Input Validation
+const sanitization = {
+  sql: true,      // Prevenir SQL injection (usando Prisma)
+  xss: true,      // Prevenir XSS
+  noSql: true,    // Prevenir NoSQL injection
+  command: true   // Prevenir command injection
+};
+```
+
+---
+
+## 13. TESTING
+
+### 13.1 Unit Tests
+
+```javascript
+// Ejemplo de test para producto
+describe('Product Service', () => {
+  test('should create a new product', async () => {
+    const productData = {
+      name: 'Samsung Galaxy S24',
+      price: 899000,
+      brand: 'Samsung',
+      // ... más datos
+    };
+    
+    const product = await productService.create(productData);
+    
+    expect(product).toHaveProperty('id');
+    expect(product.name).toBe(productData.name);
+    expect(product.price).toBe(productData.price);
+  });
+  
+  test('should calculate discount correctly', () => {
+    const price = 1000000;
+    const discountPercent = 25;
+    const discounted = calculateDiscount(price, discountPercent);
+    
+    expect(discounted).toBe(750000);
+  });
+});
+```
+
+### 13.2 Integration Tests
+
+```javascript
+// Test de flujo de compra completo
+describe('Checkout Flow', () => {
+  test('complete purchase flow', async () => {
+    // 1. Agregar producto al carrito
+    const cartResponse = await request(app)
+      .post('/api/cart/add')
+      .send({ productId: 'prod_123', quantity: 1 });
+    
+    expect(cartResponse.status).toBe(200);
+    
+    // 2. Proceder al checkout
+    const checkoutResponse = await request(app)
+      .post('/api/checkout/create')
+      .send({
+        cartId: cartResponse.body.cartId,
+        shipping: { /* datos de envío */ },
+        payment: { /* datos de pago */ }
+      });
+    
+    expect(checkoutResponse.status).toBe(200);
+    expect(checkoutResponse.body).toHaveProperty('orderId');
+    
+    // 3. Confirmar pago
+    const paymentResponse = await request(app)
+      .post('/api/payment/confirm')
+      .send({
+        orderId: checkoutResponse.body.orderId,
+        paymentId: 'pay_test_123'
+      });
+    
+    expect(paymentResponse.status).toBe(200);
+    expect(paymentResponse.body.status).toBe('completed');
+  });
+});
+```
+
+### 13.3 E2E Tests (Playwright)
+
+```javascript
+// Test E2E con Playwright
+test('user can search and buy a product', async ({ page }) => {
+  // Ir a homepage
+  await page.goto('https://localhost:3000');
+  
+  // Buscar producto
+  await page.fill('[data-testid="search-input"]', 'Samsung Galaxy S24');
+  await page.press('[data-testid="search-input"]', 'Enter');
+  
+  // Click en primer resultado
+  await page.click('[data-testid="product-card"]:first-child');
+  
+  // Agregar al carrito
+  await page.click('[data-testid="add-to-cart"]');
+  
+  // Ir al carrito
+  await page.click('[data-testid="cart-icon"]');
+  
+  // Proceder al checkout
+  await page.click('[data-testid="proceed-checkout"]');
+  
+  // Llenar formulario de envío
+  await page.fill('[name="firstName"]', 'Juan');
+  await page.fill('[name="lastName"]', 'Pérez');
+  await page.fill('[name="email"]', 'juan@test.com');
+  // ... más campos
+  
+  // Verificar orden creada
+  await expect(page).toHaveURL(/\/checkout\/confirmation/);
+  await expect(page.locator('[data-testid="order-success"]')).toBeVisible();
+});
+```
+
+---
+
+## 14. DEPLOYMENT Y CI/CD
+
+### 14.1 GitHub Actions Pipeline
+
+```yaml
+name: Deploy to Production
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Run tests
+        run: npm test
+        
+      - name: Run E2E tests
+        run: npm run test:e2e
+        
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build application
+        run: npm run build
+        
+      - name: Build Docker image
+        run: docker build -t ecommerce-celulares .
+        
+      - name: Push to registry
+        run: docker push registry.tutienda.co/ecommerce-celulares
+        
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to production
+        run: |
+          ssh deploy@server 'docker pull registry.tutienda.co/ecommerce-celulares'
+          ssh deploy@server 'docker-compose up -d'
+```
+
+### 14.2 Monitoring y Alertas
+
+```javascript
+// Configuración de monitoring con Sentry
+const sentryConfig = {
+  dsn: process.env.SENTRY_DSN,
+  environment: process.env.NODE_ENV,
+  tracesSampleRate: 1.0,
+  
+  beforeSend(event, hint) {
+    // Filtrar información sensible
+    if (event.request) {
+      delete event.request.cookies;
+      delete event.request.headers?.authorization;
+    }
+    return event;
+  }
+};
+
+// Health checks
+app.get('/health', (req, res) => {
+  const health = {
+    uptime: process.uptime(),
+    responseTime: process.hrtime(),
+    message: 'OK',
+    timestamp: Date.now(),
+    checks: {
+      database: checkDatabase(),
+      redis: checkRedis(),
+      payment: checkPaymentGateway(),
+      shipping: checkShippingAPI()
+    }
+  };
+  
+  res.status(200).json(health);
+});
+```
+
+---
+
+## 15. TIMELINE DE DESARROLLO
+
+### Fase 1: MVP (4 semanas)
+**Semanas 1-2: Infraestructura Base**
+- Setup del proyecto (Next.js, TypeScript, Tailwind)
+- Configuración de base de datos (PostgreSQL + Prisma)
+- Autenticación básica (JWT)
+- Design system y componentes base
+
+**Semanas 3-4: Core Features**
+- Homepage y navegación
+- Catálogo de productos con filtros
+- Página de detalle de producto
+- Carrito de compras básico
+- Checkout simplificado
+
+### Fase 2: Integraciones (2 semanas)
+**Semana 5: Pagos**
+- Integración con Wompi
+- Integración con Stripe (backup)
+- Testing de flujo de pago
+
+**Semana 6: Envíos y Comunicación**
+- API de Coordinadora/Servientrega
+- WhatsApp Business API
+- Emails transaccionales (SendGrid)
+
+### Fase 3: Optimización (2 semanas)
+**Semanas 7-8:**
+- Panel administrativo básico
+- SEO y meta tags
+- Performance optimization
+- Testing exhaustivo
+- Soft launch con usuarios beta
+
+### Fase 4: Lanzamiento (1 semana)
+**Semana 9:**
+- Deploy a producción
+- Monitoring setup
+- Marketing launch
+- Soporte 24/7 activado
+
+---
+
+## 16. PRESUPUESTO ESTIMADO
+
+```
+Desarrollo (9 semanas):
+- Frontend Developer:        $8,000 USD
+- Backend Developer:         $8,000 USD  
+- UI/UX Designer:           $3,000 USD
+- QA Tester:                $2,000 USD
+- Project Manager:          $3,000 USD
+Subtotal Desarrollo:       $24,000 USD
+
+Infraestructura (mensual):
+- Hosting (Vercel + AWS):     $200 USD
+- Base de datos (RDS):        $100 USD
+- CDN (Cloudflare):           $50 USD
+- APIs terceros:              $150 USD
+Subtotal Infraestructura:    $500 USD/mes
+
+Marketing Inicial:
+- Google Ads:               $2,000 USD
+- Social Media:             $1,500 USD
+- Influencers:              $1,000 USD
+- Content/SEO:              $500 USD
+Subtotal Marketing:         $5,000 USD
+
+TOTAL INVERSIÓN INICIAL:    $29,500 USD
+(~$118,000,000 COP)
+```
+
+---
+
+## 17. MÉTRICAS DE ÉXITO
+
+### KPIs Objetivo Mes 1
+- Visitantes únicos: 10,000+
+- Tasa de conversión: 1.5-2%
+- Ticket promedio: $600,000 COP
+- Ventas totales: 100-150 pedidos
+- Revenue: $60-90M COP
+- CAC: <$120,000 COP
+- Tasa de abandono de carrito: <70%
+
+### KPIs Objetivo Mes 3
+- Visitantes únicos: 50,000+
+- Tasa de conversión: 2-2.5%
+- Ticket promedio: $700,000 COP
+- Ventas totales: 1,000+ pedidos  
+- Revenue: $700M+ COP
+- Repeat purchase rate: 15-20%
+- NPS: 50+
+
+---
+
+## 18. CONCLUSIÓN
+
+Este PRD define un e-commerce robusto y escalable para el mercado colombiano de celulares, con foco en:
+
+1. **Experiencia de Usuario**: Diseño intuitivo inspirado en las mejores prácticas de Apple y Giztop
+2. **Performance**: Carga rápida y optimización para móviles (60%+ del tráfico)
+3. **Confianza**: Garantía oficial, múltiples métodos de pago, soporte local
+4. **Escalabilidad**: Arquitectura preparada para crecer de 100 a 10,000+ pedidos mensuales
+5. **Localización**: Adaptado al mercado colombiano (pagos, envíos, cultura)
+
+El desarrollo con Claude Code debe seguir estos lineamientos, priorizando el MVP funcional para validar el modelo de negocio rápidamente.
+
+---
+
+**Documento preparado para:** Empleados Digitales / Jorge
+**Por:** Claude (Anthropic)
+**Fecha:** Noviembre 2025
+**Versión:** 1.0
