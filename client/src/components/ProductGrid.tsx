@@ -1,7 +1,6 @@
 import ProductCard from "./ProductCard";
-import { useQuery } from "@tanstack/react-query";
-import { getFeaturedProducts } from "@/lib/api";
 import { Skeleton } from "@/components/ui/skeleton";
+import { db } from "@/lib/instant";
 import samsungImage from "@assets/generated_images/Samsung_flagship_phone_product_aa170b09.png";
 import xiaomiImage from "@assets/generated_images/Xiaomi_phone_product_shot_0705b3ea.png";
 import motorolaImage from "@assets/generated_images/Motorola_phone_product_shot_9bac3b5d.png";
@@ -17,10 +16,19 @@ const brandImages: Record<string, string> = {
 };
 
 export default function ProductGrid() {
-  const { data: products, isLoading } = useQuery({
-    queryKey: ['/api/products/featured'],
-    queryFn: getFeaturedProducts,
+  const { data, isLoading } = db.useQuery({
+    products: {
+      $: {
+        where: {
+          isActive: true,
+          isFeatured: true,
+        },
+        limit: 8,
+      },
+    },
   });
+
+  const products = data?.products || [];
 
   if (isLoading) {
     return (
@@ -56,18 +64,18 @@ export default function ProductGrid() {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-          {products?.map((product) => (
+          {products.map((product) => (
             <ProductCard
               key={product.id}
               id={product.id}
               name={product.name}
               brand={product.brand}
-              price={parseFloat(product.price)}
-              compareAtPrice={product.compareAtPrice ? parseFloat(product.compareAtPrice) : undefined}
+              price={product.price}
+              compareAtPrice={product.compareAtPrice}
               image={brandImages[product.brand] || samsungImage}
-              rating={product.rating ? parseFloat(product.rating) : undefined}
+              rating={product.rating}
               reviewCount={product.reviewCount}
-              freeShipping={parseFloat(product.price) >= 100000}
+              freeShipping={product.price >= 100000}
               stock={product.stock}
             />
           ))}

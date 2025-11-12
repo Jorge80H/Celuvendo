@@ -4,55 +4,47 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Celuvendo.com is an e-commerce platform for selling mobile phones in Colombia. It's built as a full-stack monorepo using React + Express with TypeScript, Drizzle ORM, and PostgreSQL.
+Celuvendo.com is an e-commerce platform for selling mobile phones in Colombia. It's built with React + Vite and InstantDB as a real-time database.
 
 ## Development Commands
 
 ```bash
-# Start development server (runs both frontend and backend)
+# Start development server (Vite dev server)
 npm run dev
 
-# Build for production (builds frontend and bundles backend)
+# Build for production (frontend only)
 npm run build
-
-# Start production server
-npm start
 
 # Type checking
 npm run check
 
-# Database operations
-npm run db:push  # Push schema changes to database
+# Seed InstantDB with products
+npm run seed
 ```
 
 ## Architecture
 
-### Monorepo Structure
+### Project Structure
 
 - **`client/`**: React frontend (Vite-based SPA)
   - `src/pages/`: Route components (Home, Products, Cart, NotFound)
   - `src/components/`: Reusable React components (Header, Footer, ProductCard, FilterSidebar, etc.)
   - `src/components/ui/`: shadcn/ui components
   - `src/hooks/`: Custom React hooks
-  - `src/lib/`: Client utilities (query client, etc.)
+  - `src/lib/`: Client utilities (InstantDB client, etc.)
 
-- **`server/`**: Express backend API
-  - `index.ts`: Express server setup and middleware
-  - `routes.ts`: API endpoint definitions
-  - `storage.ts`: Database abstraction layer (DbStorage class)
-  - `db.ts`: Drizzle database connection
-  - `seed.ts`: Database seeding script
-  - `vite.ts`: Vite integration for dev/prod
+- **`shared/`**: Code shared across the app
+  - `instant-schema.ts`: InstantDB schema definitions and TypeScript types
 
-- **`shared/`**: Code shared between client and server
-  - `schema.ts`: Drizzle schema definitions and Zod validation schemas
+- **`scripts/`**: Utility scripts
+  - `seed-instant.ts`: Script to populate InstantDB with product data
 
 ### Key Technologies
 
-- **Frontend**: React 18, Wouter (routing), TanStack Query, Radix UI, Tailwind CSS, shadcn/ui
-- **Backend**: Express, Passport (session-based auth), express-session
-- **Database**: PostgreSQL via Drizzle ORM (@neondatabase/serverless)
-- **Build**: Vite (frontend), esbuild (backend bundling)
+- **Frontend**: React 18, Wouter (routing), InstantDB React hooks, Radix UI, Tailwind CSS, shadcn/ui
+- **Database**: InstantDB (real-time database)
+- **Build**: Vite
+- **Deployment**: Netlify (static hosting)
 
 ### Path Aliases
 
@@ -60,32 +52,34 @@ npm run db:push  # Push schema changes to database
 - `@shared/` → `shared/`
 - `@assets/` → `attached_assets/`
 
-## Database Schema
+## Database (InstantDB)
 
-Two main tables defined in `shared/schema.ts`:
+This project uses InstantDB for real-time data synchronization. The schema is defined in `shared/instant-schema.ts`.
+
+### Schema Structure
+
+Two main entities:
 
 1. **products**: Mobile phone catalog with JSON fields for specifications, images, and features
-2. **cartItems**: Shopping cart items tied to session IDs
+2. **cartItems**: Shopping cart items with relationship to products
 
-## API Structure
+### Working with InstantDB
 
-All API routes are in `server/routes.ts`:
+- **Queries**: Use `db.useQuery()` hook in React components
+- **Mutations**: Use `db.transact()` for creating/updating/deleting data
+- **Schema**: Defined using `i.schema()` with entities and links (relationships)
 
-- `GET /api/products` - List products with filtering (brand, price, RAM, storage, search)
-- `GET /api/products/featured` - Featured products
-- `GET /api/products/:id` - Single product by ID
-- `GET /api/products/slug/:slug` - Single product by slug
-- `GET /api/cart` - Current session's cart items
-- `POST /api/cart` - Add item to cart
-- `PATCH /api/cart/:id` - Update cart item quantity
-- `DELETE /api/cart/:id` - Remove cart item
-- `DELETE /api/cart` - Clear cart
-
-Session management is handled via express-session with session IDs used to track carts.
-
-## Storage Layer
-
-`server/storage.ts` contains the `DbStorage` class implementing the `IStorage` interface. This is the data access layer for all database operations. When adding new features, extend this interface and implementation.
+Example query:
+```typescript
+const { data, isLoading } = db.useQuery({
+  products: {
+    $: {
+      where: { isActive: true, isFeatured: true },
+      limit: 8,
+    },
+  },
+});
+```
 
 ## Design Guidelines
 
@@ -100,21 +94,28 @@ The project follows specific design patterns documented in `design_guidelines.md
 
 ### Environment Variables
 
-- `DATABASE_URL`: PostgreSQL connection string (required)
-- `SESSION_SECRET`: Session encryption key (change in production)
-- `NODE_ENV`: Set to "production" for production builds
-- `PORT`: Server port (default: 5000)
+- `VITE_INSTANT_APP_ID`: Your InstantDB app ID (required - get from https://instantdb.com/dash)
 
-### Development Server
+### Development Setup
 
-The dev server runs on `localhost:5000` and serves both the API and the Vite dev server. In production, the built frontend is served from `dist/public`.
+1. Create an InstantDB app at https://instantdb.com/dash
+2. Copy your APP_ID
+3. Create a `.env` file: `VITE_INSTANT_APP_ID=your_app_id`
+4. Run `npm run seed` to populate the database
+5. Run `npm run dev` to start development
+
+### Deployment (Netlify)
+
+1. Set environment variable `VITE_INSTANT_APP_ID` in Netlify dashboard
+2. Netlify will automatically build using `vite build`
+3. After deployment, run `npm run seed` locally to populate the database
 
 ### Adding New Features
 
-1. If adding database tables: Update `shared/schema.ts` with Drizzle schema and Zod validators
-2. If adding API endpoints: Add routes to `server/routes.ts` and methods to `server/storage.ts`
-3. If adding UI components: Follow the shadcn/ui pattern in `client/src/components/ui/`
-4. Frontend pages use Wouter for routing (configured in `client/src/App.tsx`)
+1. If adding database entities: Update `shared/instant-schema.ts` with schema definitions
+2. UI components: Follow the shadcn/ui pattern in `client/src/components/ui/`
+3. Frontend pages use Wouter for routing (configured in `client/src/App.tsx`)
+4. Use InstantDB React hooks (`db.useQuery()`, `db.transact()`) for data operations
 
 ### Product Data
 
@@ -123,4 +124,4 @@ Products contain JSON fields for complex data:
 - `specifications`: Nested object with screen, processor, RAM, storage, camera, battery, connectivity, OS
 - `features`: Array of feature strings
 
-When filtering by RAM/storage, filtering happens in-memory after database query (see `storage.ts:64-76`).
+All product data is stored directly in InstantDB with real-time synchronization.
