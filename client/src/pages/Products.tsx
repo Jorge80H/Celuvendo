@@ -23,9 +23,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { SlidersHorizontal } from "lucide-react";
-import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getProducts, type ProductFilters } from "@/lib/api";
+import { useState, useMemo } from "react";
+import { db } from "@/lib/instant";
 import { formatCOP } from "@/lib/utils";
 import samsungImage from "@assets/generated_images/Samsung_flagship_phone_product_aa170b09.png";
 import xiaomiImage from "@assets/generated_images/Xiaomi_phone_product_shot_0705b3ea.png";
@@ -200,19 +199,54 @@ export default function Products() {
   const [selectedStorage, setSelectedStorage] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState([200000, 4000000]);
 
-  const filters: ProductFilters = {
-    brand: selectedBrands.length > 0 ? selectedBrands : undefined,
-    ram: selectedRam.length > 0 ? selectedRam : undefined,
-    storage: selectedStorage.length > 0 ? selectedStorage : undefined,
-    minPrice: priceRange[0],
-    maxPrice: priceRange[1],
-    sortBy,
-  };
+  // Fetch products from InstantDB
+  const { data, isLoading, error } = db.useQuery({ products: {} });
 
-  const { data: products, isLoading } = useQuery({
-    queryKey: ['/api/products', filters],
-    queryFn: () => getProducts(filters),
-  });
+  // Apply filters and sorting
+  const products = useMemo(() => {
+    if (!data?.products) return [];
+
+    let filtered = [...data.products];
+
+    // Apply brand filter
+    if (selectedBrands.length > 0) {
+      filtered = filtered.filter(p => selectedBrands.includes(p.brand));
+    }
+
+    // Apply RAM filter
+    if (selectedRam.length > 0) {
+      filtered = filtered.filter(p => p.ram && selectedRam.includes(p.ram));
+    }
+
+    // Apply storage filter
+    if (selectedStorage.length > 0) {
+      filtered = filtered.filter(p => p.storage && selectedStorage.includes(p.storage));
+    }
+
+    // Apply price range filter
+    filtered = filtered.filter(p => {
+      const price = parseFloat(p.price);
+      return price >= priceRange[0] && price <= priceRange[1];
+    });
+
+    // Apply sorting
+    switch (sortBy) {
+      case 'price_asc':
+        filtered.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+        break;
+      case 'price_desc':
+        filtered.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+        break;
+      case 'rating':
+        filtered.sort((a, b) => (parseFloat(b.rating || '0') - parseFloat(a.rating || '0')));
+        break;
+      case 'newest':
+        filtered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+        break;
+    }
+
+    return filtered;
+  }, [data, selectedBrands, selectedRam, selectedStorage, priceRange, sortBy]);
 
   const toggleSelection = (item: string, list: string[], setList: (list: string[]) => void) => {
     if (list.includes(item)) {
@@ -244,7 +278,7 @@ export default function Products() {
                 Todos los Celulares
               </h1>
               <p className="text-muted-foreground" data-testid="text-product-count">
-                {products?.length || 0} productos encontrados
+                {products.length} productos encontrados
               </p>
             </div>
 
@@ -411,7 +445,7 @@ export default function Products() {
                 </div>
               ) : (
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-                  {products?.map((product) => (
+                  {products.map((product) => (
                     <ProductCard
                       key={product.id}
                       id={product.id}
@@ -424,6 +458,7 @@ export default function Products() {
                       reviewCount={product.reviewCount}
                       freeShipping={parseFloat(product.price) >= 100000}
                       stock={product.stock}
+                      slug={product.slug}
                     />
                   ))}
                 </div>

@@ -1,0 +1,375 @@
+import { useRoute } from "wouter";
+import { db } from "@/lib/instant";
+import Header from "@/components/Header";
+import CategoryNav from "@/components/CategoryNav";
+import Footer from "@/components/Footer";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ShoppingCart, Truck, Shield, Package, Star, Check, X } from "lucide-react";
+import { formatCOP } from "@/lib/utils";
+import { useMemo } from "react";
+
+export default function ProductDetail() {
+  const [, params] = useRoute("/producto/:slug");
+  const slug = params?.slug;
+
+  const { data, isLoading, error } = db.useQuery({ products: {} });
+
+  const product = useMemo(() => {
+    if (!data?.products) return null;
+    return data.products.find((p: any) => p.slug === slug);
+  }, [data, slug]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <CategoryNav />
+        <main className="flex-1">
+          <div className="max-w-7xl mx-auto px-4 py-8">
+            <div className="grid md:grid-cols-2 gap-8">
+              <Skeleton className="aspect-square" />
+              <div className="space-y-4">
+                <Skeleton className="h-8 w-3/4" />
+                <Skeleton className="h-4 w-1/2" />
+                <Skeleton className="h-6 w-1/4" />
+                <Skeleton className="h-24" />
+              </div>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !product) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <CategoryNav />
+        <main className="flex-1 flex items-center justify-center">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold mb-2">Producto no encontrado</h1>
+            <p className="text-muted-foreground mb-4">
+              El producto que buscas no existe o ha sido eliminado
+            </p>
+            <Button onClick={() => window.location.href = "/productos"}>
+              Ver todos los productos
+            </Button>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  const discount = product.compareAtPrice
+    ? Math.round(((product.compareAtPrice - product.price) / product.compareAtPrice) * 100)
+    : 0;
+
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      <CategoryNav />
+
+      <main className="flex-1">
+        <div className="max-w-7xl mx-auto px-4 py-8">
+          {/* Breadcrumb */}
+          <div className="text-sm text-muted-foreground mb-6">
+            <a href="/" className="hover:underline">Inicio</a>
+            {" / "}
+            <a href="/productos" className="hover:underline">Productos</a>
+            {" / "}
+            <span>{product.name}</span>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 mb-12">
+            {/* Imagen del producto */}
+            <div className="space-y-4">
+              <div className="aspect-square rounded-lg overflow-hidden bg-gray-100">
+                <img
+                  src={product.images?.[0] || "/placeholder.png"}
+                  alt={product.name}
+                  className="w-full h-full object-contain p-8"
+                />
+              </div>
+
+              {product.colors && product.colors.length > 0 && (
+                <div>
+                  <p className="text-sm font-medium mb-2">Colores disponibles:</p>
+                  <div className="flex gap-2">
+                    {product.colors.map((color: any) => (
+                      <div
+                        key={color.name}
+                        className="flex items-center gap-2 px-3 py-2 border rounded-md"
+                        title={color.name}
+                      >
+                        <div
+                          className="w-4 h-4 rounded-full border"
+                          style={{ backgroundColor: color.code }}
+                        />
+                        <span className="text-sm">{color.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Información del producto */}
+            <div className="space-y-6">
+              <div>
+                <Badge variant="secondary" className="mb-2">{product.brand}</Badge>
+                <h1 className="text-3xl font-bold mb-2">{product.name}</h1>
+                <p className="text-muted-foreground">{product.sku}</p>
+
+                {product.rating && (
+                  <div className="flex items-center gap-2 mt-2">
+                    <div className="flex">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className={`w-4 h-4 ${
+                            i < Math.floor(product.rating)
+                              ? "fill-yellow-400 text-yellow-400"
+                              : "text-gray-300"
+                          }`}
+                        />
+                      ))}
+                    </div>
+                    <span className="text-sm text-muted-foreground">
+                      {product.rating} ({product.reviewCount || 0} reseñas)
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex items-baseline gap-3">
+                  <span className="text-4xl font-bold">{formatCOP(product.price)}</span>
+                  {product.compareAtPrice && (
+                    <>
+                      <span className="text-xl text-muted-foreground line-through">
+                        {formatCOP(product.compareAtPrice)}
+                      </span>
+                      <Badge variant="destructive">{discount}% OFF</Badge>
+                    </>
+                  )}
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  {product.stock > 0 ? (
+                    <span className="text-green-600">✓ En stock ({product.stock} disponibles)</span>
+                  ) : (
+                    <span className="text-red-600">✗ Agotado</span>
+                  )}
+                </p>
+              </div>
+
+              <p className="text-lg">{product.description}</p>
+
+              <div className="space-y-3">
+                <Button size="lg" className="w-full" disabled={product.stock === 0}>
+                  <ShoppingCart className="w-5 h-5 mr-2" />
+                  Agregar al Carrito
+                </Button>
+                <Button size="lg" variant="outline" className="w-full">
+                  Comprar Ahora
+                </Button>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <Card className="p-4 flex items-center gap-3">
+                  <Truck className="w-6 h-6 text-primary" />
+                  <div>
+                    <p className="font-semibold text-sm">Envío gratis</p>
+                    <p className="text-xs text-muted-foreground">En compras +$100.000</p>
+                  </div>
+                </Card>
+                <Card className="p-4 flex items-center gap-3">
+                  <Shield className="w-6 h-6 text-primary" />
+                  <div>
+                    <p className="font-semibold text-sm">Garantía</p>
+                    <p className="text-xs text-muted-foreground">12 meses oficial</p>
+                  </div>
+                </Card>
+              </div>
+
+              {product.highlights && (
+                <Card className="p-4 space-y-3">
+                  <h3 className="font-semibold">Puntos destacados</h3>
+                  <div className="space-y-2">
+                    {product.highlights.pros?.map((pro: string, i: number) => (
+                      <div key={i} className="flex items-start gap-2">
+                        <Check className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                        <span className="text-sm">{pro}</span>
+                      </div>
+                    ))}
+                  </div>
+                </Card>
+              )}
+            </div>
+          </div>
+
+          {/* Tabs de información */}
+          <Tabs defaultValue="description" className="mb-12">
+            <TabsList className="grid w-full grid-cols-4">
+              <TabsTrigger value="description">Descripción</TabsTrigger>
+              <TabsTrigger value="specs">Especificaciones</TabsTrigger>
+              <TabsTrigger value="box">Contenido</TabsTrigger>
+              <TabsTrigger value="features">Características</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="description" className="mt-6">
+              <Card className="p-6">
+                <div className="prose max-w-none">
+                  {product.longDescription?.split('\n').map((paragraph: string, i: number) => (
+                    <p key={i} className="mb-4">{paragraph}</p>
+                  ))}
+                </div>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="specs" className="mt-6">
+              <Card className="p-6">
+                <div className="space-y-6">
+                  {product.specifications?.screen && (
+                    <div>
+                      <h3 className="font-semibold text-lg mb-3">📱 Pantalla</h3>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div><span className="text-muted-foreground">Tamaño:</span> {product.specifications.screen.size}</div>
+                        <div><span className="text-muted-foreground">Tipo:</span> {product.specifications.screen.type}</div>
+                        <div><span className="text-muted-foreground">Resolución:</span> {product.specifications.screen.resolution}</div>
+                        {product.specifications.screen.refreshRate && (
+                          <div><span className="text-muted-foreground">Refresco:</span> {product.specifications.screen.refreshRate}</div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {product.specifications?.processor && (
+                    <div>
+                      <h3 className="font-semibold text-lg mb-3">⚙️ Rendimiento</h3>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div><span className="text-muted-foreground">Procesador:</span> {product.specifications.processor}</div>
+                        <div><span className="text-muted-foreground">RAM:</span> {product.specifications.ram}</div>
+                        <div><span className="text-muted-foreground">Almacenamiento:</span> {product.specifications.storage}</div>
+                        {product.specifications.expandableStorage && (
+                          <div><span className="text-muted-foreground">Expandible:</span> {product.specifications.expandableStorage}</div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {product.specifications?.camera && (
+                    <div>
+                      <h3 className="font-semibold text-lg mb-3">📷 Cámaras</h3>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div><span className="text-muted-foreground">Principal:</span> {product.specifications.camera.main}</div>
+                        <div><span className="text-muted-foreground">Frontal:</span> {product.specifications.camera.front}</div>
+                        {product.specifications.camera.depth && (
+                          <div><span className="text-muted-foreground">Profundidad:</span> {product.specifications.camera.depth}</div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {product.specifications?.battery && (
+                    <div>
+                      <h3 className="font-semibold text-lg mb-3">🔋 Batería</h3>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div><span className="text-muted-foreground">Capacidad:</span> {product.specifications.battery.capacity}</div>
+                        {product.specifications.battery.charging && (
+                          <div><span className="text-muted-foreground">Carga:</span> {product.specifications.battery.charging}</div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="box" className="mt-6">
+              <Card className="p-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  {product.boxContents?.included && (
+                    <div>
+                      <h3 className="font-semibold text-lg mb-3 flex items-center gap-2">
+                        <Package className="w-5 h-5 text-green-600" />
+                        Incluido en la caja
+                      </h3>
+                      <ul className="space-y-2">
+                        {product.boxContents.included.map((item: string, i: number) => (
+                          <li key={i} className="flex items-start gap-2">
+                            <Check className="w-4 h-4 text-green-600 mt-0.5" />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {product.boxContents?.notIncluded && (
+                    <div>
+                      <h3 className="font-semibold text-lg mb-3 flex items-center gap-2">
+                        <X className="w-5 h-5 text-red-600" />
+                        NO incluido
+                      </h3>
+                      <ul className="space-y-2">
+                        {product.boxContents.notIncluded.map((item: string, i: number) => (
+                          <li key={i} className="flex items-start gap-2">
+                            <X className="w-4 h-4 text-red-600 mt-0.5" />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="features" className="mt-6">
+              <Card className="p-6">
+                <div className="grid md:grid-cols-2 gap-8">
+                  {product.features && (
+                    <div>
+                      <h3 className="font-semibold text-lg mb-3">✨ Características</h3>
+                      <ul className="space-y-2">
+                        {product.features.map((feature: string, i: number) => (
+                          <li key={i} className="flex items-start gap-2">
+                            <Check className="w-4 h-4 text-primary mt-0.5" />
+                            <span>{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {product.highlights?.cons && (
+                    <div>
+                      <h3 className="font-semibold text-lg mb-3">⚠️ Consideraciones</h3>
+                      <ul className="space-y-2">
+                        {product.highlights.cons.map((con: string, i: number) => (
+                          <li key={i} className="flex items-start gap-2">
+                            <X className="w-4 h-4 text-orange-600 mt-0.5" />
+                            <span className="text-sm">{con}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </Card>
+            </TabsContent>
+          </Tabs>
+        </div>
+      </main>
+
+      <Footer />
+    </div>
+  );
+}

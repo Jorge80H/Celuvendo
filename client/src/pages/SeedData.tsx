@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { db, id } from "@/lib/instant";
 import { Button } from "@/components/ui/button";
-import productsData from "../../../scripts/products-data.json";
+import { samsungProducts } from "@/data/samsung-products";
 
 export default function SeedData() {
   const [loading, setLoading] = useState(false);
@@ -13,7 +13,7 @@ export default function SeedData() {
     setError(null);
 
     try {
-      for (const product of productsData) {
+      for (const product of samsungProducts) {
         const productWithTimestamps = {
           ...product,
           id: id(),
@@ -27,7 +27,7 @@ export default function SeedData() {
       }
 
       setSuccess(true);
-      alert(`✅ Successfully seeded ${productsData.length} products!`);
+      alert(`✅ Successfully seeded ${samsungProducts.length} Samsung products!`);
     } catch (err) {
       console.error("Error seeding:", err);
       setError(err instanceof Error ? err.message : "Unknown error");
@@ -41,7 +41,7 @@ export default function SeedData() {
       <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
         <h1 className="text-2xl font-bold mb-4">Seed Database</h1>
         <p className="text-gray-600 mb-6">
-          Click the button below to populate your InstantDB database with {productsData.length} products.
+          Click the button below to populate your InstantDB database with {samsungProducts.length} Samsung products.
         </p>
 
         {!success && (

@@ -77,6 +77,7 @@ export default function ProductGrid() {
               reviewCount={product.reviewCount}
               freeShipping={product.price >= 100000}
               stock={product.stock}
+              slug={product.slug}
             />
           ))}
         </div>

@@ -19,6 +19,7 @@ interface ProductCardProps {
   reviewCount?: number;
   freeShipping?: boolean;
   stock: number;
+  slug?: string;
 }
 
 export default function ProductCard({
@@ -32,6 +33,7 @@ export default function ProductCard({
   reviewCount = 0,
   freeShipping = false,
   stock,
+  slug,
 }: ProductCardProps) {
   const [isFavorite, setIsFavorite] = useState(false);
   const discount = compareAtPrice ? calculateDiscount(price, compareAtPrice) : 0;
@@ -56,15 +58,18 @@ export default function ProductCard({
     },
   });
 
+  const productUrl = slug ? `/producto/${slug}` : `/producto/${id}`;
+
   return (
     <Card className="overflow-hidden hover-elevate transition-transform duration-200 hover:scale-105 group">
-      <div className="relative aspect-square bg-card p-4">
-        <img
-          src={image}
-          alt={name}
-          className="w-full h-full object-contain"
-          data-testid={`img-product-${id}`}
-        />
+      <a href={productUrl} className="block">
+        <div className="relative aspect-square bg-card p-4">
+          <img
+            src={image}
+            alt={name}
+            className="w-full h-full object-contain"
+            data-testid={`img-product-${id}`}
+          />
         
         <Button
           size="icon"
@@ -92,16 +97,17 @@ export default function ProductCard({
           </Badge>
         )}
       </div>
+      </a>
 
       <div className="p-4 space-y-3">
-        <div className="space-y-1">
+        <a href={productUrl} className="block space-y-1">
           <p className="text-xs text-muted-foreground font-medium uppercase" data-testid={`text-brand-${id}`}>
             {brand}
           </p>
           <h3 className="font-semibold text-base line-clamp-2 min-h-[3rem]" data-testid={`text-name-${id}`}>
             {name}
           </h3>
-        </div>
+        </a>
 
         {rating > 0 && (
           <div className="flex items-center gap-2">
@@ -129,7 +135,11 @@ export default function ProductCard({
         <Button
           className="w-full"
           disabled={stock === 0 || addToCartMutation.isPending}
-          onClick={() => addToCartMutation.mutate()}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            addToCartMutation.mutate();
+          }}
           data-testid={`button-add-cart-${id}`}
         >
           {stock === 0 ? 'Agotado' : addToCartMutation.isPending ? 'Agregando...' : 'Agregar al Carrito'}

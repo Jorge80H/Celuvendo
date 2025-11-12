@@ -1,4 +1,5 @@
 import type { Product } from "@shared/schema";
+import { db } from "./instant";
 
 export interface ProductFilters {
   brand?: string[];
@@ -11,40 +12,79 @@ export interface ProductFilters {
 }
 
 export async function getProducts(filters?: ProductFilters): Promise<Product[]> {
-  const params = new URLSearchParams();
-  
-  if (filters?.brand) {
-    filters.brand.forEach(b => params.append('brand', b));
-  }
-  if (filters?.minPrice) params.append('minPrice', filters.minPrice.toString());
-  if (filters?.maxPrice) params.append('maxPrice', filters.maxPrice.toString());
-  if (filters?.ram) {
-    filters.ram.forEach(r => params.append('ram', r));
-  }
-  if (filters?.storage) {
-    filters.storage.forEach(s => params.append('storage', s));
-  }
-  if (filters?.sortBy) params.append('sortBy', filters.sortBy);
-  if (filters?.search) params.append('search', filters.search);
-  
-  const url = `/api/products${params.toString() ? `?${params.toString()}` : ''}`;
-  const response = await fetch(url);
-  
-  if (!response.ok) {
+  const { data, error } = await db.useQuery({ products: {} });
+
+  if (error) {
+    console.error('Error fetching products:', error);
     throw new Error('Failed to fetch products');
   }
-  
-  return response.json();
+
+  let products = data?.products || [];
+
+  // Apply filters
+  if (filters?.brand && filters.brand.length > 0) {
+    products = products.filter(p => filters.brand!.includes(p.brand));
+  }
+
+  if (filters?.minPrice !== undefined) {
+    products = products.filter(p => parseFloat(p.price) >= filters.minPrice!);
+  }
+
+  if (filters?.maxPrice !== undefined) {
+    products = products.filter(p => parseFloat(p.price) <= filters.maxPrice!);
+  }
+
+  if (filters?.ram && filters.ram.length > 0) {
+    products = products.filter(p => p.ram && filters.ram!.includes(p.ram));
+  }
+
+  if (filters?.storage && filters.storage.length > 0) {
+    products = products.filter(p => p.storage && filters.storage!.includes(p.storage));
+  }
+
+  if (filters?.search) {
+    const searchLower = filters.search.toLowerCase();
+    products = products.filter(p =>
+      p.name.toLowerCase().includes(searchLower) ||
+      p.brand.toLowerCase().includes(searchLower)
+    );
+  }
+
+  // Apply sorting
+  if (filters?.sortBy) {
+    switch (filters.sortBy) {
+      case 'price_asc':
+        products.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+        break;
+      case 'price_desc':
+        products.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+        break;
+      case 'rating':
+        products.sort((a, b) => (parseFloat(b.rating || '0') - parseFloat(a.rating || '0')));
+        break;
+      case 'newest':
+        products.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+        break;
+    }
+  }
+
+  return products;
 }
 
 export async function getFeaturedProducts(): Promise<Product[]> {
-  const response = await fetch('/api/products/featured');
-  
-  if (!response.ok) {
+  const { data, error } = await db.useQuery({ products: {} });
+
+  if (error) {
+    console.error('Error fetching featured products:', error);
     throw new Error('Failed to fetch featured products');
   }
-  
-  return response.json();
+
+  const products = data?.products || [];
+
+  // Return products with rating > 4.5 or first 6
+  return products
+    .filter(p => p.rating && parseFloat(p.rating) >= 4.5)
+    .slice(0, 6);
 }
 
 export async function getProduct(id: string): Promise<Product> {
