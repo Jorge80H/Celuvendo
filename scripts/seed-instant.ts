@@ -1,5 +1,9 @@
 import { init, id } from "@instantdb/core";
 import schema from "../shared/instant-schema";
+import { config } from "dotenv";
+
+// Load environment variables from .env file
+config();
 
 // You need to get your APP_ID from https://instantdb.com/dash
 const APP_ID = process.env.VITE_INSTANT_APP_ID || "__APP_ID__";
@@ -259,21 +263,28 @@ async function seedDatabase() {
   console.log("🌱 Seeding InstantDB with products...");
 
   try {
-    // Insert all products
-    const transactions = products.map(product =>
-      db.tx.products[product.id].update(product)
-    );
+    // Insert products one by one
+    for (const product of products) {
+      console.log(`   Adding: ${product.name}...`);
+      await db.transact([
+        db.tx.products[product.id].update(product)
+      ]);
+    }
 
-    await db.transact(transactions);
-
-    console.log(`✅ Successfully seeded ${products.length} products!`);
+    console.log(`\n✅ Successfully seeded ${products.length} products!`);
     console.log("\n📦 Products added:");
     products.forEach(p => {
-      console.log(`   - ${p.name} (${p.brand})`);
+      console.log(`   - ${p.name} (${p.brand}) - $${p.price.toLocaleString()} COP`);
     });
+
+    console.log("\n🎉 Database seeded successfully! You can now run 'npm run dev' to see your products.");
 
   } catch (error) {
     console.error("❌ Error seeding database:", error);
+    console.error("\nTroubleshooting:");
+    console.error("1. Make sure your VITE_INSTANT_APP_ID is correct");
+    console.error("2. Check that you created the app at https://instantdb.com/dash");
+    console.error("3. Verify your internet connection");
     process.exit(1);
   }
 }
