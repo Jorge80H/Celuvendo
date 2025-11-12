@@ -9,6 +9,7 @@ const categories = [
   { id: "motorola", name: "Motorola", icon: Smartphone },
   { id: "oppo", name: "Oppo", icon: Smartphone },
   { id: "infinix", name: "Infinix", icon: Smartphone },
+  { id: "tecno", name: "TECNO", icon: Smartphone },
   { id: "ofertas", name: "Ofertas", icon: null },
 ];
 

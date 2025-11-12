@@ -38,9 +38,10 @@ const brandImages: Record<string, string> = {
   "Motorola": motorolaImage,
   "Oppo": oppoImage,
   "Infinix": infinixImage,
+  "TECNO": samsungImage, // Placeholder until we have TECNO image
 };
 
-const brands = ["Samsung", "Xiaomi", "Motorola", "Oppo", "Infinix"];
+const brands = ["Samsung", "Xiaomi", "Motorola", "Oppo", "Infinix", "TECNO"];
 const ramOptions = ["4GB", "6GB", "8GB", "12GB"];
 const storageOptions = ["64GB", "128GB", "256GB", "512GB"];
 
@@ -215,12 +216,18 @@ export default function Products() {
 
     // Apply RAM filter
     if (selectedRam.length > 0) {
-      filtered = filtered.filter(p => p.ram && selectedRam.includes(p.ram));
+      filtered = filtered.filter(p => {
+        const ram = p.specifications?.ram || p.ram;
+        return ram && selectedRam.includes(ram);
+      });
     }
 
     // Apply storage filter
     if (selectedStorage.length > 0) {
-      filtered = filtered.filter(p => p.storage && selectedStorage.includes(p.storage));
+      filtered = filtered.filter(p => {
+        const storage = p.specifications?.storage || p.storage;
+        return storage && selectedStorage.includes(storage);
+      });
     }
 
     // Apply price range filter
