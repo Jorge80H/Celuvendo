@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Truck, Shield, CreditCard } from "lucide-react";
 import { Link } from "wouter";
-import heroBannerImage from "@assets/generated_images/Hero_banner_smartphones_collection_6141ec3a.png";
 
 export default function HeroBanner() {
   return (
@@ -54,12 +53,33 @@ export default function HeroBanner() {
           </div>
 
           <div className="relative h-[300px] md:h-[400px]">
-            <img
-              src={heroBannerImage}
-              alt="Colección de celulares modernos"
-              className="absolute inset-0 w-full h-full object-contain"
-              data-testid="img-hero-banner"
-            />
+            <picture>
+              <source
+                media="(max-width: 767px)"
+                srcSet="/assets/hero-banner-mobile.webp"
+                type="image/webp"
+              />
+              <source
+                media="(max-width: 1023px)"
+                srcSet="/assets/hero-banner-tablet.webp"
+                type="image/webp"
+              />
+              <source
+                media="(min-width: 1024px)"
+                srcSet="/assets/hero-banner-desktop.webp"
+                type="image/webp"
+              />
+              <img
+                src="/assets/hero-banner-desktop.webp"
+                alt="Colección de celulares modernos"
+                className="absolute inset-0 w-full h-full object-contain"
+                data-testid="img-hero-banner"
+                fetchPriority="high"
+                loading="eager"
+                width="1408"
+                height="768"
+              />
+            </picture>
           </div>
         </div>
       </div>
