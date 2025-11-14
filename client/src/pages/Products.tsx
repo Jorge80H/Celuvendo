@@ -460,7 +460,7 @@ export default function Products() {
                       brand={product.brand}
                       price={parseFloat(product.price)}
                       compareAtPrice={product.compareAtPrice ? parseFloat(product.compareAtPrice) : undefined}
-                      image={brandImages[product.brand] || samsungImage}
+                      image={product.images?.[0] || brandImages[product.brand] || samsungImage}
                       rating={product.rating ? parseFloat(product.rating) : undefined}
                       reviewCount={product.reviewCount}
                       freeShipping={parseFloat(product.price) >= 100000}

@@ -72,7 +72,7 @@ export default function ProductGrid() {
               brand={product.brand}
               price={product.price}
               compareAtPrice={product.compareAtPrice}
-              image={brandImages[product.brand] || samsungImage}
+              image={product.images?.[0] || brandImages[product.brand] || samsungImage}
               rating={product.rating}
               reviewCount={product.reviewCount}
               freeShipping={product.price >= 100000}
