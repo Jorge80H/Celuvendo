@@ -10,11 +10,16 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ShoppingCart, Truck, Shield, Package, Star, Check, X } from "lucide-react";
 import { formatCOP } from "@/lib/utils";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { addToCartInstant } from "@/lib/cart-instant";
+import { useToast } from "@/hooks/use-toast";
 
 export default function ProductDetail() {
   const [, params] = useRoute("/producto/:slug");
   const slug = params?.slug;
+  const { toast } = useToast();
+  const [isAdding, setIsAdding] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const { data, isLoading, error } = db.useQuery({ products: {} });
 
@@ -22,6 +27,42 @@ export default function ProductDetail() {
     if (!data?.products) return null;
     return data.products.find((p: any) => p.slug === slug);
   }, [data, slug]);
+
+  // Map color names to image indices (assuming first image is main, rest are color variants)
+  const getImageIndexForColor = (colorName: string): number => {
+    if (!product?.images) return 0;
+
+    const colorLower = colorName.toLowerCase();
+    // Mapping based on common color patterns in image names
+    if (colorLower.includes('negro') || colorLower.includes('black')) return 1;
+    if (colorLower.includes('blanco') || colorLower.includes('white') || colorLower.includes('glaciar')) return 2;
+    if (colorLower.includes('azul') || colorLower.includes('blue')) return 2;
+    if (colorLower.includes('verde') || colorLower.includes('green') || colorLower.includes('esmeralda') || colorLower.includes('lago')) return 3;
+    if (colorLower.includes('gris') || colorLower.includes('gray') || colorLower.includes('grey')) return 3;
+
+    return 0; // Default to first image
+  };
+
+  const handleAddToCart = async () => {
+    if (!product) return;
+
+    setIsAdding(true);
+    try {
+      await addToCartInstant(product.id, 1);
+      toast({
+        title: "Producto agregado",
+        description: `${product.name} fue agregado al carrito`,
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "No se pudo agregar el producto al carrito",
+        variant: "destructive",
+      });
+    } finally {
+      setIsAdding(false);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -92,9 +133,9 @@ export default function ProductDetail() {
             <div className="space-y-4">
               <div className="aspect-square rounded-lg overflow-hidden bg-gray-100">
                 <img
-                  src={product.images?.[0] || "/placeholder.png"}
+                  src={product.images?.[currentImageIndex] || product.images?.[0] || "/placeholder.png"}
                   alt={product.name}
-                  className="w-full h-full object-contain p-8"
+                  className="w-full h-full object-contain p-8 transition-opacity duration-300"
                 />
               </div>
 
@@ -102,19 +143,24 @@ export default function ProductDetail() {
                 <div>
                   <p className="text-sm font-medium mb-2">Colores disponibles:</p>
                   <div className="flex gap-2">
-                    {product.colors.map((color: any) => (
-                      <div
-                        key={color.name}
-                        className="flex items-center gap-2 px-3 py-2 border rounded-md"
-                        title={color.name}
-                      >
+                    {product.colors.map((color: any) => {
+                      const imageIndex = getImageIndexForColor(color.name);
+                      return (
                         <div
-                          className="w-4 h-4 rounded-full border"
-                          style={{ backgroundColor: color.code }}
-                        />
-                        <span className="text-sm">{color.name}</span>
-                      </div>
-                    ))}
+                          key={color.name}
+                          className="flex items-center gap-2 px-3 py-2 border rounded-md cursor-pointer hover:border-primary hover:bg-accent transition-all duration-200"
+                          title={color.name}
+                          onMouseEnter={() => setCurrentImageIndex(imageIndex)}
+                          onMouseLeave={() => setCurrentImageIndex(0)}
+                        >
+                          <div
+                            className="w-4 h-4 rounded-full border"
+                            style={{ backgroundColor: color.code }}
+                          />
+                          <span className="text-sm">{color.name}</span>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               )}
@@ -172,9 +218,14 @@ export default function ProductDetail() {
               <p className="text-lg">{product.description}</p>
 
               <div className="space-y-3">
-                <Button size="lg" className="w-full" disabled={product.stock === 0}>
+                <Button
+                  size="lg"
+                  className="w-full"
+                  disabled={product.stock === 0 || isAdding}
+                  onClick={handleAddToCart}
+                >
                   <ShoppingCart className="w-5 h-5 mr-2" />
-                  Agregar al Carrito
+                  {isAdding ? 'Agregando...' : 'Agregar al Carrito'}
                 </Button>
                 <Button size="lg" variant="outline" className="w-full">
                   Comprar Ahora

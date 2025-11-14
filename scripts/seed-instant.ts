@@ -213,7 +213,12 @@ const products = [
     price: 599900,
     compareAtPrice: null,
     currency: "COP",
-    images: ["/api/placeholder/infinix-note50s-1.jpg"],
+    images: [
+      "/assets/generated_images/INFINIX_Note_50S_Flyer.webp",
+      "/assets/generated_images/INFINIX_Note_50S_negro.webp",
+      "/assets/generated_images/INFINIX_Note_50S_azul.webp",
+      "/assets/generated_images/INFINIX_Note_50S_gris.webp"
+    ],
     specifications: {
       screen: { size: "6.78\"", type: "AMOLED 3D Curvo", resolution: "1080 x 2436", refreshRate: "144Hz" },
       processor: "MediaTek Dimensity 7300 Ultimate",
@@ -224,6 +229,11 @@ const products = [
       connectivity: ["5G", "WiFi 6", "Bluetooth 5.3", "NFC"],
       os: "Android 14 (XOS 14)"
     },
+    colors: [
+      { name: "Negro", code: "#000000" },
+      { name: "Azul", code: "#4169E1" },
+      { name: "Gris", code: "#808080" }
+    ],
     features: ["144Hz líder", "JBL Audio", "Scent-Tech", "Gorilla Glass 5", "Cargador 45W incluido"],
     stock: 28,
     isActive: true,
@@ -364,6 +374,18 @@ async function seedDatabase() {
   console.log("   ONLY products from completed fichas (11 total)\n");
 
   try {
+    // First, delete all existing products
+    console.log("🗑️  Deleting existing products...");
+    const { data: existingProducts } = await db.queryOnce({ products: {} });
+
+    if (existingProducts?.products && existingProducts.products.length > 0) {
+      const deleteTxs = existingProducts.products.map((p: any) =>
+        db.tx.products[p.id].delete()
+      );
+      await db.transact(deleteTxs);
+      console.log(`   Deleted ${existingProducts.products.length} existing products\n`);
+    }
+
     // Insert products one by one
     for (const product of products) {
       console.log(`   Adding: ${product.name}...`);

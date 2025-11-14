@@ -7,11 +7,12 @@ import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Separator } from "@/components/ui/separator";
 import { Trash2, Plus, Minus } from "lucide-react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getCart, updateCartQuantity, removeFromCart } from "@/lib/api";
+import { db } from "@/lib/instant";
+import { updateCartQuantityInstant, removeFromCartInstant, getCartSessionId } from "@/lib/cart-instant";
 import { formatCOP } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "wouter";
+import { useMemo, useState } from "react";
 import samsungImage from "@assets/generated_images/Samsung_flagship_phone_product_aa170b09.png";
 import xiaomiImage from "@assets/generated_images/Xiaomi_phone_product_shot_0705b3ea.png";
 import motorolaImage from "@assets/generated_images/Motorola_phone_product_shot_9bac3b5d.png";
@@ -28,45 +29,67 @@ const brandImages: Record<string, string> = {
 
 export default function Cart() {
   const { toast } = useToast();
-  const queryClient = useQueryClient();
-  const { data: cart, isLoading } = useQuery({
-    queryKey: ['/api/cart'],
-    queryFn: getCart,
+  const sessionId = getCartSessionId();
+  const [updatingItems, setUpdatingItems] = useState<Set<string>>(new Set());
+
+  // Query cart items with products
+  const { data, isLoading } = db.useQuery({
+    cartItems: {
+      $: {
+        where: {
+          sessionId,
+        },
+      },
+      product: {},
+    },
   });
 
-  const updateQuantityMutation = useMutation({
-    mutationFn: ({ id, quantity }: { id: string; quantity: number }) => updateCartQuantity(id, quantity),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['/api/cart'] });
-    },
-    onError: () => {
+  const cartItems = useMemo(() => {
+    return data?.cartItems || [];
+  }, [data]);
+
+  const handleUpdateQuantity = async (id: string, quantity: number) => {
+    setUpdatingItems(prev => new Set(prev).add(id));
+    try {
+      await updateCartQuantityInstant(id, quantity);
+    } catch (error) {
       toast({
         title: "Error",
         description: "No se pudo actualizar la cantidad",
         variant: "destructive",
       });
-    },
-  });
+    } finally {
+      setUpdatingItems(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(id);
+        return newSet;
+      });
+    }
+  };
 
-  const removeMutation = useMutation({
-    mutationFn: removeFromCart,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['/api/cart'] });
+  const handleRemove = async (id: string) => {
+    setUpdatingItems(prev => new Set(prev).add(id));
+    try {
+      await removeFromCartInstant(id);
       toast({
         title: "Producto eliminado",
         description: "El producto fue eliminado del carrito",
       });
-    },
-    onError: () => {
+    } catch (error) {
       toast({
         title: "Error",
         description: "No se pudo eliminar el producto",
         variant: "destructive",
       });
-    },
-  });
+      setUpdatingItems(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(id);
+        return newSet;
+      });
+    }
+  };
 
-  const subtotal = cart?.reduce((sum, item) => sum + parseFloat(item.product.price) * item.quantity, 0) || 0;
+  const subtotal = cartItems.reduce((sum: number, item: any) => sum + (item.product?.price || 0) * item.quantity, 0);
   const shipping = subtotal >= 100000 ? 0 : 15000;
   const total = subtotal + shipping;
 
@@ -95,7 +118,7 @@ export default function Cart() {
     );
   }
 
-  if (!cart || cart.length === 0) {
+  if (!cartItems || cartItems.length === 0) {
     return (
       <div className="min-h-screen flex flex-col">
         <Header />
@@ -135,13 +158,15 @@ export default function Cart() {
 
           <div className="grid lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2 space-y-4">
-              {cart.map((item) => (
+              {cartItems.map((item: any) => {
+                const isUpdating = updatingItems.has(item.id);
+                return (
                 <Card key={item.id} className="p-6">
                   <div className="flex gap-4">
                     <div className="w-24 h-24 flex-shrink-0 bg-card rounded-md p-2">
                       <img
-                        src={brandImages[item.product.brand] || samsungImage}
-                        alt={item.product.name}
+                        src={item.product?.images?.[0] || brandImages[item.product?.brand] || samsungImage}
+                        alt={item.product?.name}
                         className="w-full h-full object-contain"
                         data-testid={`img-cart-product-${item.id}`}
                       />
@@ -150,10 +175,10 @@ export default function Cart() {
                     <div className="flex-1 space-y-3">
                       <div>
                         <h3 className="font-semibold text-lg" data-testid={`text-cart-name-${item.id}`}>
-                          {item.product.name}
+                          {item.product?.name}
                         </h3>
                         <p className="text-sm text-muted-foreground" data-testid={`text-cart-brand-${item.id}`}>
-                          {item.product.brand}
+                          {item.product?.brand}
                         </p>
                       </div>
 
@@ -163,34 +188,34 @@ export default function Cart() {
                             size="icon"
                             variant="outline"
                             className="h-8 w-8"
-                            onClick={() => updateQuantityMutation.mutate({ id: item.id, quantity: item.quantity - 1 })}
-                            disabled={item.quantity <= 1 || updateQuantityMutation.isPending}
+                            onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
+                            disabled={item.quantity <= 1 || isUpdating}
                             data-testid={`button-decrease-${item.id}`}
                           >
                             <Minus className="h-4 w-4" />
                           </Button>
-                          
+
                           <Input
                             type="number"
                             value={item.quantity}
                             onChange={(e) => {
                               const qty = parseInt(e.target.value);
-                              if (qty > 0 && qty <= item.product.stock) {
-                                updateQuantityMutation.mutate({ id: item.id, quantity: qty });
+                              if (qty > 0 && qty <= item.product?.stock) {
+                                handleUpdateQuantity(item.id, qty);
                               }
                             }}
                             className="w-16 text-center"
                             min="1"
-                            max={item.product.stock}
+                            max={item.product?.stock}
                             data-testid={`input-quantity-${item.id}`}
                           />
-                          
+
                           <Button
                             size="icon"
                             variant="outline"
                             className="h-8 w-8"
-                            onClick={() => updateQuantityMutation.mutate({ id: item.id, quantity: item.quantity + 1 })}
-                            disabled={item.quantity >= item.product.stock || updateQuantityMutation.isPending}
+                            onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
+                            disabled={item.quantity >= item.product?.stock || isUpdating}
                             data-testid={`button-increase-${item.id}`}
                           >
                             <Plus className="h-4 w-4" />
@@ -199,10 +224,10 @@ export default function Cart() {
 
                         <div className="text-right">
                           <p className="text-xl font-bold text-primary" data-testid={`text-cart-price-${item.id}`}>
-                            {formatCOP(parseFloat(item.product.price) * item.quantity)}
+                            {formatCOP((item.product?.price || 0) * item.quantity)}
                           </p>
                           <p className="text-sm text-muted-foreground">
-                            {formatCOP(parseFloat(item.product.price))} c/u
+                            {formatCOP(item.product?.price || 0)} c/u
                           </p>
                         </div>
                       </div>
@@ -211,8 +236,8 @@ export default function Cart() {
                         variant="ghost"
                         size="sm"
                         className="text-destructive hover:text-destructive"
-                        onClick={() => removeMutation.mutate(item.id)}
-                        disabled={removeMutation.isPending}
+                        onClick={() => handleRemove(item.id)}
+                        disabled={isUpdating}
                         data-testid={`button-remove-${item.id}`}
                       >
                         <Trash2 className="h-4 w-4 mr-2" />
@@ -221,7 +246,7 @@ export default function Cart() {
                     </div>
                   </div>
                 </Card>
-              ))}
+              );})}
             </div>
 
             <div>

@@ -30,10 +30,10 @@ export default function Footer() {
           <div className="space-y-4">
             <h4 className="font-semibold">Ayuda</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><a href="#" className="hover:text-foreground transition-colors">Preguntas Frecuentes</a></li>
-              <li><a href="#" className="hover:text-foreground transition-colors">Envíos y Devoluciones</a></li>
-              <li><a href="#" className="hover:text-foreground transition-colors">Garantía</a></li>
-              <li><a href="#" className="hover:text-foreground transition-colors">Términos y Condiciones</a></li>
+              <li><a href="/preguntas-frecuentes" className="hover:text-foreground transition-colors">Preguntas Frecuentes</a></li>
+              <li><a href="/envios-y-devoluciones" className="hover:text-foreground transition-colors">Envíos y Devoluciones</a></li>
+              <li><a href="/garantia" className="hover:text-foreground transition-colors">Garantía</a></li>
+              <li><a href="/terminos-y-condiciones" className="hover:text-foreground transition-colors">Términos y Condiciones</a></li>
             </ul>
           </div>
 

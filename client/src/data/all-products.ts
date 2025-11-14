@@ -1,11 +1,7 @@
-import { id, init } from "@instantdb/core";
-import type { Schema } from "../shared/instant-schema";
-
-const APP_ID = "7d176ba5-60f3-4385-a6e7-bf8bd7944993";
-const db = init<Schema>({ appId: APP_ID });
+import { id } from "@/lib/instant";
 
 // Productos únicamente de las fichas completadas (11 productos totales)
-const allProducts = [
+export const allProducts = [
   // Samsung Products (4 productos)
   {
     id: id(),

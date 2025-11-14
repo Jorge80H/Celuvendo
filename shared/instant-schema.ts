@@ -8,6 +8,7 @@ const schema = i.schema({
       name: i.string().indexed(),
       slug: i.string().unique().indexed(),
       description: i.string(),
+      longDescription: i.string().optional(),
       brand: i.string().indexed(),
       price: i.number(),
       compareAtPrice: i.number().optional(),
@@ -15,6 +16,10 @@ const schema = i.schema({
       images: i.json(), // Array of image URLs
       specifications: i.json(), // Nested object with screen, processor, ram, etc.
       features: i.json(), // Array of feature strings
+      colors: i.json().optional(), // Array of color objects
+      highlights: i.json().optional(), // pros/cons object
+      boxContents: i.json().optional(), // included/notIncluded object
+      promotion: i.json().optional(), // promotion object
       stock: i.number(),
       isActive: i.boolean(),
       isFeatured: i.boolean(),
