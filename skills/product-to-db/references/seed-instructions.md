@@ -1,0 +1,227 @@
+# Database Seed Instructions
+
+## Overview
+
+The Celuvendo e-commerce system uses an intelligent seed system that automatically detects duplicate products and only adds new ones to the database.
+
+## How the Seed System Works
+
+### Automatic Duplicate Detection
+
+The seed page (`/seed`) includes smart duplicate detection:
+
+1. **Queries existing products** from InstantDB by SKU
+2. **Compares** products in `samsung-products.ts` with database
+3. **Only adds new products** (products with SKUs that don't exist yet)
+4. **Shows statistics** after completion
+
+### Example Scenarios
+
+#### Scenario 1: Adding 2 New Products
+
+**Current state:**
+- Database: 11 products
+- samsung-products.ts: 13 products (11 old + 2 new)
+
+**What happens when you click "Seed Database":**
+- ✅ System detects 11 products already exist
+- ✅ Adds only the 2 new products
+- ✅ Shows: "2 producto(s) nuevo(s) agregado(s)! 11 producto(s) ya existían."
+
+#### Scenario 2: No New Products
+
+**Current state:**
+- Database: 11 products
+- samsung-products.ts: 11 products (all same)
+
+**What happens when you click "Seed Database":**
+- ℹ️ Shows: "Todos los 11 productos ya existen en la base de datos."
+- ℹ️ No products added
+
+#### Scenario 3: Fresh Database
+
+**Current state:**
+- Database: 0 products (empty)
+- samsung-products.ts: 11 products
+
+**What happens when you click "Seed Database":**
+- ✅ Adds all 11 products
+- ✅ Shows: "11 producto(s) nuevo(s) agregado(s)! 0 producto(s) ya existían."
+
+## Seed Page Features
+
+### Real-time Statistics
+
+The seed page shows:
+- 📊 **Productos en BD:** Current count in database
+- 📦 **Productos en archivo:** Count in samsung-products.ts
+
+### Two Buttons
+
+1. **Seed Database** (Green)
+   - Adds new products
+   - Skips duplicates automatically
+   - Safe to run multiple times
+
+2. **Clear Database** (Red - Destructive)
+   - Deletes ALL products from database
+   - Requires confirmation
+   - Use only when you need to start fresh
+
+## Complete Workflow: Adding a New Product
+
+### Step 1: Create Product Ficha
+Create a markdown file with complete product information:
+```
+Fichas_Productos/XIAOMI-Redmi-14C.md
+```
+
+### Step 2: Add to samsung-products.ts
+Use the `product-to-db` skill to add the product data to the TypeScript array:
+```typescript
+// At the end of samsungProducts array, before ];
+{
+  sku: "XIAOMI-14C-8-256",
+  name: "Xiaomi Redmi 14C 256GB | 8GB RAM",
+  // ... full product data
+}
+```
+
+### Step 3: Navigate to Seed Page
+Open your browser and go to:
+```
+http://localhost:5173/seed
+```
+
+### Step 4: Review Statistics
+Check the displayed counts:
+- If **Productos en archivo** is higher than **Productos en BD**, you have new products to add
+
+### Step 5: Click "Seed Database"
+- The system will detect and add only new products
+- Wait for the success message
+- Review the statistics shown
+
+### Step 6: Verify on Homepage
+Navigate to the homepage (`/`) to see your new products in the catalog.
+
+## Important Notes
+
+### Safe Operations
+- ✅ **Safe to run seed multiple times** - duplicates are automatically skipped
+- ✅ **No manual cleanup needed** - the system handles everything
+- ✅ **Incremental additions** - add 1, 2, or 100 products at once
+
+### Duplicate Prevention
+Products are identified by **SKU** (unique identifier):
+- SKU format: `BRAND-MODEL-RAM-STORAGE`
+- Example: `XIAOMI-14C-8-256`
+- If a product with the same SKU exists, it won't be added again
+
+### When to Use "Clear Database"
+Only use the clear button when:
+- You want to completely reset and start fresh
+- You're testing and need a clean slate
+- You've made errors and want to re-seed everything
+
+**Warning:** Clearing is permanent and cannot be undone!
+
+## Troubleshooting
+
+### Products Not Appearing After Seed
+
+**Check:**
+1. Was there a success message?
+2. Did the statistics show products were added?
+3. Are the products marked as `isActive: true`?
+4. Refresh the homepage with Ctrl+F5
+
+### Duplicate Products in Database
+
+**This shouldn't happen** with the new system, but if it does:
+1. Click "Clear Database"
+2. Confirm the action
+3. Click "Seed Database" to re-add all products fresh
+
+### Database Connection Errors
+
+**If you see connection errors:**
+1. Check that InstantDB is configured correctly
+2. Verify `VITE_INSTANT_APP_ID` in environment variables
+3. Check browser console for detailed error messages
+
+## Technical Details
+
+### How Duplicate Detection Works
+
+```typescript
+// 1. Get existing SKUs from database
+const existingSKUs = new Set(
+  existingData?.products?.map(p => p.sku) || []
+);
+
+// 2. Filter only new products
+const newProducts = samsungProducts.filter(
+  p => !existingSKUs.has(p.sku)
+);
+
+// 3. Add only new products
+for (const product of newProducts) {
+  await db.transact([
+    db.tx.products[id()].update(product)
+  ]);
+}
+```
+
+### Database Schema
+
+Products are stored with these additional fields added automatically:
+- `id`: Unique UUID generated by `id()` function
+- `createdAt`: Timestamp when product was added
+- `updatedAt`: Timestamp of last update
+
+## Best Practices
+
+### 1. Always Create Ficha First
+- Complete, accurate product information
+- Verified specs and prices
+- Proper formatting
+
+### 2. Use the Skill
+- Don't manually edit samsung-products.ts
+- Let the skill handle formatting
+- Ensures consistency
+
+### 3. Review Before Seeding
+- Check the statistics on /seed page
+- Verify expected number of new products
+- Confirm product data is correct
+
+### 4. Test After Adding
+- Visit homepage to see new products
+- Check product details page
+- Verify images, prices, and specs
+
+### 5. Keep Files in Sync
+- After successful seed, the database and samsung-products.ts should match
+- Don't delete products from samsung-products.ts without clearing database
+- Think of samsung-products.ts as the "source of truth"
+
+## Quick Reference
+
+| Action | Command | Result |
+|--------|---------|---------|
+| Add 1-2 products | Add to samsung-products.ts → /seed → Seed Database | Only new products added |
+| Start fresh | /seed → Clear Database → Seed Database | All products re-added |
+| Check status | Visit /seed page | See current counts |
+| View products | Visit homepage (/) | See all active products |
+
+## Summary
+
+The seed system is designed to be:
+- **Intelligent**: Automatically detects duplicates
+- **Safe**: Won't duplicate products
+- **Fast**: Only adds what's needed
+- **Transparent**: Shows exactly what happened
+
+Simply add products to samsung-products.ts using the skill, then click "Seed Database" on the /seed page. The system handles the rest!
