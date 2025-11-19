@@ -12,26 +12,26 @@ export default function HeroBanner() {
         <div className="grid md:grid-cols-2 gap-8 items-center py-12 md:py-16">
           <div className="space-y-6">
             <div className="space-y-3">
-              <Badge variant="secondary" className="text-sm font-semibold">
-                100% Originales
+              <Badge variant="destructive" className="text-sm font-bold animate-pulse">
+                BLACK FRIDAY 2024
               </Badge>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-serif leading-tight">
-                Celulares con Garantía en Colombia
+                Hasta 40% OFF en Celulares
               </h2>
               <p className="text-lg md:text-xl text-muted-foreground">
-                Envío gratis en compras superiores a $100.000 COP
+                Las mejores ofertas del año + Envío gratis en toda Colombia
               </p>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3">
               <Link href="/productos">
-                <Button size="lg" className="text-base w-full sm:w-auto" data-testid="button-explore-offers">
-                  Explorar Ofertas
+                <Button size="lg" className="text-base w-full sm:w-auto bg-destructive hover:bg-destructive/90" data-testid="button-explore-offers">
+                  Ver Ofertas Black Friday
                 </Button>
               </Link>
               <Link href="/productos">
-                <Button size="lg" variant="outline" className="text-base backdrop-blur-sm w-full sm:w-auto" data-testid="button-view-catalog">
-                  Ver Catálogo
+                <Button size="lg" variant="outline" className="text-base backdrop-blur-sm w-full sm:w-auto border-destructive text-destructive hover:bg-destructive/10" data-testid="button-view-catalog">
+                  Ver Todos los Productos
                 </Button>
               </Link>
             </div>
