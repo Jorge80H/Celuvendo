@@ -23,9 +23,10 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { SlidersHorizontal } from "lucide-react";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { db } from "@/lib/instant";
 import { formatCOP } from "@/lib/utils";
+import { useLocation } from "wouter";
 import samsungImage from "@assets/generated_images/Samsung_flagship_phone_product_aa170b09.png";
 import xiaomiImage from "@assets/generated_images/Xiaomi_phone_product_shot_0705b3ea.png";
 import motorolaImage from "@assets/generated_images/Motorola_phone_product_shot_9bac3b5d.png";
@@ -193,6 +194,10 @@ const oldMockProducts = [
 ];
 
 export default function Products() {
+  const [location] = useLocation();
+  const searchParams = new URLSearchParams(location.split('?')[1]);
+  const searchQuery = searchParams.get('search') || '';
+
   const [showFilters, setShowFilters] = useState(false);
   const [sortBy, setSortBy] = useState("recommended");
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
@@ -208,6 +213,16 @@ export default function Products() {
     if (!data?.products) return [];
 
     let filtered = [...data.products];
+
+    // Apply search filter
+    if (searchQuery) {
+      const searchLower = searchQuery.toLowerCase();
+      filtered = filtered.filter(p =>
+        p.name.toLowerCase().includes(searchLower) ||
+        p.brand.toLowerCase().includes(searchLower) ||
+        p.description?.toLowerCase().includes(searchLower)
+      );
+    }
 
     // Apply brand filter
     if (selectedBrands.length > 0) {
@@ -253,7 +268,7 @@ export default function Products() {
     }
 
     return filtered;
-  }, [data, selectedBrands, selectedRam, selectedStorage, priceRange, sortBy]);
+  }, [data, selectedBrands, selectedRam, selectedStorage, priceRange, sortBy, searchQuery]);
 
   const toggleSelection = (item: string, list: string[], setList: (list: string[]) => void) => {
     if (list.includes(item)) {

@@ -3,18 +3,34 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getCart } from "@/lib/api";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
+import { db } from "@/lib/instant";
+import { getCartSessionId } from "@/lib/cart-instant";
 
 export default function Header() {
   const [searchQuery, setSearchQuery] = useState("");
-  const { data: cart } = useQuery({
-    queryKey: ['/api/cart'],
-    queryFn: getCart,
+  const [, setLocation] = useLocation();
+  const sessionId = getCartSessionId();
+
+  // Use InstantDB to get cart items in real-time
+  const { data } = db.useQuery({
+    cartItems: {
+      $: {
+        where: {
+          sessionId,
+        },
+      },
+    },
   });
-  
-  const cartCount = cart?.reduce((sum, item) => sum + item.quantity, 0) || 0;
+
+  const cartCount = data?.cartItems?.reduce((sum: number, item: any) => sum + item.quantity, 0) || 0;
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      setLocation(`/productos?search=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
 
   return (
     <header className="sticky top-0 z-50 bg-background border-b">
@@ -36,7 +52,7 @@ export default function Header() {
           </Link>
 
           <div className="flex-1 max-w-xl hidden md:block">
-            <div className="relative">
+            <form onSubmit={handleSearch} className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 type="search"
@@ -46,7 +62,7 @@ export default function Header() {
                 className="pl-10"
                 data-testid="input-search"
               />
-            </div>
+            </form>
           </div>
 
           <div className="flex items-center gap-2">
@@ -59,11 +75,11 @@ export default function Header() {
             </Button>
 
             <Link href="/carrito" aria-label="Ver carrito de compras">
-              <Button size="icon" variant="ghost" className="relative" data-testid="button-cart" aria-label="Carrito de compras">
-                <ShoppingCart className="h-5 w-5" />
+              <Button size="icon" variant="ghost" className="relative h-12 w-12" data-testid="button-cart" aria-label="Carrito de compras">
+                <ShoppingCart className="h-6 w-6" />
                 {cartCount > 0 && (
                   <Badge
-                    className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs"
+                    className="absolute -top-0.5 -right-0.5 h-6 w-6 flex items-center justify-center p-0 text-xs font-bold bg-destructive hover:bg-destructive border-2 border-background"
                     data-testid="badge-cart-count"
                   >
                     {cartCount}
@@ -75,7 +91,7 @@ export default function Header() {
         </div>
 
         <div className="pb-3 md:hidden">
-          <div className="relative">
+          <form onSubmit={handleSearch} className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               type="search"
@@ -85,7 +101,7 @@ export default function Header() {
               className="pl-10"
               data-testid="input-search-mobile"
             />
-          </div>
+          </form>
         </div>
       </div>
     </header>
