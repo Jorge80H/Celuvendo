@@ -13,7 +13,7 @@ export default function HeroBanner() {
           <div className="space-y-6">
             <div className="space-y-3">
               <Badge variant="destructive" className="text-sm font-bold animate-pulse">
-                BLACK FRIDAY 2024
+                BLACK FRIDAY 2025
               </Badge>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-serif leading-tight">
                 Hasta 40% OFF en Celulares
