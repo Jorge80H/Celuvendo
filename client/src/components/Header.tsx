@@ -1,4 +1,4 @@
-import { ShoppingCart, Search, Menu, Phone } from "lucide-react";
+import { ShoppingCart, Search, Menu, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -30,6 +30,13 @@ export default function Header() {
     if (searchQuery.trim()) {
       setLocation(`/productos?search=${encodeURIComponent(searchQuery.trim())}`);
     }
+  };
+
+  const handleWhatsAppClick = () => {
+    // WhatsApp number for Celuvendo - Replace with actual number
+    const phoneNumber = "573001234567"; // Update with real WhatsApp number
+    const message = encodeURIComponent("Hola! Me gustaría obtener información sobre sus productos.");
+    window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };
 
   return (
@@ -69,9 +76,16 @@ export default function Header() {
             <Button size="icon" variant="ghost" className="md:hidden" data-testid="button-search-mobile">
               <Search className="h-5 w-5" />
             </Button>
-            
-            <Button size="icon" variant="ghost" data-testid="button-support" aria-label="Soporte al cliente">
-              <Phone className="h-5 w-5" />
+
+            <Button
+              size="icon"
+              variant="ghost"
+              className="h-12 w-12 text-green-600 hover:text-green-700 hover:bg-green-50"
+              onClick={handleWhatsAppClick}
+              data-testid="button-whatsapp"
+              aria-label="Chatear con agente de IA en WhatsApp"
+            >
+              <MessageCircle className="h-6 w-6" />
             </Button>
 
             <Link href="/carrito" aria-label="Ver carrito de compras">
