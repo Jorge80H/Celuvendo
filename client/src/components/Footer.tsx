@@ -9,7 +9,7 @@ export default function Footer() {
           <div className="space-y-4">
             <h3 className="text-lg font-bold font-serif text-primary">Celuvendo</h3>
             <p className="text-sm text-muted-foreground">
-              Celulares 100% originales con garantía oficial en Colombia
+              Celulares 100% originales con garantía oficial. Envíos solo en Bogotá.
             </p>
             <div className="flex items-center gap-3">
               <Shield className="h-5 w-5 text-primary" />
@@ -42,7 +42,7 @@ export default function Footer() {
             <ul className="space-y-3 text-sm text-muted-foreground">
               <li className="flex items-center gap-2">
                 <Phone className="h-4 w-4" />
-                <span>+57 300 123 4567</span>
+                <span>+57 316 888 0808</span>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4" />

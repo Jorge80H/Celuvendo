@@ -9,6 +9,7 @@ import { getCartSessionId } from "@/lib/cart-instant";
 
 export default function Header() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [showMobileSearch, setShowMobileSearch] = useState(false);
   const [, setLocation] = useLocation();
   const sessionId = getCartSessionId();
 
@@ -33,8 +34,7 @@ export default function Header() {
   };
 
   const handleWhatsAppClick = () => {
-    // WhatsApp number for Celuvendo - Replace with actual number
-    const phoneNumber = "573001234567"; // Update with real WhatsApp number
+    const phoneNumber = "573168880808";
     const message = encodeURIComponent("Hola! Me gustaría obtener información sobre sus productos.");
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };
@@ -73,7 +73,14 @@ export default function Header() {
           </div>
 
           <div className="flex items-center gap-2">
-            <Button size="icon" variant="ghost" className="md:hidden" data-testid="button-search-mobile">
+            <Button 
+              size="icon" 
+              variant="ghost" 
+              className="md:hidden" 
+              onClick={() => setShowMobileSearch(!showMobileSearch)}
+              data-testid="button-search-mobile"
+              aria-label="Mostrar búsqueda"
+            >
               <Search className="h-5 w-5" />
             </Button>
 
@@ -104,19 +111,25 @@ export default function Header() {
           </div>
         </div>
 
-        <div className="pb-3 md:hidden">
-          <form onSubmit={handleSearch} className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              type="search"
-              placeholder="Buscar celulares..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10"
-              data-testid="input-search-mobile"
-            />
-          </form>
-        </div>
+        {showMobileSearch && (
+          <div className="pb-3 md:hidden">
+            <form onSubmit={(e) => {
+              handleSearch(e);
+              setShowMobileSearch(false);
+            }} className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                type="search"
+                placeholder="Buscar celulares..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10"
+                data-testid="input-search-mobile"
+                autoFocus
+              />
+            </form>
+          </div>
+        )}
       </div>
     </header>
   );

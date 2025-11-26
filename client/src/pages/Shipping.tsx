@@ -33,10 +33,10 @@ export default function Shipping() {
               </div>
               <div>
                 <h2 className="text-xl font-semibold mb-2">
-                  ¡Envío GRATIS en compras mayores a $100,000!
+                  ¡Envío GRATIS en Bogotá en compras mayores a $100,000!
                 </h2>
                 <p className="text-muted-foreground">
-                  Disfruta de envío sin costo adicional en todo el territorio colombiano para compras superiores a cien mil pesos. Para montos menores, el costo de envío varía entre $10,000 y $20,000 según tu ubicación.
+                  Disfruta de envío sin costo adicional en Bogotá para compras superiores a cien mil pesos. Para montos menores, el costo de envío es de $10,000.
                 </p>
               </div>
             </div>
@@ -46,35 +46,21 @@ export default function Shipping() {
           <Card className="p-6 mb-6">
             <div className="flex items-center gap-2 mb-4">
               <Calendar className="h-6 w-6 text-primary" />
-              <h2 className="text-2xl font-semibold">Tiempos de Entrega</h2>
+              <h2 className="text-2xl font-semibold">Tiempos de Entrega en Bogotá</h2>
             </div>
             <div className="space-y-4">
-              <div className="flex items-start justify-between border-b pb-4">
-                <div>
-                  <h3 className="font-semibold mb-1">Bogotá, Medellín, Cali y Barranquilla</h3>
-                  <p className="text-sm text-muted-foreground">Ciudades principales</p>
-                </div>
-                <Badge className="bg-green-500 hover:bg-green-600">1-3 días hábiles</Badge>
-              </div>
-              <div className="flex items-start justify-between border-b pb-4">
-                <div>
-                  <h3 className="font-semibold mb-1">Otras Ciudades Principales</h3>
-                  <p className="text-sm text-muted-foreground">Cartagena, Bucaramanga, Pereira, etc.</p>
-                </div>
-                <Badge className="bg-blue-500 hover:bg-blue-600">3-5 días hábiles</Badge>
-              </div>
               <div className="flex items-start justify-between">
                 <div>
-                  <h3 className="font-semibold mb-1">Municipios y Zonas Rurales</h3>
-                  <p className="text-sm text-muted-foreground">Áreas alejadas de centros urbanos</p>
+                  <h3 className="font-semibold mb-1">Toda Bogotá</h3>
+                  <p className="text-sm text-muted-foreground">Incluye todas las localidades</p>
                 </div>
-                <Badge className="bg-orange-500 hover:bg-orange-600">5-8 días hábiles</Badge>
+                <Badge className="bg-green-500 hover:bg-green-600">1-3 días hábiles</Badge>
               </div>
             </div>
             <div className="mt-4 p-4 bg-muted rounded-md">
               <p className="text-sm text-muted-foreground">
                 <AlertCircle className="inline h-4 w-4 mr-1" />
-                Los tiempos son estimados y pueden variar por disponibilidad de inventario, condiciones climáticas o situaciones de fuerza mayor.
+                Los tiempos son estimados y pueden variar por disponibilidad de inventario o situaciones de fuerza mayor.
               </p>
             </div>
           </Card>
@@ -83,23 +69,23 @@ export default function Shipping() {
           <Card className="p-6 mb-6">
             <div className="flex items-center gap-2 mb-4">
               <MapPin className="h-6 w-6 text-primary" />
-              <h2 className="text-2xl font-semibold">Cobertura Nacional</h2>
+              <h2 className="text-2xl font-semibold">Cobertura en Bogotá</h2>
             </div>
             <p className="text-muted-foreground mb-4">
-              Realizamos envíos a todo el territorio colombiano. Trabajamos con las transportadoras más confiables del país:
+              Actualmente realizamos envíos únicamente en Bogotá y sus alrededores. Trabajamos con las transportadoras más confiables:
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border rounded-md text-center">
                 <div className="font-semibold mb-1">Servientrega</div>
-                <p className="text-sm text-muted-foreground">Nacional</p>
+                <p className="text-sm text-muted-foreground">Bogotá</p>
               </div>
               <div className="p-4 border rounded-md text-center">
                 <div className="font-semibold mb-1">Coordinadora</div>
-                <p className="text-sm text-muted-foreground">Nacional</p>
+                <p className="text-sm text-muted-foreground">Bogotá</p>
               </div>
               <div className="p-4 border rounded-md text-center">
                 <div className="font-semibold mb-1">Interrapidísimo</div>
-                <p className="text-sm text-muted-foreground">Nacional</p>
+                <p className="text-sm text-muted-foreground">Bogotá</p>
               </div>
             </div>
           </Card>
@@ -236,7 +222,7 @@ export default function Shipping() {
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <a
-                href="https://wa.me/573001234567"
+                href="https://wa.me/573168880808"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors text-sm"

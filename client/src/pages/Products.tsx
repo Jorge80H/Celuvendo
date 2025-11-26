@@ -196,8 +196,7 @@ const oldMockProducts = [
 
 export default function Products() {
   const [location] = useLocation();
-  const searchParams = new URLSearchParams(location.split('?')[1]);
-  const searchQuery = searchParams.get('search') || '';
+  const [currentSearch, setCurrentSearch] = useState(window.location.search);
 
   const [showFilters, setShowFilters] = useState(false);
   const [sortBy, setSortBy] = useState("recommended");
@@ -205,6 +204,35 @@ export default function Products() {
   const [selectedRam, setSelectedRam] = useState<string[]>([]);
   const [selectedStorage, setSelectedStorage] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState([200000, 4000000]);
+
+  // Monitor URL changes by checking window.location.search
+  useEffect(() => {
+    const checkUrlChange = () => {
+      if (window.location.search !== currentSearch) {
+        setCurrentSearch(window.location.search);
+      }
+    };
+
+    const interval = setInterval(checkUrlChange, 100);
+    return () => clearInterval(interval);
+  }, [currentSearch]);
+
+  // Update filters when URL search params change
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const brand = params.get('brand');
+
+    if (brand) {
+      setSelectedBrands([brand]);
+    } else {
+      setSelectedBrands([]);
+    }
+  }, [currentSearch]);
+
+  const searchParams = new URLSearchParams(window.location.search);
+  const searchQuery = searchParams.get('search') || '';
+  const brandParam = searchParams.get('brand') || '';
+  const ofertasParam = searchParams.get('ofertas') || '';
 
   // Fetch products from InstantDB
   const { data, isLoading, error } = db.useQuery({ products: {} });

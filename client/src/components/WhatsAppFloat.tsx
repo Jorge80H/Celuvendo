@@ -3,8 +3,7 @@ import { Button } from "@/components/ui/button";
 
 export default function WhatsAppFloat() {
   const handleWhatsAppClick = () => {
-    // WhatsApp number for Celuvendo - Replace with actual number
-    const phoneNumber = "573001234567"; // Update with real WhatsApp number
+    const phoneNumber = "573168880808";
     const message = encodeURIComponent("Hola! Me gustaría obtener información sobre sus productos.");
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };

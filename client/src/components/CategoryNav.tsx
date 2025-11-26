@@ -7,7 +7,7 @@ const categories = [
   { id: "samsung", name: "Samsung", icon: SiSamsung },
   { id: "xiaomi", name: "Xiaomi", icon: SiXiaomi },
   { id: "motorola", name: "Motorola", icon: Smartphone },
-  { id: "oppo", name: "Oppo", icon: Smartphone },
+  { id: "oppo", name: "OPPO", icon: Smartphone },
   { id: "infinix", name: "Infinix", icon: Smartphone },
   { id: "tecno", name: "TECNO", icon: Smartphone },
   { id: "ofertas", name: "Ofertas", icon: null },
@@ -20,8 +20,12 @@ export default function CategoryNav() {
         <div className="flex items-center gap-2 py-3 overflow-x-auto">
           {categories.map((category) => {
             const Icon = category.icon;
+            const href = category.id === "ofertas"
+              ? "/productos?ofertas=true"
+              : `/productos?brand=${category.name}`;
+
             return (
-              <Link key={category.id} href="/productos">
+              <Link key={category.id} href={href}>
                 <Button
                   variant={category.id === "ofertas" ? "default" : "ghost"}
                   size="sm"

@@ -311,11 +311,11 @@ export default function ProductDetail() {
 
           {/* Tabs de información */}
           <Tabs defaultValue="description" className="mb-12">
-            <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="description">Descripción</TabsTrigger>
-              <TabsTrigger value="specs">Especificaciones</TabsTrigger>
-              <TabsTrigger value="box">Contenido</TabsTrigger>
-              <TabsTrigger value="features">Características</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 gap-2">
+              <TabsTrigger value="description" className="text-xs md:text-sm">Descripción</TabsTrigger>
+              <TabsTrigger value="specs" className="text-xs md:text-sm">Especificaciones</TabsTrigger>
+              <TabsTrigger value="box" className="text-xs md:text-sm">Contenido</TabsTrigger>
+              <TabsTrigger value="features" className="text-xs md:text-sm">Características</TabsTrigger>
             </TabsList>
 
             <TabsContent value="description" className="mt-6">
