@@ -35,6 +35,11 @@ export default function ProductDetail() {
     const colorLower = colorName.toLowerCase();
     // Mapping based on common color patterns in image names
     // Priority order matters - check more specific patterns first
+
+    // OPPO A5 5G specific: Mist White (0), Aurora Green (1)
+    if (colorLower.includes('mist') && colorLower.includes('white')) return 0;
+    if (colorLower.includes('aurora') && colorLower.includes('green')) return 1;
+
     if (colorLower.includes('negro') || colorLower.includes('black') || colorLower.includes('obsidian') || colorLower.includes('midnight') || colorLower.includes('ocaso') || colorLower.includes('medianoche')) return 0;
     if (colorLower.includes('verde menta') || colorLower.includes('menta')) return 1;
     if (colorLower.includes('gris') || colorLower.includes('gray') || colorLower.includes('grey') || colorLower.includes('titan') || colorLower.includes('light gray')) return 1;
