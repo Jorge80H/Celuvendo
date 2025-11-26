@@ -36,6 +36,54 @@ export default function ProductDetail() {
     // Mapping based on common color patterns in image names
     // Priority order matters - check more specific patterns first
 
+    // TECNO Camon 40 Pro specific: Flyer (0), Negro (1), Blanco (2), Verde (3)
+    if (product.name?.includes('Camon 40')) {
+      if (colorLower.includes('negro') || colorLower.includes('black')) return 1;
+      if (colorLower.includes('blanco') || colorLower.includes('white')) return 2;
+      if (colorLower.includes('verde') || colorLower.includes('esmeralda') || colorLower.includes('green')) return 3;
+    }
+
+    // INFINIX Note 50S specific: azul (0), negro (1), gris (2)
+    if (product.name?.includes('Note 50S')) {
+      if (colorLower.includes('azul') || colorLower.includes('blue') || colorLower.includes('marine') || colorLower.includes('drift')) return 0;
+      if (colorLower.includes('negro') || colorLower.includes('black') || colorLower.includes('obsidian')) return 1;
+      if (colorLower.includes('gris') || colorLower.includes('grey') || colorLower.includes('gray') || colorLower.includes('titan')) return 2;
+    }
+
+    // Motorola Moto G06 specific: azul (0), naranja (1)
+    if (product.name?.includes('Moto G06')) {
+      if (colorLower.includes('azul') || colorLower.includes('blue') || colorLower.includes('starry')) return 0;
+      if (colorLower.includes('naranja') || colorLower.includes('orange') || colorLower.includes('pastel')) return 1;
+    }
+
+    // Motorola Moto G55 specific: forest grey (0), pink (1), smoky green (2)
+    if (product.name?.includes('Moto G55')) {
+      if (colorLower.includes('forest') && colorLower.includes('grey')) return 0;
+      if (colorLower.includes('twilight') || colorLower.includes('purple') || colorLower.includes('pink')) return 1;
+      if (colorLower.includes('smoky') || colorLower.includes('green')) return 2;
+    }
+
+    // OPPO A5X specific: azul (0), blanco (1)
+    if (product.name?.includes('A5X')) {
+      if (colorLower.includes('azul') || colorLower.includes('blue') || colorLower.includes('lago') || colorLower.includes('tranquilo')) return 0;
+      if (colorLower.includes('blanco') || colorLower.includes('white') || colorLower.includes('laser')) return 1;
+    }
+
+    // Xiaomi Redmi 15 specific: morado (0), gris (1), negro (2)
+    if (product.name?.includes('Redmi 15') && !product.name?.includes('Note')) {
+      if (colorLower.includes('morado') || colorLower.includes('purple') || colorLower.includes('arena')) return 0;
+      if (colorLower.includes('gris') || colorLower.includes('grey') || colorLower.includes('gray') || colorLower.includes('titan')) return 1;
+      if (colorLower.includes('negro') || colorLower.includes('black') || colorLower.includes('ocaso')) return 2;
+    }
+
+    // Xiaomi Redmi Note 14 Pro specific: negro (0), azul (1), morado (2)
+    if (product.name?.includes('Redmi Note 14')) {
+      if (colorLower.includes('negro') || colorLower.includes('black') || colorLower.includes('medianoche')) return 0;
+      if (colorLower.includes('azul') || colorLower.includes('blue') || colorLower.includes('aurora')) return 1;
+      if (colorLower.includes('morado') || colorLower.includes('purple') || colorLower.includes('cosmica')) return 2;
+      return 1; // Default to azul for this product
+    }
+
     // OPPO A5 5G specific: blanco (0), verde (1)
     if (colorLower.includes('mist')) return 0;
     if (colorLower.includes('aurora')) return 1;
