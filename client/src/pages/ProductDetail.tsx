@@ -35,11 +35,12 @@ export default function ProductDetail() {
     const colorLower = colorName.toLowerCase();
     // Mapping based on common color patterns in image names
     // Priority order matters - check more specific patterns first
-    if (colorLower.includes('verde') || colorLower.includes('green') || colorLower.includes('esmeralda') || colorLower.includes('smoky')) return 0;
-    if (colorLower.includes('negro') || colorLower.includes('black') || colorLower.includes('obsidian') || colorLower.includes('midnight') || colorLower.includes('ocaso') || colorLower.includes('medianoche')) return 1;
-    if (colorLower.includes('gris') || colorLower.includes('gray') || colorLower.includes('grey') || colorLower.includes('titan') || colorLower.includes('light gray')) return 2;
-    if (colorLower.includes('azul') || colorLower.includes('blue') || colorLower.includes('marine') || colorLower.includes('drift') || colorLower.includes('starry') || colorLower.includes('lago') || colorLower.includes('aurora')) return 1;
-    if (colorLower.includes('morado') || colorLower.includes('purple') || colorLower.includes('purpura') || colorLower.includes('twilight') || colorLower.includes('pink') || colorLower.includes('arena')) return 2;
+    if (colorLower.includes('negro') || colorLower.includes('black') || colorLower.includes('obsidian') || colorLower.includes('midnight') || colorLower.includes('ocaso') || colorLower.includes('medianoche')) return 0;
+    if (colorLower.includes('verde menta') || colorLower.includes('menta')) return 1;
+    if (colorLower.includes('gris') || colorLower.includes('gray') || colorLower.includes('grey') || colorLower.includes('titan') || colorLower.includes('light gray')) return 1;
+    if (colorLower.includes('verde') || colorLower.includes('green') || colorLower.includes('esmeralda') || colorLower.includes('smoky')) return 2;
+    if ((colorLower.includes('azul') || colorLower.includes('blue') || colorLower.includes('marine') || colorLower.includes('drift') || colorLower.includes('starry') || colorLower.includes('lago') || colorLower.includes('aurora')) && !colorLower.includes('verde')) return 1;
+    if (colorLower.includes('morado') || colorLower.includes('purple') || colorLower.includes('purpura') || colorLower.includes('twilight') || colorLower.includes('pink') || colorLower.includes('arena') || colorLower.includes('violeta')) return 1;
     if (colorLower.includes('forest') || colorLower.includes('dove')) return 2;
     if (colorLower.includes('naranja') || colorLower.includes('orange') || colorLower.includes('pastel')) return 1;
     if (colorLower.includes('blanco') || colorLower.includes('white') || colorLower.includes('glaciar') || colorLower.includes('laser')) return 1;
