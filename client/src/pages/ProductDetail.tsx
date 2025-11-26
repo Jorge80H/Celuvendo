@@ -34,11 +34,15 @@ export default function ProductDetail() {
 
     const colorLower = colorName.toLowerCase();
     // Mapping based on common color patterns in image names
-    if (colorLower.includes('negro') || colorLower.includes('black')) return 1;
-    if (colorLower.includes('blanco') || colorLower.includes('white') || colorLower.includes('glaciar')) return 2;
-    if (colorLower.includes('azul') || colorLower.includes('blue')) return 2;
-    if (colorLower.includes('verde') || colorLower.includes('green') || colorLower.includes('esmeralda') || colorLower.includes('lago')) return 3;
-    if (colorLower.includes('gris') || colorLower.includes('gray') || colorLower.includes('grey')) return 3;
+    // Priority order matters - check more specific patterns first
+    if (colorLower.includes('verde') || colorLower.includes('green') || colorLower.includes('esmeralda') || colorLower.includes('smoky')) return 0;
+    if (colorLower.includes('negro') || colorLower.includes('black') || colorLower.includes('obsidian') || colorLower.includes('midnight') || colorLower.includes('ocaso') || colorLower.includes('medianoche')) return 1;
+    if (colorLower.includes('gris') || colorLower.includes('gray') || colorLower.includes('grey') || colorLower.includes('titan') || colorLower.includes('light gray')) return 2;
+    if (colorLower.includes('azul') || colorLower.includes('blue') || colorLower.includes('marine') || colorLower.includes('drift') || colorLower.includes('starry') || colorLower.includes('lago') || colorLower.includes('aurora')) return 1;
+    if (colorLower.includes('morado') || colorLower.includes('purple') || colorLower.includes('purpura') || colorLower.includes('twilight') || colorLower.includes('pink') || colorLower.includes('arena')) return 2;
+    if (colorLower.includes('forest') || colorLower.includes('dove')) return 2;
+    if (colorLower.includes('naranja') || colorLower.includes('orange') || colorLower.includes('pastel')) return 1;
+    if (colorLower.includes('blanco') || colorLower.includes('white') || colorLower.includes('glaciar') || colorLower.includes('laser')) return 1;
 
     return 0; // Default to first image
   };
@@ -248,20 +252,6 @@ export default function ProductDetail() {
                   </div>
                 </Card>
               </div>
-
-              {product.highlights && (
-                <Card className="p-4 space-y-3">
-                  <h3 className="font-semibold">Puntos destacados</h3>
-                  <div className="space-y-2">
-                    {product.highlights.pros?.map((pro: string, i: number) => (
-                      <div key={i} className="flex items-start gap-2">
-                        <Check className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
-                        <span className="text-sm">{pro}</span>
-                      </div>
-                    ))}
-                  </div>
-                </Card>
-              )}
             </div>
           </div>
 
@@ -394,20 +384,6 @@ export default function ProductDetail() {
                           <li key={i} className="flex items-start gap-2">
                             <Check className="w-4 h-4 text-primary mt-0.5" />
                             <span>{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-
-                  {product.highlights?.cons && (
-                    <div>
-                      <h3 className="font-semibold text-lg mb-3">⚠️ Consideraciones</h3>
-                      <ul className="space-y-2">
-                        {product.highlights.cons.map((con: string, i: number) => (
-                          <li key={i} className="flex items-start gap-2">
-                            <X className="w-4 h-4 text-orange-600 mt-0.5" />
-                            <span className="text-sm">{con}</span>
                           </li>
                         ))}
                       </ul>
