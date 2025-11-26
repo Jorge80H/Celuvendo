@@ -37,12 +37,13 @@ const brandImages: Record<string, string> = {
   "Samsung": samsungImage,
   "Xiaomi": xiaomiImage,
   "Motorola": motorolaImage,
+  "OPPO": oppoImage,
   "Oppo": oppoImage,
   "Infinix": infinixImage,
   "TECNO": samsungImage, // Placeholder until we have TECNO image
 };
 
-const brands = ["Samsung", "Xiaomi", "Motorola", "Oppo", "Infinix", "TECNO"];
+const brands = ["Samsung", "Xiaomi", "Motorola", "OPPO", "Infinix", "TECNO"];
 const ramOptions = ["4GB", "6GB", "8GB", "12GB"];
 const storageOptions = ["64GB", "128GB", "256GB", "512GB"];
 
@@ -214,6 +215,9 @@ export default function Products() {
 
     let filtered = [...data.products];
 
+    // Filter out inactive products (agotados)
+    filtered = filtered.filter(p => p.isActive === true);
+
     // Apply search filter
     if (searchQuery) {
       const searchLower = searchQuery.toLowerCase();
@@ -224,9 +228,13 @@ export default function Products() {
       );
     }
 
-    // Apply brand filter
+    // Apply brand filter (case-insensitive)
     if (selectedBrands.length > 0) {
-      filtered = filtered.filter(p => selectedBrands.includes(p.brand));
+      filtered = filtered.filter(p =>
+        selectedBrands.some(brand =>
+          brand.toLowerCase() === p.brand.toLowerCase()
+        )
+      );
     }
 
     // Apply RAM filter
