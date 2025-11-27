@@ -85,17 +85,18 @@ export default function ProductCard({
           <Heart className={`h-4 w-4 ${isFavorite ? 'fill-current' : ''}`} />
         </Button>
 
-        {discount > 0 && (
-          <Badge className="absolute top-2 left-2 bg-destructive text-destructive-foreground" data-testid={`badge-discount-${id}`}>
-            -{discount}%
-          </Badge>
-        )}
-
-        {freeShipping && (
-          <Badge variant="secondary" className="absolute bottom-2 left-2 text-xs" data-testid={`badge-shipping-${id}`}>
-            Envío Gratis
-          </Badge>
-        )}
+        <div className="absolute top-2 left-2 flex flex-col gap-2">
+          {discount > 0 && (
+            <Badge className="bg-destructive text-destructive-foreground" data-testid={`badge-discount-${id}`}>
+              -{discount}%
+            </Badge>
+          )}
+          {freeShipping && (
+            <Badge variant="secondary" className="text-xs" data-testid={`badge-shipping-${id}`}>
+              Envío Gratis
+            </Badge>
+          )}
+        </div>
       </div>
       </a>
 
