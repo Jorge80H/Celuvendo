@@ -330,12 +330,12 @@ export default function Products() {
       
       <main className="flex-1">
         <div className="max-w-7xl mx-auto px-4 py-8">
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex items-start justify-between mb-6 gap-4">
             <div>
-              <h1 className="text-3xl font-bold font-serif mb-2" data-testid="text-page-title">
+              <h1 className="text-2xl sm:text-3xl font-bold font-serif mb-2 whitespace-nowrap" data-testid="text-page-title">
                 Todos los Celulares
               </h1>
-              <p className="text-muted-foreground" data-testid="text-product-count">
+              <p className="text-sm sm:text-base text-muted-foreground" data-testid="text-product-count">
                 {products.length} productos encontrados
               </p>
             </div>
