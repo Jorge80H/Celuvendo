@@ -63,7 +63,7 @@ export default function ProductCard({
   return (
     <Card className="overflow-hidden hover-elevate transition-transform duration-200 hover:scale-105 group">
       <a href={productUrl} className="block">
-        <div className="relative aspect-square bg-card p-4">
+        <div className="relative aspect-square bg-card p-6">
           <img
             src={image}
             alt={name}
@@ -85,14 +85,14 @@ export default function ProductCard({
           <Heart className={`h-4 w-4 ${isFavorite ? 'fill-current' : ''}`} />
         </Button>
 
-        <div className="absolute top-2 left-2 flex flex-col gap-2">
+        <div className="absolute top-2 left-2 flex gap-1.5">
           {discount > 0 && (
-            <Badge className="bg-destructive text-destructive-foreground" data-testid={`badge-discount-${id}`}>
+            <Badge className="bg-destructive text-destructive-foreground text-xs px-2 py-0.5" data-testid={`badge-discount-${id}`}>
               -{discount}%
             </Badge>
           )}
           {freeShipping && (
-            <Badge variant="secondary" className="text-xs" data-testid={`badge-shipping-${id}`}>
+            <Badge variant="secondary" className="text-xs px-2 py-0.5" data-testid={`badge-shipping-${id}`}>
               Envío Gratis
             </Badge>
           )}
@@ -100,7 +100,7 @@ export default function ProductCard({
       </div>
       </a>
 
-      <div className="p-4 space-y-3">
+      <div className="p-2 space-y-2">
         <a href={productUrl} className="block space-y-1">
           <p className="text-xs text-muted-foreground font-medium uppercase" data-testid={`text-brand-${id}`}>
             {brand}
@@ -128,7 +128,7 @@ export default function ProductCard({
               {formatCOP(compareAtPrice)}
             </p>
           )}
-          <p className="text-2xl font-bold text-primary" data-testid={`text-price-${id}`}>
+          <p className="text-xl sm:text-2xl font-bold text-primary whitespace-nowrap" data-testid={`text-price-${id}`}>
             {formatCOP(price)}
           </p>
         </div>
