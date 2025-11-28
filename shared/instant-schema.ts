@@ -34,6 +34,35 @@ const schema = i.schema({
       quantity: i.number(),
       createdAt: i.number(),
     }),
+    orders: i.entity({
+      orderNumber: i.string().unique().indexed(),
+      sessionId: i.string().indexed(),
+      // Customer information
+      customerName: i.string(),
+      documentType: i.string(),
+      documentNumber: i.string().indexed(),
+      address: i.string(),
+      city: i.string(),
+      phone: i.string(),
+      email: i.string().indexed(),
+      // Order details
+      items: i.json(), // Array of order items
+      subtotal: i.number(),
+      shipping: i.number(),
+      discount: i.number(),
+      total: i.number(),
+      // Payment information
+      paymentMethod: i.string().optional(),
+      paymentStatus: i.string().indexed(), // pending, paid, failed
+      boldTransactionId: i.string().optional(),
+      boldOrderId: i.string().optional(),
+      // Status
+      orderStatus: i.string().indexed(), // pending, processing, shipped, delivered, cancelled
+      // Timestamps
+      createdAt: i.number(),
+      paidAt: i.number().optional(),
+      updatedAt: i.number(),
+    }),
   },
   links: {
     cartProduct: {
@@ -102,4 +131,44 @@ export interface CartItem {
 
 export interface CartItemWithProduct extends CartItem {
   product: Product;
+}
+
+export interface OrderItem {
+  productId: string;
+  name: string;
+  brand: string;
+  price: number;
+  quantity: number;
+  color?: string;
+}
+
+export interface Order {
+  id: string;
+  orderNumber: string;
+  sessionId: string;
+  // Customer information
+  customerName: string;
+  documentType: string;
+  documentNumber: string;
+  address: string;
+  city: string;
+  phone: string;
+  email: string;
+  // Order details
+  items: OrderItem[];
+  subtotal: number;
+  shipping: number;
+  discount: number;
+  total: number;
+  // Payment information
+  paymentMethod?: string;
+  paymentStatus: string;
+  boldTransactionId?: string;
+  boldOrderId?: string;
+  // Status
+  orderStatus: string;
+  // Timestamps
+  createdAt: number;
+  paidAt?: number;
+  updatedAt: number;
 }

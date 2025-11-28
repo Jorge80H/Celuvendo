@@ -58,3 +58,56 @@ export const insertCartItemSchema = createInsertSchema(cartItems).omit({
 
 export type InsertCartItem = z.infer<typeof insertCartItemSchema>;
 export type CartItem = typeof cartItems.$inferSelect;
+
+export const orders = pgTable("orders", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  orderNumber: text("order_number").notNull().unique(),
+  sessionId: text("session_id").notNull(),
+
+  // Customer information
+  customerName: text("customer_name").notNull(),
+  documentType: text("document_type").notNull(),
+  documentNumber: text("document_number").notNull(),
+  address: text("address").notNull(),
+  city: text("city").notNull(),
+  phone: text("phone").notNull(),
+  email: text("email").notNull(),
+
+  // Order details
+  items: json("items").$type<Array<{
+    productId: string;
+    name: string;
+    brand: string;
+    price: number;
+    quantity: number;
+  }>>().notNull(),
+
+  subtotal: decimal("subtotal", { precision: 10, scale: 2 }).notNull(),
+  shipping: decimal("shipping", { precision: 10, scale: 2 }).notNull(),
+  discount: decimal("discount", { precision: 10, scale: 2 }).default("0"),
+  total: decimal("total", { precision: 10, scale: 2 }).notNull(),
+
+  // Payment information
+  paymentMethod: text("payment_method"),
+  paymentStatus: text("payment_status").notNull().default("pending"), // pending, paid, failed
+  boldTransactionId: text("bold_transaction_id"),
+  boldOrderId: text("bold_order_id"),
+
+  // Status
+  orderStatus: text("order_status").notNull().default("pending"), // pending, processing, shipped, delivered, cancelled
+
+  // Timestamps
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  paidAt: timestamp("paid_at"),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
+
+export const insertOrderSchema = createInsertSchema(orders).omit({
+  id: true,
+  orderNumber: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export type InsertOrder = z.infer<typeof insertOrderSchema>;
+export type Order = typeof orders.$inferSelect;
