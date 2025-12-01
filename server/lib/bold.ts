@@ -39,8 +39,11 @@ export async function createBoldPayment(data: BoldPaymentData): Promise<BoldPaym
     // Prepare payment request according to Bold API documentation
     // Bold uses payment links with /online/link/v1 endpoint
     const paymentRequest = {
-      amount: data.amount, // Amount in cents
-      amount_type: "CLOSED", // Fixed amount (not open)
+      amount_type: "CLOSE", // Fixed amount (note: use "CLOSE" not "CLOSED")
+      amount: {
+        currency: data.currency,
+        total_amount: data.amount, // Amount in cents
+      },
       description: data.description,
       callback_url: data.redirectUrl,
       payer_email: data.customerEmail,
