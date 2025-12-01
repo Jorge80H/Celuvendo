@@ -54,7 +54,7 @@ export async function createBoldPayment(data: BoldPaymentData): Promise<BoldPaym
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-api-key": BOLD_API_KEY,
+        "Authorization": `x-api-key ${BOLD_API_KEY}`,
       },
       body: JSON.stringify(paymentRequest),
     });
