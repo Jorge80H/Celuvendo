@@ -1,6 +1,6 @@
 import express, { type Request, Response, NextFunction } from "express";
-import { registerRoutes } from "./routes";
-import { serveStatic } from "./vite";
+import { registerRoutes } from "../server/routes";
+import { serveStatic } from "../server/vite";
 import serverless from "serverless-http";
 
 declare module 'http' {
