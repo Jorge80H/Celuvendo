@@ -5,11 +5,14 @@ import * as schema from "@shared/schema";
 
 neonConfig.webSocketConstructor = ws;
 
-if (!process.env.DATABASE_URL) {
-  throw new Error(
-    "DATABASE_URL must be set. Did you forget to provision a database?",
-  );
+// Make DATABASE_URL optional - we're using InstantDB for most operations
+const DATABASE_URL = process.env.DATABASE_URL;
+
+if (!DATABASE_URL) {
+  console.warn("DATABASE_URL not set - Drizzle/Neon database will not be available");
+  console.warn("Using InstantDB for data operations");
 }
 
-export const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-export const db = drizzle({ client: pool, schema });
+// Only initialize if DATABASE_URL is provided
+export const pool = DATABASE_URL ? new Pool({ connectionString: DATABASE_URL }) : null;
+export const db = pool ? drizzle({ client: pool, schema }) : null;
