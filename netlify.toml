@@ -9,7 +9,12 @@
 
 [functions]
   node_bundler = "esbuild"
-  included_files = ["dist/server/**"]
+  included_files = [
+    "dist/server/**",
+    "dist/shared/**",
+    "dist/vite.config.*"
+  ]
+  external_node_modules = ["@instantdb/admin", "lightningcss", "esbuild"]
 
 # API routes (including webhooks)
 [[redirects]]
