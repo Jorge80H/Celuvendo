@@ -3,13 +3,13 @@ import { registerRoutes } from "./routes";
 import { serveStatic } from "./vite";
 import serverless from "serverless-http";
 
-const app = express();
-
 declare module 'http' {
   interface IncomingMessage {
     rawBody: unknown
   }
 }
+
+const app = express();
 
 app.use(express.json({
   verify: (req, _res, buf) => {
@@ -48,18 +48,26 @@ app.use((req, res, next) => {
   next();
 });
 
-(async () => {
-  await registerRoutes(app);
+// Initialize routes
+let initialized = false;
+async function initializeApp() {
+  if (!initialized) {
+    await registerRoutes(app);
 
-  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
-    const status = err.status || err.statusCode || 500;
-    const message = err.message || "Internal Server Error";
+    app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+      const status = err.status || err.statusCode || 500;
+      const message = err.message || "Internal Server Error";
 
-    res.status(status).json({ message });
-    throw err;
-  });
+      res.status(status).json({ message });
+      console.error(err);
+    });
 
-  serveStatic(app);
-})();
+    serveStatic(app);
+    initialized = true;
+  }
+}
+
+// Initialize on first import
+initializeApp();
 
 export const handler = serverless(app);

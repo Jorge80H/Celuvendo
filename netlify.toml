@@ -11,17 +11,10 @@
   node_bundler = "esbuild"
   included_files = ["dist/server/**"]
 
-# API routes
+# API routes (including webhooks)
 [[redirects]]
   from = "/api/*"
-  to = "/.netlify/functions/index/:splat"
-  status = 200
-  force = true
-
-# Webhook routes (important for Bold webhooks)
-[[redirects]]
-  from = "/api/webhooks/*"
-  to = "/.netlify/functions/index/webhooks/:splat"
+  to = "/.netlify/functions/netlify/:splat"
   status = 200
   force = true
 
