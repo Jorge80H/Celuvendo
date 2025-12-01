@@ -380,7 +380,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           console.log("Bold payment status:", boldStatus);
 
           // If Bold reports payment as successful, update our order
-          if (boldStatus && (boldStatus.status === "APPROVED" || boldStatus.state === "APPROVED")) {
+          // Bold payment link status can be: PAID, PENDING, EXPIRED, REJECTED
+          if (boldStatus && (boldStatus.status === "PAID" || boldStatus.status === "APPROVED" || boldStatus.state === "APPROVED")) {
             console.log("Bold reports payment approved, updating order");
 
             await instantServer.updateOrderStatus(order.id, {
