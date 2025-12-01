@@ -1,6 +1,6 @@
-import { type Product, type InsertProduct, type CartItem, type InsertCartItem } from "@shared/schema";
+import { type Product, type InsertProduct, type CartItem, type InsertCartItem, type Order, type InsertOrder } from "@shared/schema";
 import { db } from "./db";
-import { products, cartItems } from "@shared/schema";
+import { products, cartItems, orders } from "@shared/schema";
 import { eq, and, gte, lte, inArray, sql, desc, asc } from "drizzle-orm";
 
 export interface IStorage {
@@ -24,6 +24,13 @@ export interface IStorage {
   updateCartQuantity(id: string, quantity: number): Promise<CartItem | undefined>;
   removeFromCart(id: string): Promise<void>;
   clearCart(sessionId: string): Promise<void>;
+
+  // Orders
+  createOrder(order: InsertOrder): Promise<Order>;
+  getOrder(id: string): Promise<Order | undefined>;
+  getOrderByNumber(orderNumber: string): Promise<Order | undefined>;
+  updateOrderPaymentInfo(id: string, info: { boldTransactionId?: string; boldOrderId?: string }): Promise<void>;
+  updateOrderStatus(id: string, status: { paymentStatus?: string; orderStatus?: string; paidAt?: Date }): Promise<void>;
 }
 
 export class DbStorage implements IStorage {
@@ -158,6 +165,48 @@ export class DbStorage implements IStorage {
   
   async clearCart(sessionId: string): Promise<void> {
     await db.delete(cartItems).where(eq(cartItems.sessionId, sessionId));
+  }
+
+  // Order methods
+  async createOrder(order: InsertOrder): Promise<Order> {
+    // Generate unique order number
+    const orderNumber = `CEL-${Date.now()}-${Math.random().toString(36).substring(7).toUpperCase()}`;
+
+    const result = await db.insert(orders).values({
+      ...order,
+      orderNumber,
+    }).returning();
+
+    return result[0];
+  }
+
+  async getOrder(id: string): Promise<Order | undefined> {
+    const result = await db.select().from(orders).where(eq(orders.id, id));
+    return result[0];
+  }
+
+  async getOrderByNumber(orderNumber: string): Promise<Order | undefined> {
+    const result = await db.select().from(orders).where(eq(orders.orderNumber, orderNumber));
+    return result[0];
+  }
+
+  async updateOrderPaymentInfo(id: string, info: { boldTransactionId?: string; boldOrderId?: string }): Promise<void> {
+    await db.update(orders)
+      .set({
+        boldTransactionId: info.boldTransactionId,
+        boldOrderId: info.boldOrderId,
+        updatedAt: new Date(),
+      })
+      .where(eq(orders.id, id));
+  }
+
+  async updateOrderStatus(id: string, status: { paymentStatus?: string; orderStatus?: string; paidAt?: Date }): Promise<void> {
+    await db.update(orders)
+      .set({
+        ...status,
+        updatedAt: new Date(),
+      })
+      .where(eq(orders.id, id));
   }
 }
 

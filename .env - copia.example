@@ -1,0 +1,34 @@
+# InstantDB - Base de Datos
+# Get these from https://instantdb.com/dash
+# Client-side (VITE_ prefix is required for Vite)
+VITE_INSTANT_APP_ID=7d176ba5-60f3-4385-a6e7-bf8bd7944993
+
+# Server-side (for admin operations)
+INSTANT_APP_ID=7d176ba5-60f3-4385-a6e7-bf8bd7944993
+INSTANT_ADMIN_TOKEN=7c799aa0-a50a-4000-9863-c3321f7f8de7
+
+# Session
+SESSION_SECRET=change-this-to-a-random-secret-in-production
+
+# Server
+PORT=5173
+NODE_ENV=development
+APP_URL=http://localhost:5173
+
+# Bold Payment Gateway
+# Use test keys for development, production keys for production
+BOLD_ENV=test
+
+# Test keys (provided)
+BOLD_API_KEY=Iu2YwnF_G0gqnpUcqGJJW1Jz_5wrzyaYk21bYYM9bWs
+BOLD_SECRET_KEY=sOwzS3EPJfdd6PL83_MPMw
+
+# Production keys (from the image you provided)
+# When ready for production, uncomment these and comment out test keys above
+# BOLD_ENV=production
+# BOLD_API_KEY=MdG8AUR_EQ6MeT_WvDVkAIhbspC4EOgWyPTLyMW8eh0
+# BOLD_SECRET_KEY=8ss8oSlI8reH8LVOcty39g
+
+# n8n Webhook
+# URL to send order data after successful payment
+N8N_WEBHOOK_URL=https://n8n.srv942208.hstgr.cloud/webhook/celuvendo-orders

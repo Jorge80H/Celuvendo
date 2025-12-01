@@ -1,4 +1,4 @@
-import { id } from "@/lib/instant";
+import { id, db } from "@/lib/instant";
 
 // Productos únicamente de las fichas completadas (11 productos totales)
 export const allProducts = [
@@ -506,7 +506,14 @@ export const allProducts = [
   }
 ];
 
-async function seedAllProducts() {
+/**
+ * Función para hacer seed de todos los productos en la base de datos.
+ * Esta función debe ser llamada explícitamente desde SeedData.tsx o un script de Node.js,
+ * NO se ejecuta automáticamente al importar el módulo.
+ * 
+ * @returns Promise que se resuelve cuando todos los productos han sido agregados
+ */
+export async function seedAllProducts() {
   console.log("🌱 Iniciando seed de TODOS los productos de las fichas...");
   console.log(`   Total: ${allProducts.length} productos\n`);
 
@@ -534,14 +541,3 @@ async function seedAllProducts() {
     throw error;
   }
 }
-
-// Ejecutar el seed
-seedAllProducts()
-  .then(() => {
-    console.log("\n✨ Seed completado exitosamente");
-    process.exit(0);
-  })
-  .catch((error) => {
-    console.error("\n❌ Error fatal:", error);
-    process.exit(1);
-  });

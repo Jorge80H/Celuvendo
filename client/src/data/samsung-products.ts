@@ -14,7 +14,7 @@ La batería de 5000mAh asegura energía para todo el día de uso intenso, compat
 
 Con Android 14 y One UI 6.1, obtienes una experiencia de usuario intuitiva y el respaldo de actualizaciones de seguridad regulares de Samsung.`,
     brand: "Samsung",
-    price: 550000,
+    price: 650000,
     compareAtPrice: 399050,
     currency: "COP",
     images: [
@@ -253,7 +253,7 @@ Con un diseño premium de solo 7.9mm de grosor, certificación IP54 para resiste
 
 Seguridad Knox Vault protege tus datos más sensibles, mientras que la doble SIM te permite separar vida personal y profesional. El Galaxy A16 5G no es solo un teléfono, es tu compañero confiable para los próximos años.`,
     brand: "Samsung",
-    price: 870000,
+    price: 900000,
     compareAtPrice: 1022050,
     currency: "COP",
     images: [
@@ -384,7 +384,7 @@ Con batería de 5000mAh y carga ultrarrápida de 45W, recupera energía en minut
 
 Diseño premium delgado con vidrio Corning Gorilla Glass 5 y marco de aluminio. Samsung Knox protege tus datos con seguridad de nivel defensa. El Galaxy M55 5G es la elección perfecta para quienes buscan especificaciones de flagship sin el precio premium.`,
     brand: "Samsung",
-    price: 950000,
+    price: 900000,
     compareAtPrice: null,
     currency: "COP",
     images: [
@@ -511,8 +511,8 @@ La batería de 5200 mAh con carga rápida de 45W te mantiene conectado todo el d
 
 Con pantalla AMOLED de 6.78 pulgadas a 120Hz protegida por Panda King Glass, cada imagen cobra vida con colores vibrantes. El diseño delgado y los colores exclusivos hacen del Camon 40 no solo un smartphone potente, sino también un accesorio de estilo.`,
     brand: "TECNO",
-    price: 900000,
-    compareAtPrice: 889000,
+    price: 1090000,
+    compareAtPrice: 1094900,
     currency: "COP",
     images: [
       "/assets/generated_images/Tecno40flyer.avif",
@@ -620,9 +620,9 @@ Con pantalla AMOLED de 6.78 pulgadas a 120Hz protegida por Panda King Glass, cad
       description: "",
       expired: false,
     },
-    stock: 18,
-    isActive: true,
-    isFeatured: true,
+    stock: 0,
+    isActive: false,
+    isFeatured: false,
     rating: 4.3,
     reviewCount: 0,
   },
@@ -641,7 +641,7 @@ Sistema de cámaras profesional: Cámara frontal de 50MP con autoenfoque PDAF id
 
 La batería de 5200mAh con carga rápida de 45W (100% en 43 minutos) asegura autonomía todo el día. Con resistencia superior IP68/IP69, este dispositivo resiste inmersión en agua y chorros de alta presión. El audio Dolby Atmos con parlantes estéreo completa una experiencia multimedia premium.`,
     brand: "TECNO",
-    price: 1550000,
+    price: 1090000,
     compareAtPrice: 1599900,
     currency: "COP",
     images: [
@@ -772,7 +772,7 @@ La batería de 5200mAh se recarga con carga rápida de 45W incluida en la caja. 
 
 Con conectividad 5G, NFC para pagos móviles, y diseño premium con bordes curvos, el Infinix Note 50S 5G no es solo un teléfono, es una declaración de valor inteligente.`,
     brand: "Infinix",
-    price: 599900,
+    price: 1090000,
     compareAtPrice: 999999,
     currency: "COP",
     images: [
@@ -899,7 +899,7 @@ La cámara 50MP con IA optimiza automáticamente retratos y capturas nocturnas c
 
 Disfruta de audio Dolby Atmos con parlantes estéreo, protección IP64 contra salpicaduras, vidrio Corning Gorilla Glass 3, y acabado premium en cuero vegano resistente a huellas. Con cargador incluido y NFC para pagos móviles, el Moto G06 es valor completo desde el día uno.`,
     brand: "Motorola",
-    price: 479000,
+    price: 650000,
     compareAtPrice: 479900,
     currency: "COP",
     images: [
@@ -1022,7 +1022,7 @@ El diseño premium incluye opciones con cuero vegano en parte posterior, certifi
 
 El Moto G55 5G no es solo un teléfono, es la elección inteligente para quien valora calidad sin pagar flagship.`,
     brand: "Motorola",
-    price: 729000,
+    price: 850000,
     compareAtPrice: 729050,
     currency: "COP",
     images: [
@@ -1153,8 +1153,8 @@ La batería de 5200mAh con tecnología SuperVOOC de 45W se carga en tiempo réco
 
 Con ColorOS 14 basado en Android 14, obtén experiencia optimizada con funciones exclusivas de OPPO. El A5 5G es la puerta de entrada perfecta al ecosistema OPPO con especificaciones de gama media-alta.`,
     brand: "OPPO",
-    price: 899000,
-    compareAtPrice: null,
+    price: 1090000,
+    compareAtPrice: 999900,
     currency: "COP",
     images: [
       "/assets/generated_images/Samsung_flagship_phone_product_aa170b09.png",
@@ -1383,6 +1383,532 @@ Con ColorOS 14 basado en Android 14, obtén experiencia optimizada con funciones
     isActive: true,
     isFeatured: false,
     rating: 4.2,
+    reviewCount: 0,
+  },
+  {
+    sku: "OPP-A5X-8-128",
+    name: "OPPO A5X 128GB | 8GB RAM",
+    slug: "oppo-a5x-128gb-8gb",
+    description: "Diseño resistente con certificación IP65 y batería gigante de 6000mAh. Pantalla de 6.67\" con 90Hz y brillo líder de 1000 nits, protegida por Gorilla Glass 7i. Incluye cargador rápido 45W SUPERVOOC.",
+    longDescription: `El OPPO A5X es el smartphone perfecto para quienes buscan durabilidad y autonomía extrema sin comprometer el rendimiento diario. Con su batería masiva de 6000mAh y carga rápida SUPERVOOC de 45W (cargador incluido), este dispositivo está diseñado para usuarios que necesitan un teléfono que resista jornadas completas de uso intensivo.
+
+Su pantalla IPS LCD de 6.67 pulgadas con tasa de refresco de 90Hz ofrece una experiencia visual fluida y brillante, alcanzando hasta 1000 nits de brillo máximo para una excelente visibilidad incluso bajo luz solar directa. Protegida con Corning Gorilla Glass 7i, esta pantalla resiste arañazos y caídas del día a día.
+
+El sistema de cámara incluye un sensor principal de 32MP con autofoco y apertura f/1.8, capaz de capturar fotos nítidas en diversas condiciones de iluminación. La cámara frontal de 5MP es ideal para videollamadas y selfies casuales.
+
+Con certificación IP65, el OPPO A5X está protegido contra polvo y chorros de agua, mientras que su construcción robusta cumple con estándares militares de resistencia. El procesador Snapdragon 6s 4G Gen1 con 8GB de RAM garantiza un rendimiento fluido para multitarea, redes sociales, streaming y juegos casuales. Incluye jack 3.5mm para audífonos y lector de huella lateral para acceso rápido y seguro.`,
+    brand: "OPPO",
+    price: 700000,
+    compareAtPrice: null,
+    currency: "COP",
+    images: [
+      "/assets/generated_images/Opo_A5X_black.jpg",
+      "/assets/generated_images/Opo_A5X_White.jpg",
+    ],
+    specifications: {
+      screen: {
+        size: "6.67\"",
+        type: "IPS LCD",
+        resolution: "720 x 1604 (HD+)",
+        refreshRate: "90Hz",
+      },
+      processor: "Snapdragon 6s 4G Gen1",
+      ram: "8GB",
+      storage: "128GB",
+      expandableStorage: "Sí, microSDXC",
+      camera: {
+        main: "32MP f/1.8",
+        front: "5MP f/2.2",
+        features: ["PDAF", "HDR", "Modo noche", "Video 1080p"],
+      },
+      battery: {
+        capacity: "6000mAh",
+        charging: "45W SUPERVOOC",
+      },
+      connectivity: ["4G LTE", "Wi-Fi 5", "Bluetooth 5.1", "NFC", "Jack 3.5mm"],
+      security: ["Huella lateral", "Desbloqueo facial"],
+      os: "Android 15, ColorOS 15",
+      dimensions: "165.8 x 76 x 8.5 mm",
+      weight: "198g",
+      resistance: "IP65",
+      updates: "2 años Android + 3 años seguridad",
+    },
+    colors: [
+      { name: "Azul Lago Tranquilo", code: "#4682B4" },
+      { name: "Blanco Láser", code: "#F5F5F5" },
+    ],
+    features: [
+      "Batería 6000mAh",
+      "Carga 45W incluida",
+      "Pantalla 90Hz 1000 nits",
+      "Gorilla Glass 7i",
+      "IP65 resistente",
+      "8GB RAM",
+      "128GB almacenamiento",
+      "Jack 3.5mm",
+      "NFC",
+      "ColorOS 15",
+    ],
+    highlights: {
+      pros: [
+        "Batería gigante 6000mAh",
+        "Carga 45W incluida",
+        "Brillo 1000 nits",
+        "IP65 resistente",
+        "Gorilla Glass 7i",
+        "Cargador incluido",
+      ],
+      cons: [
+        "Solo 4G",
+        "HD+ no FHD+",
+        "Cámara simple",
+        "Peso 198g",
+        "Solo 90Hz",
+      ],
+    },
+    boxContents: {
+      included: [
+        "Teléfono OPPO A5X",
+        "Cargador 45W",
+        "Cable USB-C",
+        "Herramienta SIM",
+        "Funda",
+        "Guía",
+      ],
+      notIncluded: ["Audífonos"],
+    },
+    promotion: {
+      active: false,
+      title: "",
+      description: "",
+      expired: false,
+    },
+    stock: 18,
+    isActive: true,
+    isFeatured: false,
+    rating: 4.3,
+    reviewCount: 0,
+  },
+  {
+    sku: "XIA-R15-8-256",
+    name: "Xiaomi Redmi 15 256GB | 8GB RAM",
+    slug: "xiaomi-redmi-15-256gb-8gb",
+    description: "Récord mundial: batería de 7000mAh. Pantalla 144Hz, procesador G100-Ultra, cámara 50MP con OIS, carga rápida 45W incluida. NFC, IR blaster y jack 3.5mm.",
+    longDescription: `El Xiaomi Redmi 15 rompe todos los récords con la batería más grande jamás vista en un smartphone: 7000mAh. Esta capacidad sin precedentes garantiza hasta 3 días de autonomía con uso moderado, eliminando por completo la ansiedad de batería.
+
+Su espectacular pantalla AMOLED de 6.74 pulgadas con 144Hz de tasa de refresco ofrece una experiencia visual ultra fluida, perfecta para gaming y contenido multimedia. El procesador MediaTek Helio G100-Ultra con 8GB de RAM garantiza rendimiento ágil para todas tus necesidades.
+
+El sistema de cámara triple incluye sensor principal de 50MP con estabilización óptica (OIS) para fotos y videos estables, ultra gran angular de 8MP, y sensor macro de 2MP. La cámara frontal de 20MP captura selfies de alta calidad.
+
+Con conectividad 5G, NFC para pagos móviles, puerto infrarrojo para control remoto, jack 3.5mm y carga rápida de 45W incluida, el Redmi 15 es el smartphone más completo de su categoría.`,
+    brand: "Xiaomi",
+    price: 800000,
+    compareAtPrice: null,
+    currency: "COP",
+    images: [
+      "/assets/generated_images/Samsung_flagship_phone_product_aa170b09.png",
+    ],
+    specifications: {
+      screen: {
+        size: "6.74\"",
+        type: "AMOLED",
+        resolution: "1080 x 2400 (FHD+)",
+        refreshRate: "144Hz",
+      },
+      processor: "MediaTek Helio G100-Ultra",
+      ram: "8GB",
+      storage: "256GB",
+      expandableStorage: "Hasta 1TB microSD",
+      camera: {
+        main: "50MP f/1.8 OIS",
+        ultrawide: "8MP",
+        macro: "2MP",
+        front: "20MP",
+        features: ["OIS", "HDR", "Modo noche", "Video 4K"],
+      },
+      battery: {
+        capacity: "7000mAh",
+        charging: "45W incluido",
+      },
+      connectivity: ["5G", "4G", "Wi-Fi 6", "Bluetooth 5.3", "NFC", "IR blaster", "Jack 3.5mm"],
+      security: ["Huella lateral", "Desbloqueo facial"],
+      os: "Android 15, HyperOS",
+      dimensions: "Por confirmar",
+      weight: "Por confirmar",
+      resistance: "Sin certificación IP",
+      updates: "3 años Android + 4 años seguridad",
+    },
+    colors: [
+      { name: "Negro", code: "#000000" },
+      { name: "Azul", code: "#4169E1" },
+      { name: "Verde", code: "#228B22" },
+    ],
+    features: [
+      "Batería récord 7000mAh",
+      "Pantalla AMOLED 144Hz",
+      "5G conectividad",
+      "OIS cámara 50MP",
+      "Carga 45W incluida",
+      "NFC pagos",
+      "IR blaster",
+      "Jack 3.5mm",
+      "256GB",
+      "HyperOS",
+    ],
+    highlights: {
+      pros: [
+        "Batería récord 7000mAh",
+        "Pantalla 144Hz líder",
+        "5G conectividad",
+        "OIS en cámara",
+        "Carga 45W incluida",
+        "Completo (NFC, IR, Jack)",
+      ],
+      cons: [
+        "Sin certificación IP",
+        "Marca menos conocida",
+        "HyperOS con bloatware",
+        "Sin especificaciones peso",
+        "Solo 3 años Android",
+      ],
+    },
+    boxContents: {
+      included: [
+        "Teléfono Redmi 15",
+        "Cargador 45W",
+        "Cable USB-C",
+        "Herramienta SIM",
+        "Funda",
+        "Guía",
+      ],
+      notIncluded: ["Audífonos"],
+    },
+    promotion: {
+      active: false,
+      title: "",
+      description: "",
+      expired: false,
+    },
+    stock: 20,
+    isActive: true,
+    isFeatured: true,
+    rating: 4.5,
+    reviewCount: 0,
+  },
+  {
+    sku: "XIA-RN14P-8-256",
+    name: "Xiaomi Redmi Note 14 Pro 256GB | 8GB RAM",
+    slug: "xiaomi-redmi-note-14-pro-256gb-8gb",
+    description: "Cámara profesional 200MP con OIS. Pantalla AMOLED 120Hz de 3000 nits, procesador G100-Ultra, resistencia IP68 y Gorilla Glass Victus 2. El flagship killer definitivo.",
+    longDescription: `El Xiaomi Redmi Note 14 Pro es el definitivo "flagship killer" que desafía a los dispositivos premium a una fracción del precio. Su cámara principal de 200MP con estabilización óptica (OIS) captura detalles asombrosos, rivalizando con smartphones de $3M+.
+
+La espectacular pantalla AMOLED curva de 6.67 pulgadas alcanza 3000 nits de brillo máximo, la más brillante de su categoría, protegida por Corning Gorilla Glass Victus 2. Con 120Hz de tasa de refresco, cada interacción es ultra fluida.
+
+El procesador MediaTek Helio G100-Ultra con 8GB de RAM expandible hasta 16GB garantiza rendimiento flagship. La batería de 5500mAh con carga ultrarrápida de 67W alcanza 100% en solo 42 minutos.
+
+Con certificación IP68 para inmersión en agua, carga inalámbrica de 30W, NFC, y diseño premium en vidrio y aluminio, el Redmi Note 14 Pro no es solo un smartphone, es la mejor inversión en gama media-alta.`,
+    brand: "Xiaomi",
+    price: 1050000,
+    compareAtPrice: null,
+    currency: "COP",
+    images: [
+      "/assets/generated_images/Samsung_flagship_phone_product_aa170b09.png",
+    ],
+    specifications: {
+      screen: {
+        size: "6.67\"",
+        type: "AMOLED Curva",
+        resolution: "1080 x 2400 (FHD+)",
+        refreshRate: "120Hz",
+      },
+      processor: "MediaTek Helio G100-Ultra",
+      ram: "8GB + 8GB expandible",
+      storage: "256GB",
+      expandableStorage: "No",
+      camera: {
+        main: "200MP f/1.7 OIS",
+        ultrawide: "8MP",
+        macro: "2MP",
+        front: "20MP",
+        features: ["OIS", "HDR10+", "Modo noche Pro", "Video 4K"],
+      },
+      battery: {
+        capacity: "5500mAh",
+        charging: "67W Turbo + 30W inalámbrica",
+      },
+      connectivity: ["5G", "Wi-Fi 6", "Bluetooth 5.3", "NFC", "IR blaster"],
+      security: ["Huella en pantalla", "Desbloqueo facial"],
+      os: "Android 15, HyperOS",
+      dimensions: "161.4 x 74.3 x 8.2 mm",
+      weight: "190g",
+      resistance: "IP68",
+      updates: "3 años Android + 4 años seguridad",
+    },
+    colors: [
+      { name: "Negro Medianoche", code: "#000000" },
+      { name: "Azul Aurora", code: "#4169E1" },
+      { name: "Plata Cósmica", code: "#C0C0C0" },
+    ],
+    features: [
+      "Cámara 200MP OIS",
+      "Pantalla 3000 nits",
+      "IP68 sumergible",
+      "Carga 67W + 30W inalámbrica",
+      "Gorilla Glass Victus 2",
+      "5G conectividad",
+      "RAM expandible 16GB",
+      "Pantalla curva",
+      "NFC + IR",
+      "HyperOS",
+    ],
+    highlights: {
+      pros: [
+        "Cámara 200MP líder",
+        "Brillo 3000 nits récord",
+        "IP68 sumergible",
+        "Carga ultrarrápida 67W",
+        "Gorilla Glass Victus 2",
+        "Carga inalámbrica 30W",
+      ],
+      cons: [
+        "Sin jack 3.5mm",
+        "Sin microSD",
+        "HyperOS bloatware",
+        "Solo 3 años Android",
+        "Pantalla curva frágil",
+      ],
+    },
+    boxContents: {
+      included: [
+        "Teléfono Redmi Note 14 Pro",
+        "Cargador 67W",
+        "Cable USB-C",
+        "Herramienta SIM",
+        "Funda",
+        "Guía",
+      ],
+      notIncluded: ["Audífonos", "Cargador inalámbrico"],
+    },
+    promotion: {
+      active: false,
+      title: "",
+      description: "",
+      expired: false,
+    },
+    stock: 15,
+    isActive: true,
+    isFeatured: true,
+    rating: 4.7,
+    reviewCount: 0,
+  },
+  {
+    sku: "SAM-A16-4G-4-128",
+    name: "Samsung Galaxy A16 4G 128GB | 4GB RAM",
+    slug: "samsung-galaxy-a16-4g-128gb-4gb",
+    description: "Pantalla Super AMOLED 90Hz, 6 años de actualizaciones hasta 2030, cámara 50MP, batería 5000mAh. Diseño premium con resistencia IP54.",
+    longDescription: `El Samsung Galaxy A16 4G combina lo mejor de Samsung en un dispositivo accesible. Su espectacular pantalla Super AMOLED de 6.7 pulgadas con 90Hz ofrece colores vibrantes y fluidez superior.
+
+Con 4GB de RAM y procesador Helio G99, maneja multitarea eficientemente. La cámara triple de 50MP + 5MP + 2MP captura fotos de calidad, mientras que la frontal de 13MP es perfecta para selfies.
+
+Lo mejor: 6 años de actualizaciones garantizadas hasta 2030, una inversión a largo plazo. Incluye resistencia IP54, NFC, y la seguridad de Samsung Knox.`,
+    brand: "Samsung",
+    price: 750000,
+    compareAtPrice: 949900,
+    currency: "COP",
+    images: [
+      "/assets/generated_images/Samsung_flagship_phone_product_aa170b09.png",
+    ],
+    specifications: {
+      screen: {
+        size: "6.7\"",
+        type: "Super AMOLED",
+        resolution: "1080 x 2340 (FHD+)",
+        refreshRate: "90Hz",
+      },
+      processor: "MediaTek Helio G99",
+      ram: "4GB",
+      storage: "128GB",
+      expandableStorage: "Hasta 1.5TB microSD",
+      camera: {
+        main: "50MP f/1.8",
+        ultrawide: "5MP",
+        depth: "2MP",
+        front: "13MP",
+        features: ["HDR", "Modo noche", "Video FHD"],
+      },
+      battery: {
+        capacity: "5000mAh",
+        charging: "25W (no incluido)",
+      },
+      connectivity: ["4G LTE", "Wi-Fi 5", "Bluetooth 5.3", "NFC", "USB-C"],
+      security: ["Huella lateral", "Knox Vault"],
+      os: "Android 15, One UI 6.1",
+      dimensions: "164.4 x 77.9 x 7.9 mm",
+      weight: "192g",
+      resistance: "IP54",
+      updates: "6 años Android + 6 años seguridad",
+    },
+    colors: [
+      { name: "Negro", code: "#000000" },
+      { name: "Gris Claro", code: "#D3D3D3" },
+      { name: "Dorado", code: "#FFD700" },
+      { name: "Verde Claro", code: "#90EE90" },
+    ],
+    features: [
+      "Super AMOLED 90Hz",
+      "6 años actualizaciones",
+      "Cámara 50MP",
+      "NFC pagos",
+      "IP54 resistente",
+      "Knox Vault",
+      "128GB",
+      "Delgado 7.9mm",
+      "One UI 6.1",
+      "Android 15",
+    ],
+    highlights: {
+      pros: [
+        "Super AMOLED premium",
+        "6 años actualizaciones",
+        "NFC incluido",
+        "IP54 resistente",
+        "Knox Vault seguro",
+        "Diseño delgado",
+      ],
+      cons: [
+        "Solo 4G",
+        "4GB RAM limitado",
+        "Cargador NO incluido",
+        "Sin jack 3.5mm",
+        "Carga solo 25W",
+      ],
+    },
+    boxContents: {
+      included: [
+        "Teléfono A16 4G",
+        "Cable USB-C",
+        "Herramienta SIM",
+        "Guía",
+        "Garantía",
+      ],
+      notIncluded: ["Cargador", "Audífonos", "Funda"],
+    },
+    promotion: {
+      active: false,
+      title: "",
+      description: "",
+      expired: false,
+    },
+    stock: 25,
+    isActive: true,
+    isFeatured: true,
+    rating: 4.6,
+    reviewCount: 0,
+  },
+  {
+    sku: "SAM-A16-4G-8-256",
+    name: "Samsung Galaxy A16 4G 256GB | 8GB RAM",
+    slug: "samsung-galaxy-a16-4g-256gb-8gb",
+    description: "Versión potenciada con 8GB RAM y 256GB almacenamiento. Pantalla Super AMOLED 90Hz, 6 años de actualizaciones, cámara 50MP, resistencia IP54.",
+    longDescription: `El Samsung Galaxy A16 4G en su versión de 8GB RAM y 256GB almacenamiento es la opción perfecta para quienes necesitan más espacio y mejor rendimiento sin saltar a 5G.
+
+Su espectacular pantalla Super AMOLED de 6.7 pulgadas con 90Hz ofrece experiencia visual premium. Con el doble de almacenamiento (256GB vs 128GB), guarda todas tus fotos, videos y apps sin preocupaciones.
+
+Los 8GB de RAM garantizan multitarea fluida, mientras que el procesador Helio G99 ofrece rendimiento confiable. La cámara triple de 50MP captura momentos con calidad.
+
+Con 6 años de actualizaciones hasta 2030, resistencia IP54, NFC y Knox Vault, el A16 4G 256GB es inversión inteligente a largo plazo.`,
+    brand: "Samsung",
+    price: 850000,
+    compareAtPrice: 949900,
+    currency: "COP",
+    images: [
+      "/assets/generated_images/Samsung_flagship_phone_product_aa170b09.png",
+    ],
+    specifications: {
+      screen: {
+        size: "6.7\"",
+        type: "Super AMOLED",
+        resolution: "1080 x 2340 (FHD+)",
+        refreshRate: "90Hz",
+      },
+      processor: "MediaTek Helio G99",
+      ram: "8GB",
+      storage: "256GB",
+      expandableStorage: "Hasta 1.5TB microSD",
+      camera: {
+        main: "50MP f/1.8",
+        ultrawide: "5MP",
+        depth: "2MP",
+        front: "13MP",
+        features: ["HDR", "Modo noche", "Video FHD"],
+      },
+      battery: {
+        capacity: "5000mAh",
+        charging: "25W (no incluido)",
+      },
+      connectivity: ["4G LTE", "Wi-Fi 5", "Bluetooth 5.3", "NFC", "USB-C"],
+      security: ["Huella lateral", "Knox Vault"],
+      os: "Android 15, One UI 6.1",
+      dimensions: "164.4 x 77.9 x 7.9 mm",
+      weight: "192g",
+      resistance: "IP54",
+      updates: "6 años Android + 6 años seguridad",
+    },
+    colors: [
+      { name: "Negro", code: "#000000" },
+      { name: "Gris Claro", code: "#D3D3D3" },
+      { name: "Dorado", code: "#FFD700" },
+      { name: "Verde Claro", code: "#90EE90" },
+    ],
+    features: [
+      "Super AMOLED 90Hz",
+      "8GB RAM doble",
+      "256GB almacenamiento",
+      "6 años actualizaciones",
+      "NFC pagos",
+      "IP54 resistente",
+      "Knox Vault",
+      "Delgado 7.9mm",
+      "One UI 6.1",
+      "Android 15",
+    ],
+    highlights: {
+      pros: [
+        "Super AMOLED premium",
+        "8GB RAM mejor rendimiento",
+        "256GB doble espacio",
+        "6 años actualizaciones",
+        "NFC + IP54",
+        "Knox Vault",
+      ],
+      cons: [
+        "Solo 4G",
+        "Cargador NO incluido",
+        "Sin jack 3.5mm",
+        "Carga solo 25W",
+        "$100K más vs 128GB",
+      ],
+    },
+    boxContents: {
+      included: [
+        "Teléfono A16 4G 256GB",
+        "Cable USB-C",
+        "Herramienta SIM",
+        "Guía",
+        "Garantía",
+      ],
+      notIncluded: ["Cargador", "Audífonos", "Funda"],
+    },
+    promotion: {
+      active: false,
+      title: "",
+      description: "",
+      expired: false,
+    },
+    stock: 20,
+    isActive: true,
+    isFeatured: true,
+    rating: 4.6,
     reviewCount: 0,
   },
 ];

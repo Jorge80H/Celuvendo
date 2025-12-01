@@ -19,7 +19,7 @@ export default function HeroBanner() {
                 Hasta 40% OFF en Celulares
               </h2>
               <p className="text-lg md:text-xl text-muted-foreground">
-                Las mejores ofertas del año + Envío gratis en toda Colombia
+                Las mejores ofertas del año + Envío gratis en Bogotá
               </p>
             </div>
 
