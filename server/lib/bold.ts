@@ -42,7 +42,7 @@ export async function createBoldPayment(data: BoldPaymentData): Promise<BoldPaym
       amount_type: "CLOSE", // Fixed amount (note: use "CLOSE" not "CLOSED")
       amount: {
         currency: data.currency,
-        total_amount: data.amount, // Amount in cents
+        total_amount: data.amount, // Amount in COP (Colombian pesos), not cents
       },
       description: data.description,
       callback_url: data.redirectUrl,

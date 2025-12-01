@@ -240,13 +240,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Get app URL for redirect
       const appUrl = process.env.APP_URL || `http://localhost:${process.env.PORT || 5000}`;
 
-      console.log("Creating order - Step 4: Creating Bold payment", { orderNumber, amount: Math.round(parseFloat(total) * 100) });
+      console.log("Creating order - Step 4: Creating Bold payment", { orderNumber, amount: Math.round(parseFloat(total)) });
 
       // Create payment with Bold
       const paymentResult = await createBoldPayment({
         orderId: orderNumber,
         description: `Orden #${orderNumber} - ${itemsDescription}`,
-        amount: Math.round(parseFloat(total) * 100), // Bold uses cents
+        amount: Math.round(parseFloat(total)), // Bold uses COP (pesos), not cents
         currency: "COP",
         redirectUrl: `${appUrl}/payment/confirmation?orderId=${order.id}`,
         customerEmail: email,
