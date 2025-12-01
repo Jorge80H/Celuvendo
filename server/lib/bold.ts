@@ -32,58 +32,67 @@ interface BoldPaymentResponse {
  */
 export async function createBoldPayment(data: BoldPaymentData): Promise<BoldPaymentResponse> {
   try {
-    const baseUrl = BOLD_ENV === "production"
-      ? "https://checkout.bold.co"
-      : "https://checkout.sandbox.bold.co";
+    // Bold uses the same API URL for test and production
+    // The environment is determined by the API key used
+    const baseUrl = "https://integrations.api.bold.co";
 
-    // Generate integrity hash (if required by Bold)
-    const integritySignature = generateIntegrityHash(data);
-
-    // Prepare payment request according to Bold API
+    // Prepare payment request according to Bold API documentation
     const paymentRequest = {
-      apiKey: BOLD_API_KEY,
-      order: {
-        id: data.orderId,
-        amount: data.amount,
-        currency: data.currency,
-        description: data.description,
-        redirectUrl: data.redirectUrl,
-      },
+      currency: data.currency,
+      total: data.amount, // Amount in cents
+      description: data.description,
+      orderId: data.orderId,
+      redirectionUrl: data.redirectUrl,
+      paymentMethod: "PAY_BY_LINK", // Bold checkout link
       customer: {
         email: data.customerEmail,
-        name: data.customerName,
-        phone: data.customerPhone,
+        fullName: data.customerName,
+        phoneNumber: data.customerPhone,
         documentNumber: data.customerDocument,
         documentType: data.customerDocumentType,
       },
-      integritySignature,
     };
 
+    console.log("Bold payment request:", JSON.stringify(paymentRequest, null, 2));
+
     // Call Bold API to create payment
-    const response = await fetch(`${baseUrl}/api/v1/payment`, {
+    const response = await fetch(`${baseUrl}/payments/app-checkout`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${BOLD_API_KEY}`,
+        "x-api-key": BOLD_API_KEY,
       },
       body: JSON.stringify(paymentRequest),
     });
 
     if (!response.ok) {
-      const errorData = await response.json();
-      console.error("Bold API Error:", errorData);
+      const errorText = await response.text();
+      console.error("Bold API Error:", { status: response.status, body: errorText });
       return {
         success: false,
-        error: errorData.message || "Error al crear el pago con Bold",
+        error: `Bold API error: ${response.status} - ${errorText}`,
       };
     }
 
     const result = await response.json();
+    console.log("Bold payment response:", JSON.stringify(result, null, 2));
+
+    // Bold API returns payment link in different possible fields
+    const paymentUrl = result.paymentLink || result.checkoutUrl || result.url;
+    const transactionId = result.transactionId || result.id || result.paymentId;
+
+    if (!paymentUrl) {
+      console.error("No payment URL in Bold response:", result);
+      return {
+        success: false,
+        error: "No se recibió URL de pago de Bold",
+      };
+    }
 
     return {
       success: true,
-      paymentUrl: result.paymentUrl || result.checkoutUrl,
-      transactionId: result.transactionId || result.id,
+      paymentUrl,
+      transactionId,
       orderId: data.orderId,
     };
 
