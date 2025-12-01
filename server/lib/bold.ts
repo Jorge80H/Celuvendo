@@ -37,26 +37,20 @@ export async function createBoldPayment(data: BoldPaymentData): Promise<BoldPaym
     const baseUrl = "https://integrations.api.bold.co";
 
     // Prepare payment request according to Bold API documentation
+    // Bold uses payment links with /online/link/v1 endpoint
     const paymentRequest = {
-      currency: data.currency,
-      total: data.amount, // Amount in cents
+      amount: data.amount, // Amount in cents
+      amount_type: "CLOSED", // Fixed amount (not open)
       description: data.description,
-      orderId: data.orderId,
-      redirectionUrl: data.redirectUrl,
-      paymentMethod: "PAY_BY_LINK", // Bold checkout link
-      customer: {
-        email: data.customerEmail,
-        fullName: data.customerName,
-        phoneNumber: data.customerPhone,
-        documentNumber: data.customerDocument,
-        documentType: data.customerDocumentType,
-      },
+      callback_url: data.redirectUrl,
+      payer_email: data.customerEmail,
+      order_id: data.orderId, // Custom order reference
     };
 
     console.log("Bold payment request:", JSON.stringify(paymentRequest, null, 2));
 
-    // Call Bold API to create payment
-    const response = await fetch(`${baseUrl}/payments/app-checkout`, {
+    // Call Bold API to create payment link
+    const response = await fetch(`${baseUrl}/online/link/v1`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -77,9 +71,10 @@ export async function createBoldPayment(data: BoldPaymentData): Promise<BoldPaym
     const result = await response.json();
     console.log("Bold payment response:", JSON.stringify(result, null, 2));
 
-    // Bold API returns payment link in different possible fields
-    const paymentUrl = result.paymentLink || result.checkoutUrl || result.url;
-    const transactionId = result.transactionId || result.id || result.paymentId;
+    // Bold API returns payment link in the response
+    // Response format: { link: "https://...", id: "...", ... }
+    const paymentUrl = result.link || result.payment_link || result.url;
+    const transactionId = result.id || result.payment_id;
 
     if (!paymentUrl) {
       console.error("No payment URL in Bold response:", result);
