@@ -152,21 +152,23 @@ export function verifyBoldWebhook(payload: string, signature: string): boolean {
 /**
  * Gets payment status from Bold
  */
-export async function getBoldPaymentStatus(transactionId: string): Promise<any> {
+export async function getBoldPaymentStatus(paymentLinkId: string): Promise<any> {
   try {
-    const baseUrl = BOLD_ENV === "production"
-      ? "https://api.bold.co"
-      : "https://api.sandbox.bold.co";
+    // Use the same base URL as payment link creation
+    const baseUrl = "https://integrations.api.bold.co";
 
-    const response = await fetch(`${baseUrl}/v1/transaction/${transactionId}`, {
+    // Query the payment link status
+    const response = await fetch(`${baseUrl}/online/link/v1/${paymentLinkId}`, {
       method: "GET",
       headers: {
-        "Authorization": `Bearer ${BOLD_API_KEY}`,
+        "Authorization": `x-api-key ${BOLD_API_KEY}`,
       },
     });
 
     if (!response.ok) {
-      throw new Error("Error al consultar el estado del pago");
+      const errorText = await response.text();
+      console.error("Bold API error:", { status: response.status, body: errorText });
+      throw new Error(`Error al consultar el estado del pago: ${response.status}`);
     }
 
     return await response.json();
