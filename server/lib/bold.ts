@@ -75,9 +75,9 @@ export async function createBoldPayment(data: BoldPaymentData): Promise<BoldPaym
     console.log("Bold payment response:", JSON.stringify(result, null, 2));
 
     // Bold API returns payment link in the response
-    // Response format: { link: "https://...", id: "...", ... }
-    const paymentUrl = result.link || result.payment_link || result.url;
-    const transactionId = result.id || result.payment_id;
+    // Response format: { payload: { url: "https://...", payment_link: "LNK_..." }, errors: [] }
+    const paymentUrl = result.payload?.url || result.url || result.link;
+    const transactionId = result.payload?.payment_link || result.id || result.payment_id;
 
     if (!paymentUrl) {
       console.error("No payment URL in Bold response:", result);
