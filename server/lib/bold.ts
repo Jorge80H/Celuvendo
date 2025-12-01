@@ -120,13 +120,24 @@ function generateIntegrityHash(data: BoldPaymentData): string {
 /**
  * Verifies Bold webhook signature
  * This ensures the webhook is actually from Bold
+ * According to Bold docs: Convert body to Base64, then use HMAC-SHA256 with Identity Key
  */
 export function verifyBoldWebhook(payload: string, signature: string): boolean {
   try {
+    // Convert payload to Base64
+    const base64Payload = Buffer.from(payload).toString('base64');
+
+    // Use HMAC-SHA256 with Identity Key (BOLD_API_KEY, not SECRET_KEY)
     const expectedSignature = crypto
-      .createHmac("sha256", BOLD_SECRET_KEY)
-      .update(payload)
+      .createHmac("sha256", BOLD_API_KEY)
+      .update(base64Payload)
       .digest("hex");
+
+    console.log("Verifying webhook signature:", {
+      providedSignature: signature,
+      expectedSignature,
+      match: signature === expectedSignature,
+    });
 
     return crypto.timingSafeEqual(
       Buffer.from(signature),

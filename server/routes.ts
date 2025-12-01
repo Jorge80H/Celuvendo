@@ -6,7 +6,7 @@ import { z } from "zod";
 import session from "express-session";
 import { randomUUID } from "crypto";
 import inventoryRoutes from "./inventory-routes";
-import { createBoldPayment, verifyBoldWebhook } from "./lib/bold";
+import { createBoldPayment, verifyBoldWebhook, getBoldPaymentStatus } from "./lib/bold";
 import * as instantServer from "./lib/instant-server";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -370,6 +370,37 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       console.log("Order found:", { id: order.id, orderNumber: order.orderNumber, status: order.paymentStatus });
+
+      // If order is still pending, check Bold API for payment status
+      if (order.paymentStatus === "pending" && order.boldTransactionId) {
+        console.log("Order pending, checking Bold API for status:", order.boldTransactionId);
+
+        try {
+          const boldStatus = await getBoldPaymentStatus(order.boldTransactionId);
+          console.log("Bold payment status:", boldStatus);
+
+          // If Bold reports payment as successful, update our order
+          if (boldStatus && (boldStatus.status === "APPROVED" || boldStatus.state === "APPROVED")) {
+            console.log("Bold reports payment approved, updating order");
+
+            await instantServer.updateOrderStatus(order.id, {
+              paymentStatus: "paid",
+              orderStatus: "processing",
+              paidAt: Date.now(),
+            });
+
+            await instantServer.clearCart(order.sessionId);
+
+            // Fetch updated order
+            const updatedOrder = await instantServer.getOrderById(req.params.orderId);
+            return res.json(updatedOrder);
+          }
+        } catch (boldError) {
+          console.error("Error checking Bold payment status:", boldError);
+          // Continue and return order as-is
+        }
+      }
+
       res.json(order);
     } catch (error) {
       console.error("Error fetching order:", error);

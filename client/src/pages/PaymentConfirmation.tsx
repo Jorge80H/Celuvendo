@@ -45,7 +45,17 @@ export default function PaymentConfirmation() {
     };
 
     fetchOrder();
-  }, [orderId]);
+
+    // Poll for order status every 5 seconds if payment is pending
+    const interval = setInterval(() => {
+      if (order?.paymentStatus === "pending") {
+        console.log("Polling order status...");
+        fetchOrder();
+      }
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [orderId, order?.paymentStatus]);
 
   if (loading) {
     return (
