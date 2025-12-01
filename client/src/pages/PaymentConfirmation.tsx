@@ -15,8 +15,8 @@ export default function PaymentConfirmation() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Get orderId from URL params
-  const urlParams = new URLSearchParams(location.split("?")[1]);
+  // Get orderId from URL params - use window.location.search for full query string
+  const urlParams = new URLSearchParams(window.location.search);
   const orderId = urlParams.get("orderId");
 
   useEffect(() => {
