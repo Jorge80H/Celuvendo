@@ -187,6 +187,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Order routes
   app.post("/api/orders/create", async (req, res) => {
     try {
+      console.log("Creating order - Step 1: Validating request");
       const {
         customerName,
         documentType,
@@ -204,9 +205,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Validate required fields
       if (!customerName || !documentNumber || !address || !city || !phone || !email || !items || !total) {
+        console.error("Missing required fields:", { customerName, documentNumber, address, city, phone, email, items: !!items, total });
         return res.status(400).json({ error: "Missing required fields" });
       }
 
+      console.log("Creating order - Step 2: Creating order in InstantDB");
       // Create order in InstantDB
       const order = await instantServer.createOrder({
         sessionId,
@@ -224,6 +227,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         discount: 0,
       });
 
+      console.log("Creating order - Step 3: Order created", { orderId: order.id, orderNumber: order.orderNumber });
+
       // Get order number
       const orderNumber = order.orderNumber;
 
@@ -234,6 +239,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Get app URL for redirect
       const appUrl = process.env.APP_URL || `http://localhost:${process.env.PORT || 5000}`;
+
+      console.log("Creating order - Step 4: Creating Bold payment", { orderNumber, amount: Math.round(parseFloat(total) * 100) });
 
       // Create payment with Bold
       const paymentResult = await createBoldPayment({
@@ -250,14 +257,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
 
       if (!paymentResult.success) {
+        console.error("Bold payment failed:", paymentResult.error);
         return res.status(500).json({ error: paymentResult.error });
       }
+
+      console.log("Creating order - Step 5: Payment created, updating order");
 
       // Update order with Bold transaction info
       await instantServer.updateOrderPaymentInfo(order.id, {
         boldTransactionId: paymentResult.transactionId,
         boldOrderId: paymentResult.orderId,
       });
+
+      console.log("Creating order - Step 6: Success");
 
       res.json({
         success: true,
@@ -268,7 +280,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
     } catch (error) {
       console.error("Error creating order:", error);
-      res.status(500).json({ error: "Failed to create order" });
+      console.error("Error stack:", error instanceof Error ? error.stack : "No stack trace");
+      console.error("Error message:", error instanceof Error ? error.message : String(error));
+      res.status(500).json({
+        error: "Failed to create order",
+        details: error instanceof Error ? error.message : String(error)
+      });
     }
   });
 
