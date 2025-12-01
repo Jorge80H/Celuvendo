@@ -98,6 +98,7 @@ export default function PaymentConfirmation() {
   }
 
   const isPaid = order.paymentStatus === "paid";
+  const isFailed = order.paymentStatus === "failed";
   const items = typeof order.items === "string" ? JSON.parse(order.items) : order.items;
 
   return (
@@ -115,6 +116,14 @@ export default function PaymentConfirmation() {
                   <h1 className="text-3xl font-bold font-serif mb-2">¡Pago Exitoso!</h1>
                   <p className="text-lg text-muted-foreground">
                     Gracias por tu compra. Tu pedido ha sido confirmado.
+                  </p>
+                </>
+              ) : isFailed ? (
+                <>
+                  <XCircle className="h-16 w-16 text-destructive mx-auto mb-4" />
+                  <h1 className="text-3xl font-bold font-serif mb-2">Pago Rechazado</h1>
+                  <p className="text-lg text-muted-foreground">
+                    El pago no pudo ser procesado. Por favor, intenta nuevamente con otro método de pago.
                   </p>
                 </>
               ) : (
@@ -147,6 +156,8 @@ export default function PaymentConfirmation() {
                     <p className="font-semibold">
                       {isPaid ? (
                         <span className="text-green-600">Pagado</span>
+                      ) : isFailed ? (
+                        <span className="text-destructive">Rechazado</span>
                       ) : (
                         <span className="text-yellow-600">Pendiente</span>
                       )}

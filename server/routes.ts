@@ -395,6 +395,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
             // Fetch updated order
             const updatedOrder = await instantServer.getOrderById(req.params.orderId);
             return res.json(updatedOrder);
+          } else if (boldStatus && (boldStatus.status === "REJECTED" || boldStatus.status === "EXPIRED")) {
+            console.log("Bold reports payment rejected/expired, updating order");
+
+            await instantServer.updateOrderStatus(order.id, {
+              paymentStatus: "failed",
+              orderStatus: "cancelled",
+            });
+
+            // Fetch updated order
+            const updatedOrder = await instantServer.getOrderById(req.params.orderId);
+            return res.json(updatedOrder);
           }
         } catch (boldError) {
           console.error("Error checking Bold payment status:", boldError);
