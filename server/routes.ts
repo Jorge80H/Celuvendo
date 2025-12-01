@@ -310,19 +310,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.warn("No signature provided - accepting webhook (test mode)");
       }
 
-      const { event, data } = req.body;
+      // Bold webhook format: { id, type, subject, time, data }
+      const { type, subject, data } = req.body;
 
-      // Handle payment confirmation
-      if (event === "payment.success" || event === "transaction.approved") {
-        const { orderId, transactionId, amount, status } = data;
+      console.log("Processing webhook event:", { type, subject });
 
-        // Find order by Bold order ID (order number)
-        const order = await instantServer.getOrderByNumber(orderId);
+      // Handle payment confirmation - Bold uses "SALE_APPROVED" event
+      if (type === "SALE_APPROVED") {
+        const paymentId = data?.payment_id || subject;
+
+        console.log("Sale approved, looking for order with payment ID:", paymentId);
+        console.log("Payment data:", JSON.stringify(data, null, 2));
+
+        // Find order by Bold transaction ID (the payment link ID we stored)
+        const order = await instantServer.getOrderByBoldTransactionId(paymentId);
 
         if (!order) {
-          console.error(`Order not found: ${orderId}`);
-          return res.status(404).json({ error: "Order not found" });
+          console.error(`Order not found for Bold transaction ID: ${paymentId}`);
+          // Still return success to Bold to avoid retries
+          return res.json({ success: true, message: "Order not found but acknowledged" });
         }
+
+        console.log(`Found order: ${order.orderNumber}, updating status to paid`);
 
         // Update order status
         await instantServer.updateOrderStatus(order.id, {
@@ -337,9 +346,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // Send data to n8n webhook
         await sendToN8n(order, data);
 
-        console.log(`Payment confirmed for order ${orderId}`);
+        console.log(`Payment confirmed for order ${order.orderNumber}`);
       }
 
+      // Always return success to Bold to avoid retries
       res.json({ success: true });
 
     } catch (error) {

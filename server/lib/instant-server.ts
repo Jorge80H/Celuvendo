@@ -70,6 +70,23 @@ export async function getOrderById(orderId: string) {
 }
 
 /**
+ * Queries order by Bold transaction ID
+ */
+export async function getOrderByBoldTransactionId(boldTransactionId: string) {
+  const result = await db.query({
+    orders: {
+      $: {
+        where: {
+          boldTransactionId,
+        },
+      },
+    },
+  });
+
+  return result.orders?.[0];
+}
+
+/**
  * Creates a new order
  */
 export async function createOrder(orderData: {
