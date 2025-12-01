@@ -11,8 +11,7 @@
   node_bundler = "esbuild"
   included_files = [
     "dist/server/**",
-    "dist/shared/**",
-    "dist/vite.config.*"
+    "dist/shared/**"
   ]
   external_node_modules = ["@instantdb/admin", "lightningcss", "esbuild"]
 

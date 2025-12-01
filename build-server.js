@@ -14,11 +14,4 @@ cpSync('./server', './dist/server', { recursive: true });
 // Copy shared files to dist/shared (so ../shared/... imports work)
 cpSync('./shared', './dist/shared', { recursive: true });
 
-// Copy vite.config.ts to dist (so ../vite.config imports work)
-try {
-  cpSync('./vite.config.ts', './dist/vite.config.ts');
-} catch (e) {
-  console.warn('⚠ vite.config.ts not copied (may not be needed)');
-}
-
 console.log('✓ Server and shared files copied to dist/');
