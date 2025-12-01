@@ -1,12 +1,11 @@
 {
-  "extends": "./tsconfig.json",
   "compilerOptions": {
     "module": "ESNext",
     "moduleResolution": "bundler",
     "target": "ES2022",
     "lib": ["ES2022"],
     "outDir": "./dist/server",
-    "rootDir": "./server",
+    "rootDir": "./",
     "declaration": false,
     "sourceMap": true,
     "esModuleInterop": true,
@@ -16,6 +15,7 @@
     "allowSyntheticDefaultImports": true,
     "strict": false,
     "noEmit": false,
+    "types": ["node"],
     "paths": {
       "@shared/*": ["./shared/*"]
     }
