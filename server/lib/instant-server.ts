@@ -5,20 +5,35 @@ import type { Schema } from "@shared/instant-schema";
 const INSTANT_APP_ID = process.env.INSTANT_APP_ID;
 const INSTANT_ADMIN_TOKEN = process.env.INSTANT_ADMIN_TOKEN;
 
-if (!INSTANT_APP_ID || !INSTANT_ADMIN_TOKEN) {
-  throw new Error(
-    "INSTANT_APP_ID and INSTANT_ADMIN_TOKEN must be set in environment variables"
-  );
-}
-
-// Initialize InstantDB admin client
-export const db = init<Schema>({
-  appId: INSTANT_APP_ID,
-  adminToken: INSTANT_ADMIN_TOKEN,
+// Log environment for debugging
+console.log("InstantDB Config:", {
+  hasAppId: !!INSTANT_APP_ID,
+  hasAdminToken: !!INSTANT_ADMIN_TOKEN,
+  appIdLength: INSTANT_APP_ID?.length || 0,
 });
 
-// Re-export utilities
-export { tx, id };
+// Initialize InstantDB admin client
+let db: ReturnType<typeof init<Schema>>;
+
+try {
+  if (!INSTANT_APP_ID || !INSTANT_ADMIN_TOKEN) {
+    throw new Error(
+      "INSTANT_APP_ID and INSTANT_ADMIN_TOKEN must be set in environment variables"
+    );
+  }
+
+  db = init<Schema>({
+    appId: INSTANT_APP_ID,
+    adminToken: INSTANT_ADMIN_TOKEN,
+  });
+
+  console.log("InstantDB initialized successfully");
+} catch (error) {
+  console.error("Failed to initialize InstantDB:", error);
+  throw error;
+}
+
+export { db, tx, id };
 
 /**
  * Queries orders by order number
