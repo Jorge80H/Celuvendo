@@ -342,12 +342,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Payment confirmation page data
   app.get("/api/orders/:orderId", async (req, res) => {
     try {
+      console.log("Fetching order:", req.params.orderId);
       const order = await instantServer.getOrderById(req.params.orderId);
 
       if (!order) {
+        console.error("Order not found:", req.params.orderId);
         return res.status(404).json({ error: "Order not found" });
       }
 
+      console.log("Order found:", { id: order.id, orderNumber: order.orderNumber, status: order.paymentStatus });
       res.json(order);
     } catch (error) {
       console.error("Error fetching order:", error);
