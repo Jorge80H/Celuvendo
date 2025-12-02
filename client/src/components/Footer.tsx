@@ -80,8 +80,9 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="text-center text-sm text-muted-foreground">
-            <p>&copy; 2025 Celuvendo. Todos los derechos reservados.</p>
+          <div className="flex flex-col md:flex-row items-center justify-between gap-2 text-sm text-muted-foreground">
+            <p>&copy; 2025 Celuvendo.com. Todos los derechos reservados.</p>
+            <p>Desarrollado por <a href="https://empleadosdigitales.com.co" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">empleadosdigitales.com.co</a></p>
           </div>
         </div>
       </div>
