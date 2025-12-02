@@ -394,6 +394,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
             // Fetch updated order
             const updatedOrder = await instantServer.getOrderById(req.params.orderId);
+
+            // Send to n8n for email notifications
+            await sendToN8n(updatedOrder, {
+              paymentMethod: boldStatus.payment_method || "Bold"
+            });
+
             return res.json(updatedOrder);
           } else if (boldStatus && (boldStatus.status === "REJECTED" || boldStatus.status === "EXPIRED")) {
             console.log("Bold reports payment rejected/expired, updating order");
