@@ -435,12 +435,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
  */
 async function sendToN8n(order: any, paymentData: any) {
   try {
+    console.log("sendToN8n called for order:", order.orderNumber);
+
     const n8nWebhookUrl = process.env.N8N_WEBHOOK_URL;
 
     if (!n8nWebhookUrl) {
       console.warn("N8N_WEBHOOK_URL not configured");
       return;
     }
+
+    console.log("Sending to n8n webhook:", n8nWebhookUrl);
 
     // Prepare data for n8n
     const items = order.items; // Already an array from InstantDB
