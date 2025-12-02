@@ -52,7 +52,7 @@ export default function HeroBanner() {
             </div>
           </div>
 
-          <div className="relative h-[300px] md:h-[400px]">
+          <Link href="/productos" className="relative h-[300px] md:h-[400px] block cursor-pointer group">
             <picture>
               <source
                 media="(max-width: 767px)"
@@ -72,7 +72,7 @@ export default function HeroBanner() {
               <img
                 src="/assets/hero-banner-desktop.webp"
                 alt="Colección de celulares modernos"
-                className="absolute inset-0 w-full h-full object-contain"
+                className="absolute inset-0 w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
                 data-testid="img-hero-banner"
                 fetchPriority="high"
                 loading="eager"
@@ -80,7 +80,7 @@ export default function HeroBanner() {
                 height="768"
               />
             </picture>
-          </div>
+          </Link>
         </div>
       </div>
     </section>
