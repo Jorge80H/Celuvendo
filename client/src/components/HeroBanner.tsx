@@ -12,25 +12,25 @@ export default function HeroBanner() {
         <div className="grid md:grid-cols-2 gap-8 items-center py-12 md:py-16">
           <div className="space-y-6">
             <div className="space-y-3">
-              <Badge variant="destructive" className="text-sm font-bold animate-pulse">
-                BLACK FRIDAY 2025
+              <Badge className="text-sm font-bold animate-pulse bg-red-600 hover:bg-red-600">
+                🎄 ESPECIAL NAVIDAD 2025
               </Badge>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-serif leading-tight">
-                Hasta 40% OFF en Celulares
+                Hasta 35% OFF en Celulares
               </h2>
               <p className="text-lg md:text-xl text-muted-foreground">
-                Las mejores ofertas del año + Envío gratis en Bogotá
+                El regalo perfecto esta Navidad + Envío gratis en Bogotá
               </p>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3">
               <Link href="/productos">
-                <Button size="lg" className="text-base w-full sm:w-auto bg-destructive hover:bg-destructive/90" data-testid="button-explore-offers">
-                  Ver Ofertas Black Friday
+                <Button size="lg" className="text-base w-full sm:w-auto bg-red-600 hover:bg-red-700" data-testid="button-explore-offers">
+                  Ver Ofertas de Navidad
                 </Button>
               </Link>
               <Link href="/productos">
-                <Button size="lg" variant="outline" className="text-base backdrop-blur-sm w-full sm:w-auto border-destructive text-destructive hover:bg-destructive/10" data-testid="button-view-catalog">
+                <Button size="lg" variant="outline" className="text-base backdrop-blur-sm w-full sm:w-auto border-red-600 text-red-600 hover:bg-red-50" data-testid="button-view-catalog">
                   Ver Todos los Productos
                 </Button>
               </Link>

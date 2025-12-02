@@ -49,9 +49,12 @@ export default function Header() {
 
           <Link href="/">
             <div className="flex items-center gap-2 cursor-pointer">
-              <h1 className="text-xl md:text-2xl font-bold font-serif text-primary" data-testid="text-logo">
-                Celuvendo
-              </h1>
+              <img
+                src="/assets/logoceluvendo_nofondo.png"
+                alt="Celuvendo"
+                className="h-8 md:h-10 w-auto"
+                data-testid="logo"
+              />
               <Badge variant="secondary" className="hidden md:flex text-xs">
                 Colombia
               </Badge>
