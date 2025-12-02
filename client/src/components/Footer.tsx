@@ -63,9 +63,16 @@ export default function Footer() {
               <span>Envío Gratis &gt; $100.000</span>
             </div>
             
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-muted-foreground">Métodos de pago:</span>
+            <div className="flex flex-col md:flex-row items-center gap-3">
               <div className="flex items-center gap-3">
+                <span className="text-sm text-muted-foreground">Pagos seguros procesados por:</span>
+                <img
+                  src="https://cdn.brandfetch.io/iddn3wqBfj/theme/dark/logo.svg"
+                  alt="Bold Pagos"
+                  className="h-5 w-auto"
+                />
+              </div>
+              <div className="flex items-center gap-2">
                 <SiVisa className="h-6 w-6 text-muted-foreground" />
                 <SiMastercard className="h-6 w-6 text-muted-foreground" />
                 <CreditCard className="h-5 w-5 text-muted-foreground" />
