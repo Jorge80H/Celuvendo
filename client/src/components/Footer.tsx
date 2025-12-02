@@ -34,6 +34,8 @@ export default function Footer() {
               <li><a href="/envios-y-devoluciones" className="hover:text-foreground transition-colors">Envíos y Devoluciones</a></li>
               <li><a href="/garantia" className="hover:text-foreground transition-colors">Garantía</a></li>
               <li><a href="/terminos-y-condiciones" className="hover:text-foreground transition-colors">Términos y Condiciones</a></li>
+              <li><a href="/politica-de-privacidad" className="hover:text-foreground transition-colors">Política de Privacidad</a></li>
+              <li><a href="/tratamiento-de-datos" className="hover:text-foreground transition-colors">Tratamiento de Datos</a></li>
             </ul>
           </div>
 

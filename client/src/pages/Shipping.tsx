@@ -25,6 +25,23 @@ export default function Shipping() {
             </p>
           </div>
 
+          {/* Información IVA */}
+          <Card className="p-6 mb-6 bg-blue-50 border-blue-200">
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0">
+                <AlertCircle className="h-8 w-8 text-blue-600" />
+              </div>
+              <div>
+                <h2 className="text-xl font-semibold mb-2">
+                  Información Importante sobre IVA
+                </h2>
+                <p className="text-muted-foreground">
+                  De acuerdo con la legislación colombiana vigente, los productos con precio inferior a <strong>$1.095.000 COP están exentos de IVA</strong>. Para productos con precio igual o superior a este monto, el IVA del 19% ya está incluido en el precio publicado.
+                </p>
+              </div>
+            </div>
+          </Card>
+
           {/* Envío Gratis */}
           <Card className="p-6 mb-6 bg-primary/5 border-primary/20">
             <div className="flex items-start gap-4">
@@ -133,6 +150,31 @@ export default function Shipping() {
             </div>
           </Card>
 
+          {/* Tiendas Físicas */}
+          <Card className="p-6 mb-6">
+            <div className="flex items-center gap-2 mb-4">
+              <MapPin className="h-6 w-6 text-primary" />
+              <h2 className="text-2xl font-semibold">Nuestras Tiendas Físicas en Bogotá</h2>
+            </div>
+            <p className="text-muted-foreground mb-4">
+              Puedes recoger tus pedidos o realizar devoluciones en nuestras tiendas físicas ubicadas en Bogotá:
+            </p>
+            <div className="space-y-4">
+              <div className="p-4 border rounded-md">
+                <div className="font-semibold mb-1">Tienda Alcalá</div>
+                <p className="text-sm text-muted-foreground">Calle 137 # 45-21</p>
+              </div>
+              <div className="p-4 border rounded-md">
+                <div className="font-semibold mb-1">Tienda Ensueño</div>
+                <p className="text-sm text-muted-foreground">Av. Gaitán Cortés con Calle 59 Sur, Centro Comercial Ensueño Local 114</p>
+              </div>
+              <div className="p-4 border rounded-md">
+                <div className="font-semibold mb-1">Tienda Tunal</div>
+                <p className="text-sm text-muted-foreground">Calle 48C Sur # 24-80, Centro Comercial Tunal Local 1036</p>
+              </div>
+            </div>
+          </Card>
+
           {/* Política de Devoluciones */}
           <Card className="p-6 mb-6">
             <div className="flex items-center gap-2 mb-4">
@@ -141,9 +183,9 @@ export default function Shipping() {
             </div>
 
             <div className="mb-6">
-              <h3 className="font-semibold text-lg mb-3">Derecho de Retracto (5 días hábiles)</h3>
+              <h3 className="font-semibold text-lg mb-3">Devoluciones</h3>
               <p className="text-muted-foreground mb-3">
-                Según la ley colombiana, tienes derecho a retractarte de tu compra dentro de los 5 días hábiles siguientes a la recepción del producto, sin necesidad de justificación.
+                Conforme a la ley colombiana, puedes devolver tu compra siempre que el producto esté sin usar, en su empaque original y con todos sus accesorios.
               </p>
               <div className="bg-muted p-4 rounded-md space-y-2">
                 <h4 className="font-semibold text-sm mb-2">Condiciones para devolución:</h4>
@@ -180,7 +222,7 @@ export default function Shipping() {
                     1
                   </span>
                   <div className="text-sm text-muted-foreground">
-                    Contáctanos por WhatsApp (+57 300 123 4567) o correo (soporte@celuvendo.com) indicando tu número de pedido
+                    <strong>En tiendas físicas:</strong> Acércate a cualquiera de nuestras 3 tiendas en Bogotá con tu producto y factura
                   </div>
                 </li>
                 <li className="flex gap-3">
@@ -188,7 +230,7 @@ export default function Shipping() {
                     2
                   </span>
                   <div className="text-sm text-muted-foreground">
-                    Te daremos instrucciones para el envío del producto. Nosotros cubrimos el costo de recolección
+                    <strong>A domicilio:</strong> Contáctanos por WhatsApp (+57 316 888 0808) o correo (soporte@celuvendo.com) y cubrimos el costo de recolección
                   </div>
                 </li>
                 <li className="flex gap-3">
@@ -205,7 +247,7 @@ export default function Shipping() {
             <div>
               <h3 className="font-semibold text-lg mb-3">Cambios por otro Modelo</h3>
               <p className="text-sm text-muted-foreground">
-                Si deseas cambiar tu celular por otro modelo, también puedes hacerlo dentro de los 5 días hábiles.
+                Si deseas cambiar tu celular por otro modelo, puedes hacerlo en nuestras tiendas físicas o contactándonos.
                 El producto debe cumplir las mismas condiciones de devolución. Si hay diferencia de precio,
                 se realizará el ajuste correspondiente (reembolso o cargo adicional según el caso).
               </p>

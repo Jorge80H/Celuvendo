@@ -20,7 +20,7 @@ const faqs = [
       },
       {
         question: "¿Los precios incluyen IVA?",
-        answer: "Sí, todos los precios publicados en nuestro sitio web ya incluyen el IVA del 19%. El precio que ves es el precio final que pagarás."
+        answer: "De acuerdo con la legislación colombiana vigente, los productos con precio inferior a $1.095.000 COP están exentos de IVA. Para productos con precio igual o superior a este monto, el IVA del 19% ya está incluido en el precio publicado. El precio que ves es el precio final que pagarás."
       },
       {
         question: "¿Puedo comprar sin registrarme?",
@@ -49,7 +49,7 @@ const faqs = [
       },
       {
         question: "¿Puedo recoger mi pedido en una tienda física?",
-        answer: "Actualmente somos una tienda 100% online y no contamos con puntos de venta físicos. Sin embargo, ofrecemos envío rápido a todo Colombia y puedes elegir la dirección que prefieras para recibir tu pedido."
+        answer: "Sí, contamos con tiendas físicas en Bogotá donde puedes recoger tu pedido o realizar devoluciones: Tienda Alcalá (Calle 137 # 45-21), Tienda Ensueño (Av. Gaitán Cortés con Calle 59 Sur, CC Ensueño Local 114), y Tienda Tunal (Calle 48C Sur # 24-80, CC Tunal Local 1036)."
       }
     ]
   },
@@ -79,15 +79,15 @@ const faqs = [
     questions: [
       {
         question: "¿Cuál es el tiempo de garantía?",
-        answer: "Todos los celulares tienen garantía oficial del fabricante por 12 meses contra defectos de fábrica. Adicionalmente, tienes derecho a 5 días hábiles de retracto desde que recibes el producto si te arrepientes de la compra (el producto debe estar sin usar y en su empaque original)."
+        answer: "Todos los celulares tienen garantía oficial del fabricante por 12 meses contra defectos de fábrica. La garantía se hace efectiva directamente con el fabricante a través de sus centros de servicio autorizados en Colombia."
       },
       {
         question: "¿Qué cubre la garantía?",
-        answer: "La garantía cubre defectos de fabricación y mal funcionamiento del equipo bajo uso normal, incluyendo: problemas de hardware (pantalla, botones, puertos), problemas de software de fábrica, batería defectuosa, y problemas con las cámaras o sensores. No cubre daños físicos por caídas, golpes, contacto con líquidos (excepto si tiene certificación IP y falla), ni desgaste normal por uso."
+        answer: "La garantía del fabricante cubre defectos de fabricación y mal funcionamiento del equipo bajo uso normal, incluyendo: problemas de hardware (pantalla, botones, puertos), problemas de software de fábrica, batería defectuosa, y problemas con las cámaras o sensores. No cubre daños físicos por caídas, golpes, contacto con líquidos (excepto si tiene certificación IP y falla), ni desgaste normal por uso."
       },
       {
         question: "¿Cómo hago efectiva la garantía?",
-        answer: "Si tu equipo presenta problemas cubiertos por la garantía: 1) Contáctanos por WhatsApp o correo electrónico, 2) Describe el problema y envía fotos/videos si es posible, 3) Te daremos instrucciones para enviar el equipo a nuestro centro de servicio, 4) Evaluamos el equipo (2-3 días hábiles), 5) Lo reparamos o reemplazamos según corresponda. El envío de devolución a tu dirección es gratis."
+        answer: "La garantía se hace efectiva directamente con el fabricante. Debes dirigirte a un centro de servicio autorizado de la marca de tu celular con tu factura de compra. En nuestra página de Garantía encontrarás los enlaces directos al soporte oficial de cada marca en Colombia (Samsung, Motorola, Xiaomi, OPPO, TECNO, INFINIX)."
       }
     ]
   },
@@ -96,11 +96,11 @@ const faqs = [
     questions: [
       {
         question: "¿Puedo devolver un producto?",
-        answer: "Sí, tienes 5 días hábiles para devolver tu compra bajo la ley de retracto, siempre que el producto esté sin usar, con todos sus accesorios, manuales y en su empaque original. El celular no debe tener señales de uso, ralladuras o haberse insertado una SIM card."
+        answer: "Sí, puedes devolver tu compra según la ley colombiana de retracto, siempre que el producto esté sin usar, con todos sus accesorios, manuales y en su empaque original. Puedes realizar la devolución en nuestras tiendas físicas en Bogotá o solicitando recolección a domicilio. Consulta nuestra página de Envíos y Devoluciones para más detalles."
       },
       {
         question: "¿Puedo cambiar un producto por otro modelo?",
-        answer: "Sí, puedes solicitar un cambio dentro de los primeros 5 días hábiles. El producto debe estar en las mismas condiciones que cuando lo recibiste. Si el nuevo modelo tiene un precio diferente, se hará el ajuste correspondiente (reembolso o pago adicional)."
+        answer: "Sí, puedes solicitar un cambio siempre que el producto esté en las mismas condiciones que cuando lo recibiste. Puedes hacerlo en nuestras tiendas físicas en Bogotá o contactándonos. Si el nuevo modelo tiene un precio diferente, se hará el ajuste correspondiente (reembolso o pago adicional)."
       },
       {
         question: "¿Cuánto tiempo tarda el reembolso?",

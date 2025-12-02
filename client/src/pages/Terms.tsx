@@ -92,11 +92,12 @@ export default function Terms() {
                 completamente precisa, completa o actualizada. Las imágenes son referenciales y pueden
                 variar ligeramente del producto real.
               </p>
-              <h3 className="font-semibold mb-2 mt-4">4.2 Precios</h3>
+              <h3 className="font-semibold mb-2 mt-4">4.2 Precios e IVA</h3>
               <p className="text-muted-foreground leading-relaxed">
-                Todos los precios están expresados en Pesos Colombianos (COP) e incluyen IVA del 19%.
-                Nos reservamos el derecho de modificar precios en cualquier momento sin previo aviso.
-                El precio aplicable será el vigente al momento de realizar el pedido.
+                Todos los precios están expresados en Pesos Colombianos (COP). De acuerdo con la legislación colombiana vigente,
+                los productos con precio inferior a $1.095.000 COP están exentos de IVA. Para productos con precio igual o superior
+                a este monto, el IVA del 19% ya está incluido en el precio publicado. Nos reservamos el derecho de modificar precios
+                en cualquier momento sin previo aviso. El precio aplicable será el vigente al momento de realizar el pedido.
               </p>
               <h3 className="font-semibold mb-2 mt-4">4.3 Disponibilidad</h3>
               <p className="text-muted-foreground leading-relaxed">
@@ -160,12 +161,17 @@ export default function Terms() {
               <h2 className="text-xl font-semibold mb-3">7. Derecho de Retracto y Devoluciones</h2>
               <p className="text-muted-foreground leading-relaxed">
                 De conformidad con el Estatuto del Consumidor (Ley 1480 de 2011), tienes derecho a
-                retractarte de tu compra dentro de los cinco (5) días hábiles siguientes a la recepción
-                del producto, sin necesidad de justificación.
+                retractarte de tu compra conforme a la legislación colombiana vigente, sin necesidad de justificación.
               </p>
               <p className="text-muted-foreground leading-relaxed mt-3">
                 Para ejercer este derecho, el producto debe estar sin usar, en su empaque original,
-                con todos sus accesorios y documentación. El costo del retorno es asumido por Celuvendo.
+                con todos sus accesorios y documentación. Puedes realizar la devolución en nuestras tiendas físicas
+                en Bogotá o solicitando recolección a domicilio (el costo del retorno es asumido por Celuvendo).
+              </p>
+              <p className="text-muted-foreground leading-relaxed mt-3">
+                <strong>Nuestras tiendas en Bogotá:</strong> Tienda Alcalá (Calle 137 # 45-21), Tienda Ensueño
+                (Av. Gaitán Cortés con Calle 59 Sur, CC Ensueño Local 114), y Tienda Tunal (Calle 48C Sur # 24-80,
+                CC Tunal Local 1036).
               </p>
               <p className="text-muted-foreground leading-relaxed mt-3">
                 El reembolso se realizará utilizando el mismo método de pago original y se procesará
@@ -178,12 +184,17 @@ export default function Terms() {
               <h2 className="text-xl font-semibold mb-3">8. Garantía</h2>
               <p className="text-muted-foreground leading-relaxed">
                 Todos los productos vendidos por Celuvendo cuentan con garantía oficial del fabricante
-                por 12 meses contra defectos de fábrica. La garantía no cubre daños por mal uso,
-                accidentes, caídas, exposición a líquidos (salvo dispositivos con certificación IP),
-                modificaciones no autorizadas o desgaste normal.
+                por 12 meses contra defectos de fábrica. La garantía se hace efectiva directamente con
+                el fabricante a través de sus centros de servicio autorizados en Colombia.
               </p>
               <p className="text-muted-foreground leading-relaxed mt-3">
-                Para mayor información sobre garantía, consulta nuestra página dedicada de Garantía.
+                La garantía no cubre daños por mal uso, accidentes, caídas, exposición a líquidos
+                (salvo dispositivos con certificación IP), modificaciones no autorizadas o desgaste normal.
+              </p>
+              <p className="text-muted-foreground leading-relaxed mt-3">
+                Para hacer efectiva la garantía, debes contactar directamente al centro de servicio autorizado
+                del fabricante de tu equipo con tu factura de compra. Consulta nuestra página de Garantía donde
+                encontrarás los enlaces oficiales de soporte de cada marca en Colombia.
               </p>
             </Card>
 

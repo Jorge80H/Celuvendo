@@ -15,6 +15,8 @@ import FAQ from "@/pages/FAQ";
 import Shipping from "@/pages/Shipping";
 import Warranty from "@/pages/Warranty";
 import Terms from "@/pages/Terms";
+import Privacy from "@/pages/Privacy";
+import DataProtection from "@/pages/DataProtection";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -30,6 +32,8 @@ function Router() {
       <Route path="/envios-y-devoluciones" component={Shipping} />
       <Route path="/garantia" component={Warranty} />
       <Route path="/terminos-y-condiciones" component={Terms} />
+      <Route path="/politica-de-privacidad" component={Privacy} />
+      <Route path="/tratamiento-de-datos" component={DataProtection} />
       <Route path="/seed" component={SeedData} />
       <Route component={NotFound} />
     </Switch>
