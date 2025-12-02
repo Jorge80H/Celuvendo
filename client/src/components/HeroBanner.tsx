@@ -12,26 +12,26 @@ export default function HeroBanner() {
         <div className="grid md:grid-cols-2 gap-8 items-center py-12 md:py-16">
           <div className="space-y-6">
             <div className="space-y-3">
-              <Badge className="text-sm font-bold animate-pulse bg-red-600 hover:bg-red-600">
-                🎄 ESPECIAL NAVIDAD 2025
+              <Badge className="text-sm font-bold animate-pulse bg-[#0F172A] hover:bg-[#0F172A]">
+                📍 TIENDAS EN BOGOTÁ Y ONLINE
               </Badge>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-serif leading-tight">
-                Hasta 35% OFF en Celulares
-              </h2>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-serif leading-tight">
+                Tecnología Premium a Tu Alcance
+              </h1>
               <p className="text-lg md:text-xl text-muted-foreground">
-                El regalo perfecto esta Navidad + Envío gratis en Bogotá
+                El regalo perfecto para esta navidad garantía oficial + Envío gratis
               </p>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3">
               <Link href="/productos">
-                <Button size="lg" className="text-base w-full sm:w-auto bg-red-600 hover:bg-red-700" data-testid="button-explore-offers">
-                  Ver Ofertas de Navidad
+                <Button size="lg" className="text-base w-full sm:w-auto bg-[#0F172A] hover:bg-[#1E293B]" data-testid="button-explore-offers">
+                  Ver Catálogo Completo
                 </Button>
               </Link>
-              <Link href="/productos">
-                <Button size="lg" variant="outline" className="text-base backdrop-blur-sm w-full sm:w-auto border-red-600 text-red-600 hover:bg-red-50" data-testid="button-view-catalog">
-                  Ver Todos los Productos
+              <Link href="/tiendas">
+                <Button size="lg" variant="outline" className="text-base backdrop-blur-sm w-full sm:w-auto border-gray-300 text-gray-700 hover:bg-gray-50" data-testid="button-view-stores">
+                  Ver Tiendas Físicas
                 </Button>
               </Link>
             </div>
