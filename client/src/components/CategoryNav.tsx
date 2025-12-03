@@ -15,7 +15,7 @@ const categories = [
 
 export default function CategoryNav() {
   return (
-    <nav className="bg-card border-b">
+    <nav className="sticky top-[64px] z-40 bg-white dark:bg-gray-950 border-b">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center gap-2 py-3 overflow-x-auto">
           {categories.map((category) => {

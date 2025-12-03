@@ -161,9 +161,9 @@ export default function Cart() {
               {cartItems.map((item: any) => {
                 const isUpdating = updatingItems.has(item.id);
                 return (
-                <Card key={item.id} className="p-6">
-                  <div className="flex gap-4">
-                    <div className="w-24 h-24 flex-shrink-0 bg-card rounded-md p-2">
+                <Card key={item.id} className="p-4 md:p-6">
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <div className="w-24 h-24 flex-shrink-0 bg-card rounded-md p-2 mx-auto sm:mx-0">
                       <img
                         src={item.product?.images?.[0] || brandImages[item.product?.brand] || samsungImage}
                         alt={item.product?.name}
@@ -173,8 +173,8 @@ export default function Cart() {
                     </div>
 
                     <div className="flex-1 space-y-3">
-                      <div>
-                        <h3 className="font-semibold text-lg" data-testid={`text-cart-name-${item.id}`}>
+                      <div className="text-center sm:text-left">
+                        <h3 className="font-semibold text-base md:text-lg" data-testid={`text-cart-name-${item.id}`}>
                           {item.product?.name}
                         </h3>
                         <p className="text-sm text-muted-foreground" data-testid={`text-cart-brand-${item.id}`}>
@@ -182,8 +182,8 @@ export default function Cart() {
                         </p>
                       </div>
 
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
+                      <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+                        <div className="flex items-center gap-2">
                           <Button
                             size="icon"
                             variant="outline"
@@ -204,7 +204,7 @@ export default function Cart() {
                                 handleUpdateQuantity(item.id, qty);
                               }
                             }}
-                            className="w-16 text-center"
+                            className="w-14 text-center"
                             min="1"
                             max={item.product?.stock}
                             data-testid={`input-quantity-${item.id}`}
@@ -222,11 +222,11 @@ export default function Cart() {
                           </Button>
                         </div>
 
-                        <div className="text-right">
-                          <p className="text-xl font-bold text-primary" data-testid={`text-cart-price-${item.id}`}>
+                        <div className="text-center sm:text-right">
+                          <p className="text-lg md:text-xl font-bold text-primary" data-testid={`text-cart-price-${item.id}`}>
                             {formatCOP((item.product?.price || 0) * item.quantity)}
                           </p>
-                          <p className="text-sm text-muted-foreground">
+                          <p className="text-xs md:text-sm text-muted-foreground">
                             {formatCOP(item.product?.price || 0)} c/u
                           </p>
                         </div>
@@ -235,7 +235,7 @@ export default function Cart() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="text-destructive hover:text-destructive"
+                        className="text-destructive hover:text-destructive w-full sm:w-auto"
                         onClick={() => handleRemove(item.id)}
                         disabled={isUpdating}
                         data-testid={`button-remove-${item.id}`}

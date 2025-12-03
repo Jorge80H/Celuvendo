@@ -50,10 +50,10 @@ export default function Shipping() {
               </div>
               <div>
                 <h2 className="text-xl font-semibold mb-2">
-                  ¡Envío GRATIS en Bogotá en compras mayores a $100,000!
+                  ¡Envío GRATIS a toda Colombia en compras mayores a $100,000!
                 </h2>
                 <p className="text-muted-foreground">
-                  Disfruta de envío sin costo adicional en Bogotá para compras superiores a cien mil pesos. Para montos menores, el costo de envío es de $10,000.
+                  Disfruta de envío sin costo adicional a cualquier ciudad de Colombia para compras superiores a cien mil pesos. Para montos menores, el costo de envío varía según la ciudad de destino.
                 </p>
               </div>
             </div>
@@ -63,15 +63,29 @@ export default function Shipping() {
           <Card className="p-6 mb-6">
             <div className="flex items-center gap-2 mb-4">
               <Calendar className="h-6 w-6 text-primary" />
-              <h2 className="text-2xl font-semibold">Tiempos de Entrega en Bogotá</h2>
+              <h2 className="text-2xl font-semibold">Tiempos de Entrega</h2>
             </div>
             <div className="space-y-4">
               <div className="flex items-start justify-between">
                 <div>
-                  <h3 className="font-semibold mb-1">Toda Bogotá</h3>
-                  <p className="text-sm text-muted-foreground">Incluye todas las localidades</p>
+                  <h3 className="font-semibold mb-1">Bogotá</h3>
+                  <p className="text-sm text-muted-foreground">Todas las localidades</p>
                 </div>
                 <Badge className="bg-green-500 hover:bg-green-600">1-3 días hábiles</Badge>
+              </div>
+              <div className="flex items-start justify-between">
+                <div>
+                  <h3 className="font-semibold mb-1">Principales Ciudades</h3>
+                  <p className="text-sm text-muted-foreground">Medellín, Cali, Barranquilla, Cartagena</p>
+                </div>
+                <Badge className="bg-blue-500 hover:bg-blue-600">2-4 días hábiles</Badge>
+              </div>
+              <div className="flex items-start justify-between">
+                <div>
+                  <h3 className="font-semibold mb-1">Resto del País</h3>
+                  <p className="text-sm text-muted-foreground">Otras ciudades y municipios</p>
+                </div>
+                <Badge className="bg-purple-500 hover:bg-purple-600">3-6 días hábiles</Badge>
               </div>
             </div>
             <div className="mt-4 p-4 bg-muted rounded-md">
@@ -86,23 +100,23 @@ export default function Shipping() {
           <Card className="p-6 mb-6">
             <div className="flex items-center gap-2 mb-4">
               <MapPin className="h-6 w-6 text-primary" />
-              <h2 className="text-2xl font-semibold">Cobertura en Bogotá</h2>
+              <h2 className="text-2xl font-semibold">Cobertura Nacional</h2>
             </div>
             <p className="text-muted-foreground mb-4">
-              Actualmente realizamos envíos únicamente en Bogotá y sus alrededores. Trabajamos con las transportadoras más confiables:
+              Realizamos envíos a toda Colombia. Trabajamos con las transportadoras más confiables del país:
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border rounded-md text-center">
                 <div className="font-semibold mb-1">Servientrega</div>
-                <p className="text-sm text-muted-foreground">Bogotá</p>
+                <p className="text-sm text-muted-foreground">Cobertura Nacional</p>
               </div>
               <div className="p-4 border rounded-md text-center">
                 <div className="font-semibold mb-1">Coordinadora</div>
-                <p className="text-sm text-muted-foreground">Bogotá</p>
+                <p className="text-sm text-muted-foreground">Cobertura Nacional</p>
               </div>
               <div className="p-4 border rounded-md text-center">
                 <div className="font-semibold mb-1">Interrapidísimo</div>
-                <p className="text-sm text-muted-foreground">Bogotá</p>
+                <p className="text-sm text-muted-foreground">Cobertura Nacional</p>
               </div>
             </div>
           </Card>
@@ -228,14 +242,6 @@ export default function Shipping() {
                 <li className="flex gap-3">
                   <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-semibold">
                     2
-                  </span>
-                  <div className="text-sm text-muted-foreground">
-                    <strong>A domicilio:</strong> Contáctanos por WhatsApp (+57 316 888 0808) o correo (soporte@celuvendo.com) y cubrimos el costo de recolección
-                  </div>
-                </li>
-                <li className="flex gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-semibold">
-                    3
                   </span>
                   <div className="text-sm text-muted-foreground">
                     Una vez recibamos y verifiquemos el producto, procesaremos tu reembolso en 5-10 días hábiles

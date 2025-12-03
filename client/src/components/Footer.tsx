@@ -1,5 +1,6 @@
 import { SiVisa, SiMastercard } from "react-icons/si";
 import { CreditCard, Shield, Truck, Phone, Mail, MapPin } from "lucide-react";
+import { Link } from "wouter";
 
 export default function Footer() {
   return (
@@ -7,9 +8,17 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           <div className="space-y-4">
-            <h3 className="text-lg font-bold font-serif text-primary">Celuvendo</h3>
+            <Link href="/">
+              <a className="flex items-center gap-2">
+                <img
+                  src="/assets/logoceluvendo_nofondo.png"
+                  alt="Celuvendo"
+                  className="h-10 w-auto"
+                />
+              </a>
+            </Link>
             <p className="text-sm text-muted-foreground">
-              Celulares 100% originales con garantía oficial. Envíos solo en Bogotá.
+              Celulares 100% originales con garantía oficial. Envíos a toda Colombia.
             </p>
             <div className="flex items-center gap-3">
               <Shield className="h-5 w-5 text-primary" />
@@ -20,10 +29,13 @@ export default function Footer() {
           <div className="space-y-4">
             <h4 className="font-semibold">Comprar</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><a href="#" className="hover:text-foreground transition-colors">Samsung</a></li>
-              <li><a href="#" className="hover:text-foreground transition-colors">Xiaomi</a></li>
-              <li><a href="#" className="hover:text-foreground transition-colors">Motorola</a></li>
-              <li><a href="#" className="hover:text-foreground transition-colors">Ofertas</a></li>
+              <li><Link href="/productos?brand=Samsung"><a onClick={() => window.scrollTo(0, 0)} className="hover:text-foreground transition-colors cursor-pointer">Samsung</a></Link></li>
+              <li><Link href="/productos?brand=Xiaomi"><a onClick={() => window.scrollTo(0, 0)} className="hover:text-foreground transition-colors cursor-pointer">Xiaomi</a></Link></li>
+              <li><Link href="/productos?brand=Motorola"><a onClick={() => window.scrollTo(0, 0)} className="hover:text-foreground transition-colors cursor-pointer">Motorola</a></Link></li>
+              <li><Link href="/productos?brand=OPPO"><a onClick={() => window.scrollTo(0, 0)} className="hover:text-foreground transition-colors cursor-pointer">OPPO</a></Link></li>
+              <li><Link href="/productos?brand=Infinix"><a onClick={() => window.scrollTo(0, 0)} className="hover:text-foreground transition-colors cursor-pointer">Infinix</a></Link></li>
+              <li><Link href="/productos?brand=TECNO"><a onClick={() => window.scrollTo(0, 0)} className="hover:text-foreground transition-colors cursor-pointer">TECNO</a></Link></li>
+              <li><Link href="/productos?ofertas=true"><a onClick={() => window.scrollTo(0, 0)} className="hover:text-foreground transition-colors cursor-pointer">Ofertas</a></Link></li>
             </ul>
           </div>
 
@@ -44,11 +56,11 @@ export default function Footer() {
             <ul className="space-y-3 text-sm text-muted-foreground">
               <li className="flex items-center gap-2">
                 <Phone className="h-4 w-4" />
-                <span>+57 316 888 0808</span>
+                <a href="tel:+573168880808" className="hover:text-foreground transition-colors">+57 316 888 0808</a>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4" />
-                <span>soporte@celuvendo.com</span>
+                <a href="mailto:soporte@celuvendo.com" className="hover:text-foreground transition-colors">soporte@celuvendo.com</a>
               </li>
               <li className="flex items-center gap-2">
                 <MapPin className="h-4 w-4" />

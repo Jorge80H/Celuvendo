@@ -13,6 +13,7 @@ import PaymentConfirmation from "@/pages/PaymentConfirmation";
 import SeedData from "@/pages/SeedData";
 import FAQ from "@/pages/FAQ";
 import Shipping from "@/pages/Shipping";
+import Stores from "@/pages/Stores";
 import Warranty from "@/pages/Warranty";
 import Terms from "@/pages/Terms";
 import Privacy from "@/pages/Privacy";
@@ -30,6 +31,7 @@ function Router() {
       <Route path="/payment/confirmation" component={PaymentConfirmation} />
       <Route path="/preguntas-frecuentes" component={FAQ} />
       <Route path="/envios-y-devoluciones" component={Shipping} />
+      <Route path="/tiendas" component={Stores} />
       <Route path="/garantia" component={Warranty} />
       <Route path="/terminos-y-condiciones" component={Terms} />
       <Route path="/politica-de-privacidad" component={Privacy} />

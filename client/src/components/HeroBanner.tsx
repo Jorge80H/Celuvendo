@@ -45,9 +45,12 @@ export default function HeroBanner() {
                 <Shield className="h-5 w-5 text-primary" />
                 <span className="text-sm font-medium">Garantía Oficial</span>
               </div>
-              <div className="flex items-center gap-2">
-                <CreditCard className="h-5 w-5 text-primary" />
-                <span className="text-sm font-medium">Financiación</span>
+              <div className="flex flex-col items-start gap-1">
+                <div className="flex items-center gap-2">
+                  <CreditCard className="h-5 w-5 text-primary" />
+                  <span className="text-sm font-medium">Financiación</span>
+                </div>
+                <span className="text-xs text-muted-foreground ml-7">Próximamente</span>
               </div>
             </div>
           </div>

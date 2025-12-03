@@ -34,13 +34,13 @@ export default function Header() {
   };
 
   const handleWhatsAppClick = () => {
-    const phoneNumber = "573168880808";
+    const phoneNumber = "573332725157";
     const message = encodeURIComponent("Hola! Me gustaría obtener información sobre sus productos.");
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-background border-b">
+    <header className="sticky top-0 z-50 bg-white dark:bg-gray-950 border-b">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16 gap-4">
           <Button size="icon" variant="ghost" className="md:hidden" data-testid="button-menu">
