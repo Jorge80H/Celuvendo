@@ -1,0 +1,27 @@
+{
+  "name": "Celuvendo - Celulares Originales en Colombia",
+  "short_name": "Celuvendo",
+  "description": "Compra celulares 100% originales con garantía a precios competitivos en Colombia",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0F172A",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["shopping", "business"],
+  "lang": "es-CO",
+  "dir": "ltr"
+}

@@ -51,8 +51,12 @@ export default function Header() {
             <div className="flex items-center gap-2 cursor-pointer">
               <img
                 src="/assets/logoceluvendo_nofondo.png"
-                alt="Celuvendo"
+                alt="Celuvendo - Tienda de celulares en Colombia"
                 className="h-8 md:h-10 w-auto"
+                width="120"
+                height="40"
+                loading="eager"
+                fetchpriority="high"
                 data-testid="logo"
               />
               <Badge variant="secondary" className="hidden md:flex text-xs">

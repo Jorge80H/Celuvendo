@@ -66,8 +66,12 @@ export default function ProductCard({
         <div className="relative aspect-square bg-card p-6">
           <img
             src={image}
-            alt={name}
+            alt={`${brand} ${name}`}
             className="w-full h-full object-contain"
+            loading="lazy"
+            decoding="async"
+            width="300"
+            height="300"
             data-testid={`img-product-${id}`}
           />
         

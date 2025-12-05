@@ -1,4 +1,23 @@
+# Robots.txt - Celuvendo.com
+# https://celuvendo.com/robots.txt
+
+# Allow all crawlers
 User-agent: *
 Allow: /
 
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /checkout/
+Disallow: /carrito/
+Disallow: /api/
+
+# Allow Google Image Bot
+User-agent: Googlebot-Image
+Allow: /
+
+# Crawl-delay for other bots
+User-agent: *
+Crawl-delay: 1
+
+# Sitemap location
 Sitemap: https://celuvendo.com/sitemap.xml

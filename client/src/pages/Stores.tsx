@@ -12,7 +12,7 @@ const stores = [
     neighborhood: "Alcalá, Bogotá",
     phone: "+57 316 888 0808",
     schedule: "Lunes a Sábado: 9:00 AM - 7:00 PM\nDomingos: 10:00 AM - 5:00 PM",
-    mapUrl: "https://maps.google.com/?q=Calle+137+45-21+Bogotá",
+    mapUrl: "https://maps.google.com/?q=4.722222,-74.051944",
   },
   {
     name: "Tienda Ensueño",
@@ -20,7 +20,7 @@ const stores = [
     neighborhood: "Centro Comercial Ensueño Local 114, Bogotá",
     phone: "+57 316 888 0808",
     schedule: "Lunes a Sábado: 10:00 AM - 8:00 PM\nDomingos: 11:00 AM - 6:00 PM",
-    mapUrl: "https://maps.google.com/?q=Centro+Comercial+Ensueño+Local+114+Bogotá",
+    mapUrl: "https://maps.google.com/?q=4.582513265902608,-74.15640452225402",
   },
   {
     name: "Tienda Tunal",
@@ -28,7 +28,7 @@ const stores = [
     neighborhood: "Centro Comercial Tunal Local 1036, Bogotá",
     phone: "+57 316 888 0808",
     schedule: "Lunes a Sábado: 10:00 AM - 8:00 PM\nDomingos: 11:00 AM - 6:00 PM",
-    mapUrl: "https://maps.google.com/?q=Centro+Comercial+Tunal+Local+1036+Bogotá",
+    mapUrl: "https://maps.google.com/?q=4.578264918171901,-74.13086657873517",
   },
 ];
 

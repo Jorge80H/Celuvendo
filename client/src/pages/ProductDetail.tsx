@@ -84,6 +84,13 @@ export default function ProductDetail() {
       return 1; // Default to azul for this product
     }
 
+    // Samsung Galaxy A17 specific: negro (0), gris (1), azul (2)
+    if (product.name?.includes('Galaxy A17')) {
+      if (colorLower.includes('negro') || colorLower.includes('black')) return 0;
+      if (colorLower.includes('gris') || colorLower.includes('grey') || colorLower.includes('gray')) return 1;
+      if (colorLower.includes('azul') || colorLower.includes('blue')) return 2;
+    }
+
     // OPPO A5 5G specific: blanco (0), verde (1)
     if (colorLower.includes('mist')) return 0;
     if (colorLower.includes('aurora')) return 1;
