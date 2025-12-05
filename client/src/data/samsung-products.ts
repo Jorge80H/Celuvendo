@@ -1911,4 +1911,223 @@ Con 6 años de actualizaciones hasta 2030, resistencia IP54, NFC y Knox Vault, e
     rating: 4.6,
     reviewCount: 0,
   },
+  {
+    sku: "SAM-A17-8-256-5G",
+    name: "Samsung Galaxy A17 5G 256GB | 8GB RAM",
+    slug: "samsung-galaxy-a17-5g-256gb-8gb",
+    description: "Conectividad 5G con pantalla Super AMOLED de 6.7\" a 90Hz, cámara triple 50MP con OIS, batería 5000mAh y 4 años de actualizaciones garantizadas. Diseño elegante de solo 7.5mm.",
+    longDescription: `El Samsung Galaxy A17 5G es la propuesta de Samsung para usuarios que buscan ingresar al mundo 5G sin comprometer calidad ni experiencia. Como parte de la reconocida serie Galaxy A, este modelo trae consigo el respaldo de marca, actualizaciones garantizadas y un ecosistema completo de servicios Samsung.
+
+Su pantalla Super AMOLED de 6.7 pulgadas con tasa de refresco de 90Hz ofrece colores vibrantes y fluidez mejorada en comparación con pantallas LCD. El procesador Exynos 1330 de 5nm combinado con 8GB de RAM garantiza un rendimiento sólido para multitarea, redes sociales y juegos casuales. Con 256GB de almacenamiento interno expandibles hasta 2TB vía microSD, no tendrás que preocuparte por espacio.
+
+El sistema de cámaras traseras incluye un sensor principal de 50MP con estabilización óptica (OIS), ideal para fotos nítidas incluso con poca luz o movimiento. La lente ultra ancha de 5MP y el sensor de profundidad de 2MP complementan el sistema para mayor versatilidad. La cámara frontal de 13MP captura selfies detallados con buen rango dinámico.
+
+Con una batería de 5000mAh y certificación IP54 contra salpicaduras de agua y polvo, el Galaxy A17 5G está diseñado para acompañarte todo el día. Incluye 4 años de actualizaciones de seguridad y One UI 7 basado en Android 15.`,
+    brand: "Samsung",
+    price: 990000,
+    compareAtPrice: 1059900,
+    currency: "COP",
+    images: [
+      "/assets/generated_images/Samsung_flagship_phone_product_aa170b09.png",
+    ],
+    specifications: {
+      screen: {
+        size: "6.7\"",
+        type: "Super AMOLED",
+        resolution: "1080 x 2340 (FHD+)",
+        refreshRate: "90Hz",
+      },
+      processor: "Samsung Exynos 1330 (5nm)",
+      ram: "8GB",
+      storage: "256GB",
+      expandableStorage: "Up to 2TB microSD",
+      camera: {
+        main: "50MP f/2.0 OIS",
+        ultrawide: "5MP f/2.2",
+        depth: "2MP f/2.4",
+        front: "13MP f/2.2",
+        features: ["OIS", "PDAF", "HDR", "Modo noche", "Video FHD @30fps"],
+      },
+      battery: {
+        capacity: "5000mAh",
+        charging: "25W compatible (cargador no incluido)",
+      },
+      connectivity: ["5G", "4G LTE", "WiFi 5", "Bluetooth 5.3", "NFC", "USB-C", "Jack 3.5mm"],
+      security: ["Lector huella lateral", "Desbloqueo facial", "Samsung Knox"],
+      os: "Android 15, One UI 7",
+      dimensions: "164.4 x 77.9 x 7.5 mm",
+      weight: "192g",
+      resistance: "IP54",
+      updates: "2 años Android + 4 años seguridad",
+    },
+    colors: [
+      { name: "Negro", code: "#000000" },
+      { name: "Gris", code: "#808080" },
+      { name: "Azul", code: "#4169E1" },
+    ],
+    features: [
+      "Conectividad 5G ultrarrápida",
+      "Pantalla Super AMOLED 90Hz",
+      "Cámara 50MP con OIS",
+      "4 años actualizaciones seguridad",
+      "NFC para pagos móviles",
+      "Resistencia IP54",
+      "256GB + microSD hasta 2TB",
+      "Jack 3.5mm",
+      "Diseño delgado 7.5mm",
+      "One UI 7 con Android 15",
+    ],
+    highlights: {
+      pros: [
+        "Pantalla Super AMOLED premium",
+        "Conectividad 5G",
+        "OIS en cámara principal",
+        "4 años actualizaciones seguridad",
+        "NFC incluido",
+        "Diseño delgado y ligero",
+      ],
+      cons: [
+        "⚠️ Cargador NO incluido",
+        "Carga 25W solamente",
+        "Pantalla 90Hz (no 120Hz)",
+        "Precio premium vs marcas chinas",
+      ],
+    },
+    boxContents: {
+      included: [
+        "Teléfono Samsung Galaxy A17 5G",
+        "Cable USB Type-C",
+        "Herramienta de expulsión SIM",
+        "Guía de inicio rápido",
+        "Tarjeta de garantía",
+      ],
+      notIncluded: [
+        "⚠️ Cargador de pared",
+        "Audífonos",
+        "Funda protectora",
+        "Protector de pantalla",
+      ],
+    },
+    promotion: {
+      active: false,
+      title: "",
+      description: "",
+      expired: false,
+    },
+    stock: 20,
+    isActive: true,
+    isFeatured: true,
+    rating: 4.5,
+    reviewCount: 0,
+  },
+  {
+    sku: "INF-HOT60PP-8-256",
+    name: "Infinix Hot 60 Pro+ 256GB | 8GB RAM",
+    slug: "infinix-hot-60-pro-plus-256gb-8gb",
+    description: "El smartphone gamer más delgado: solo 6mm y 155g. Pantalla curva AMOLED 144Hz, cámara Sony 50MP, Helio G200, carga 45W incluida, altavoces JBL y batería 5160mAh. 16GB RAM total.",
+    longDescription: `El Infinix Hot 60 Pro+ rompe paradigmas al combinar especificaciones de gamer con un diseño ultraligero y delgado que desafía la física. Con solo 6mm de espesor y 155g de peso, es uno de los smartphones más delgados del mundo, sin sacrificar potencia ni batería. Diseñado para la generación que prioriza gaming, contenido multimedia y redes sociales intensivas.
+
+Su pantalla curva 3D AMOLED de 6.78 pulgadas con tasa de refresco de 144Hz es la más fluida de su categoría, superando incluso a flagships de marcas premium. Protegida por Corning Gorilla Glass 7i, ofrece colores vibrantes, respuesta táctil instantánea y experiencia visual inmersiva para juegos competitivos. El procesador Mediatek Helio G200 de 6nm combinado con 8GB de RAM física + 8GB de RAM virtual (total 16GB) garantiza multitarea sin límites y rendimiento sostenido en títulos exigentes como PUBG Mobile, Call of Duty Mobile y Genshin Impact.
+
+La cámara trasera utiliza un sensor Sony IMX896 de 50MP con píxel binning para fotos detalladas incluso en condiciones difíciles. La cámara frontal de 13MP captura selfies nítidos con buen rango dinámico. Todo el sistema fotográfico está potenciado por IA de Infinix para escenas automáticas, modo noche mejorado y retratos con efecto bokeh natural.
+
+Con batería de 5160mAh y carga ultrarrápida de 45W (alcanza 50% en solo 22 minutos), olvídate de la ansiedad por batería. Incluye cargador de 45W en la caja, un diferencial importante frente a marcas premium. El sistema operativo Android 15 con XOS 15.1 trae optimizaciones gamer, altavoces estéreo certificados JBL, NFC para pagos contactless, y tecnología de enfriamiento avanzada para sesiones prolongadas.`,
+    brand: "Infinix",
+    price: 990000,
+    compareAtPrice: 899900,
+    currency: "COP",
+    images: [
+      "/assets/generated_images/Samsung_flagship_phone_product_aa170b09.png",
+    ],
+    specifications: {
+      screen: {
+        size: "6.78\"",
+        type: "AMOLED 3D Curvo",
+        resolution: "1224 x 2720 (FHD+)",
+        refreshRate: "144Hz",
+      },
+      processor: "MediaTek Helio G200 (6nm)",
+      ram: "8GB + 8GB virtual",
+      storage: "256GB",
+      expandableStorage: "microSD",
+      camera: {
+        main: "50MP f/1.8 Sony IMX896",
+        depth: "AI sensor",
+        front: "13MP f/2.0",
+        features: ["Sony IMX896", "PDAF", "HDR IA", "Modo noche AI", "2K video @30fps"],
+      },
+      battery: {
+        capacity: "5160mAh",
+        charging: "45W fast charging (cargador incluido)",
+      },
+      connectivity: ["4G LTE", "WiFi 5", "Bluetooth 5.4", "NFC", "USB-C", "Jack 3.5mm", "Radio FM"],
+      security: ["Lector huella en pantalla", "Desbloqueo facial IA"],
+      os: "Android 15, XOS 15.1",
+      dimensions: "165.3 x 75.4 x 6.0 mm",
+      weight: "155g",
+      resistance: "Sin certificación IP",
+      updates: "2 años Android + 2 años seguridad",
+    },
+    colors: [
+      { name: "Negro Elegante", code: "#000000" },
+      { name: "Plata Titanio", code: "#C0C0C0" },
+      { name: "Coral Tides", code: "#FF7F50" },
+      { name: "Violeta Brumoso", code: "#9370DB" },
+      { name: "Amarillo Sónico", code: "#FFD700" },
+      { name: "Verde Cyber", code: "#00FF00" },
+    ],
+    features: [
+      "Pantalla AMOLED curva 144Hz",
+      "Diseño ultradelgado 6mm y 155g",
+      "Cargador 45W incluido",
+      "Altavoces JBL estéreo certificados",
+      "Gorilla Glass 7i protección",
+      "16GB RAM total (8GB+8GB)",
+      "Sensor Sony IMX896 profesional",
+      "NFC para pagos contactless",
+      "Jack 3.5mm",
+      "Radio FM integrada",
+    ],
+    highlights: {
+      pros: [
+        "Pantalla 144Hz más fluida",
+        "Ultradelgado 6mm y 155g",
+        "Cargador 45W INCLUIDO",
+        "Altavoces JBL certificados",
+        "16GB RAM total",
+        "Sensor Sony IMX896",
+      ],
+      cons: [
+        "Sin 5G (solo 4G)",
+        "Sin certificación IP",
+        "Solo 2 años actualizaciones",
+        "Marca menos conocida",
+      ],
+    },
+    boxContents: {
+      included: [
+        "Teléfono Infinix Hot 60 Pro+",
+        "Cargador 45W",
+        "Cable USB Type-C",
+        "Funda TPU transparente",
+        "Herramienta de expulsión SIM",
+        "Guía de inicio rápido",
+        "Tarjeta de garantía",
+      ],
+      notIncluded: [
+        "Audífonos",
+      ],
+    },
+    promotion: {
+      active: false,
+      title: "",
+      description: "",
+      expired: false,
+    },
+    stock: 25,
+    isActive: true,
+    isFeatured: true,
+    rating: 4.4,
+    reviewCount: 0,
+  },
 ];
