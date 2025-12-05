@@ -34,7 +34,7 @@ export default function Header() {
   };
 
   const handleWhatsAppClick = () => {
-    const phoneNumber = "573332725157";
+    const phoneNumber = "573214029724";
     const message = encodeURIComponent("Hola! Me gustaría obtener información sobre sus productos.");
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };
