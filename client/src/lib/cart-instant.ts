@@ -10,18 +10,25 @@ function getSessionId(): string {
   return sessionId;
 }
 
-export async function addToCartInstant(productId: string, quantity: number = 1) {
+export async function addToCartInstant(productId: string, quantity: number = 1, selectedColor?: string) {
   const sessionId = getSessionId();
 
-  // Query existing cart items
+  // Build where conditions - include color if provided
+  const whereConditions: any[] = [
+    { sessionId },
+    { productId }
+  ];
+
+  if (selectedColor) {
+    whereConditions.push({ selectedColor });
+  }
+
+  // Query existing cart items (same product + same color = same item)
   const { data } = await db.queryOnce({
     cartItems: {
       $: {
         where: {
-          and: [
-            { sessionId },
-            { productId }
-          ]
+          and: whereConditions
         },
       },
     },
@@ -38,13 +45,19 @@ export async function addToCartInstant(productId: string, quantity: number = 1) 
   } else {
     // Add new item
     const newId = generateId();
+    const updateData: any = {
+      sessionId,
+      productId,
+      quantity,
+      createdAt: Date.now(),
+    };
+
+    if (selectedColor) {
+      updateData.selectedColor = selectedColor;
+    }
+
     await db.transact([
-      db.tx.cartItems[newId].update({
-        sessionId,
-        productId,
-        quantity,
-        createdAt: Date.now(),
-      }).link({ product: productId }),
+      db.tx.cartItems[newId].update(updateData).link({ product: productId }),
     ]);
   }
 }

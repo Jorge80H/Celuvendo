@@ -180,6 +180,11 @@ export default function Cart() {
                         <p className="text-sm text-muted-foreground" data-testid={`text-cart-brand-${item.id}`}>
                           {item.product?.brand}
                         </p>
+                        {item.selectedColor && (
+                          <p className="text-sm text-primary font-medium mt-1">
+                            Color: {item.selectedColor}
+                          </p>
+                        )}
                       </div>
 
                       <div className="flex flex-col sm:flex-row items-center justify-between gap-3">

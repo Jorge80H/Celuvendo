@@ -32,6 +32,7 @@ const schema = i.schema({
       sessionId: i.string().indexed(),
       productId: i.string().indexed(),
       quantity: i.number(),
+      selectedColor: i.string().optional(),
       createdAt: i.number(),
     }),
     orders: i.entity({
@@ -126,6 +127,7 @@ export interface CartItem {
   sessionId: string;
   productId: string;
   quantity: number;
+  selectedColor?: string;
   createdAt: number;
 }
 

@@ -102,6 +102,7 @@ export default function Checkout() {
         brand: item.product.brand,
         price: parseFloat(item.product.price),
         quantity: item.quantity,
+        color: item.selectedColor || undefined,
       }));
 
       // Create order in database
@@ -287,7 +288,9 @@ export default function Checkout() {
                     {cartItems.map((item: any) => (
                       <div key={item.id} className="flex justify-between text-sm">
                         <span className="flex-1">
-                          {item.product?.name} x {item.quantity}
+                          {item.product?.name}
+                          {item.selectedColor && <span className="text-primary font-medium"> - {item.selectedColor}</span>}
+                          {' x '}{item.quantity}
                         </span>
                         <span className="font-semibold">
                           {formatCOP((item.product?.price || 0) * item.quantity)}
