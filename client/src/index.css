@@ -239,6 +239,35 @@
     height: auto;
   }
 
+  /* Blog article styles */
+  .blog-image {
+    @apply rounded-lg my-6 shadow-md;
+  }
+
+  .blog-hero-image {
+    @apply w-full h-auto aspect-video object-cover rounded-lg;
+  }
+
+  .cta-box {
+    @apply p-8 bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 rounded-xl my-8 text-center;
+  }
+
+  .cta-box h3 {
+    @apply text-2xl font-bold mb-3;
+  }
+
+  .cta-box p {
+    @apply text-muted-foreground mb-6;
+  }
+
+  .cta-button {
+    @apply inline-block px-8 py-4 bg-primary text-white rounded-lg hover:bg-primary/90 transition-all font-bold text-lg shadow-lg hover:shadow-xl mb-4 w-full sm:w-auto;
+  }
+
+  .whatsapp-link {
+    @apply inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#25D366] text-white rounded-lg hover:bg-[#20BA5A] transition-all font-bold text-lg shadow-lg hover:shadow-xl mt-4 no-underline w-full sm:w-auto;
+  }
+
   /* Fix for mobile screens */
   @media (max-width: 640px) {
     body {

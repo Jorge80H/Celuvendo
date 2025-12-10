@@ -80,10 +80,16 @@ export default function Header() {
           </div>
 
           <div className="flex items-center gap-2">
-            <Button 
-              size="icon" 
-              variant="ghost" 
-              className="md:hidden" 
+            <Link href="/blog" className="hidden md:block">
+              <Button variant="ghost" className="text-sm" data-testid="button-blog">
+                Blog
+              </Button>
+            </Link>
+
+            <Button
+              size="icon"
+              variant="ghost"
+              className="md:hidden"
               onClick={() => setShowMobileSearch(!showMobileSearch)}
               data-testid="button-search-mobile"
               aria-label="Mostrar búsqueda"

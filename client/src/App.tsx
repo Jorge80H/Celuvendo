@@ -23,6 +23,8 @@ const Warranty = lazy(() => import("@/pages/Warranty"));
 const Terms = lazy(() => import("@/pages/Terms"));
 const Privacy = lazy(() => import("@/pages/Privacy"));
 const DataProtection = lazy(() => import("@/pages/DataProtection"));
+const Blog = lazy(() => import("@/pages/Blog"));
+const BlogPost = lazy(() => import("@/pages/BlogPost"));
 const NotFound = lazy(() => import("@/pages/not-found"));
 
 // Loading fallback component
@@ -42,6 +44,8 @@ function Router() {
         <Route path="/carrito" component={Cart} />
         <Route path="/checkout" component={Checkout} />
         <Route path="/payment/confirmation" component={PaymentConfirmation} />
+        <Route path="/blog" component={Blog} />
+        <Route path="/blog/:slug" component={BlogPost} />
         <Route path="/preguntas-frecuentes" component={FAQ} />
         <Route path="/envios-y-devoluciones" component={Shipping} />
         <Route path="/tiendas" component={Stores} />

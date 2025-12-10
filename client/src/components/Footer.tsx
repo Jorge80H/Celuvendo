@@ -1,4 +1,4 @@
-import { SiVisa, SiMastercard } from "react-icons/si";
+import { SiVisa, SiMastercard, SiInstagram, SiFacebook, SiTiktok } from "react-icons/si";
 import { CreditCard, Shield, Truck, Phone, Mail, MapPin } from "lucide-react";
 import { Link } from "wouter";
 
@@ -24,6 +24,38 @@ export default function Footer() {
               <Shield className="h-5 w-5 text-primary" />
               <span className="text-sm font-medium">100% Originales</span>
             </div>
+            <div className="space-y-2">
+              <h4 className="font-semibold text-sm">Síguenos</h4>
+              <div className="flex items-center gap-3">
+                <a
+                  href="https://www.instagram.com/celuvendocol/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                  aria-label="Instagram"
+                >
+                  <SiInstagram className="h-5 w-5" />
+                </a>
+                <a
+                  href="https://www.facebook.com/profile.php?id=61584323354202"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                  aria-label="Facebook"
+                >
+                  <SiFacebook className="h-5 w-5" />
+                </a>
+                <a
+                  href="https://www.tiktok.com/@user5878746258668"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                  aria-label="TikTok"
+                >
+                  <SiTiktok className="h-5 w-5" />
+                </a>
+              </div>
+            </div>
           </div>
 
           <div className="space-y-4">
@@ -42,6 +74,7 @@ export default function Footer() {
           <div className="space-y-4">
             <h4 className="font-semibold">Ayuda</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
+              <li><Link href="/blog"><a onClick={() => window.scrollTo(0, 0)} className="hover:text-foreground transition-colors cursor-pointer">Blog</a></Link></li>
               <li><a href="/preguntas-frecuentes" className="hover:text-foreground transition-colors">Preguntas Frecuentes</a></li>
               <li><a href="/envios-y-devoluciones" className="hover:text-foreground transition-colors">Envíos y Devoluciones</a></li>
               <li><a href="/garantia" className="hover:text-foreground transition-colors">Garantía</a></li>
@@ -56,7 +89,7 @@ export default function Footer() {
             <ul className="space-y-3 text-sm text-muted-foreground">
               <li className="flex items-center gap-2">
                 <Phone className="h-4 w-4" />
-                <a href="tel:+573168880808" className="hover:text-foreground transition-colors">+57 316 888 0808</a>
+                <a href="tel:+573214029724" className="hover:text-foreground transition-colors">+57 321 402 9724</a>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4" />
