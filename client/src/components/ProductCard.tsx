@@ -19,6 +19,7 @@ interface ProductCardProps {
   freeShipping?: boolean;
   stock: number;
   slug?: string;
+  colors?: Array<{ name: string; code: string }>;
 }
 
 export default function ProductCard({
@@ -33,6 +34,7 @@ export default function ProductCard({
   freeShipping = false,
   stock,
   slug,
+  colors,
 }: ProductCardProps) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
@@ -42,10 +44,13 @@ export default function ProductCard({
   const handleAddToCart = async () => {
     setIsAdding(true);
     try {
-      await addToCartInstant(id, 1);
+      // If product has colors, automatically select the first one as default
+      const defaultColor = colors && colors.length > 0 ? colors[0].name : undefined;
+
+      await addToCartInstant(id, 1, defaultColor);
       toast({
         title: "Producto agregado",
-        description: `${name} fue agregado al carrito`,
+        description: `${name}${defaultColor ? ` - ${defaultColor}` : ''} fue agregado al carrito`,
       });
     } catch (error) {
       toast({

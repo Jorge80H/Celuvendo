@@ -78,6 +78,7 @@ export default function ProductGrid() {
               freeShipping={product.price >= 100000}
               stock={product.stock}
               slug={product.slug}
+              colors={product.colors}
             />
           ))}
         </div>
