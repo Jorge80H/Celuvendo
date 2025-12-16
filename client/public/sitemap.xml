@@ -66,6 +66,30 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- Blog -->
+  <url>
+    <loc>https://celuvendo.com/blog</loc>
+    <lastmod>2025-12-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Blog Article: Mejor Celular para Trabajar Colombia 2025 -->
+  <url>
+    <loc>https://celuvendo.com/blog/mejor-celular-para-trabajar-colombia-2025</loc>
+    <lastmod>2025-12-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Blog Article: Celulares Xiaomi Bogotá -->
+  <url>
+    <loc>https://celuvendo.com/blog/celulares-xiaomi-bogota-envio-rapido</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
   <!-- Carrito -->
   <url>
     <loc>https://celuvendo.com/carrito</loc>

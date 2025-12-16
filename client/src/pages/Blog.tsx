@@ -8,6 +8,16 @@ import Footer from "@/components/Footer";
 // Blog articles data - En producción esto vendría de archivos .md en blog-content/
 const blogArticles = [
   {
+    slug: "mejor-celular-para-trabajar-colombia-2025",
+    title: "Mejor Celular para Trabajar en Colombia 2025: Guía Completa para Profesionales",
+    excerpt: "¿Te quedas sin batería a mitad del día? Descubre los mejores celulares para trabajar: conductores, repartidores, vendedores y teletrabajo. Batería duradera y cámaras profesionales.",
+    category: "Uso-Necesidad",
+    date: "2025-12-16",
+    readTime: "15 min",
+    image: "/assets/blog/mejor-celular-para-trabajar-colombia-2025-hero.jpg",
+    keywords: ["celular para trabajar", "mejor celular trabajo Colombia", "celular batería larga", "celular para Uber", "smartphone profesional"]
+  },
+  {
     slug: "celulares-xiaomi-bogota-envio-rapido",
     title: "Celulares Xiaomi en Bogotá 2025: Envío Rápido y Mejor Precio",
     excerpt: "¿Estás buscando un celular Xiaomi en Bogotá pero te preocupa esperar semanas para que llegue? Descubre cómo recibir tu Xiaomi en 24-48 horas con hasta 20% de descuento vs retail tradicional.",
@@ -88,6 +98,8 @@ export default function Blog() {
                             src={article.image}
                             alt={article.title}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            width="640"
+                            height="360"
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center text-muted-foreground">
