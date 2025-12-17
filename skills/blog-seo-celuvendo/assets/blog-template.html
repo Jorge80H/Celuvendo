@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{TITLE}} - Celuvendo.com</title>
+    <meta name="description" content="{{META_DESCRIPTION}}">
+    <meta name="keywords" content="{{KEYWORDS}}">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://celuvendo.com/blog/{{SLUG}}">
+    <meta property="og:title" content="{{TITLE}}">
+    <meta property="og:description" content="{{META_DESCRIPTION}}">
+    <meta property="og:image" content="https://celuvendo.com/assets/blog/{{SLUG}}-featured.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://celuvendo.com/blog/{{SLUG}}">
+    <meta property="twitter:title" content="{{TITLE}}">
+    <meta property="twitter:description" content="{{META_DESCRIPTION}}">
+    <meta property="twitter:image" content="https://celuvendo.com/assets/blog/{{SLUG}}-featured.jpg">
+
+    <!-- Schema.org for Article -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "{{TITLE}}",
+      "image": "https://celuvendo.com/assets/blog/{{SLUG}}-featured.jpg",
+      "datePublished": "{{DATE_PUBLISHED}}",
+      "dateModified": "{{DATE_MODIFIED}}",
+      "author": {
+        "@type": "Organization",
+        "name": "Celuvendo.com"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Celuvendo.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://celuvendo.com/assets/logoceluvendo_nofondo.png"
+        }
+      },
+      "description": "{{META_DESCRIPTION}}"
+    }
+    </script>
+
+    <!-- FAQ Schema (if applicable) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {{FAQ_SCHEMA_ITEMS}}
+      ]
+    }
+    </script>
+</head>
+<body>
+    <article class="blog-post">
+        <header class="post-header">
+            <h1>{{TITLE}}</h1>
+            <div class="post-meta">
+                <time datetime="{{DATE_PUBLISHED}}">{{DATE_PUBLISHED_FORMATTED}}</time>
+                <span class="category">{{CATEGORY}}</span>
+            </div>
+        </header>
+
+        <div class="post-content">
+            <!-- INTRO - EL GANCHO -->
+            <div class="intro">
+                {{INTRO_CONTENT}}
+            </div>
+
+            <!-- CARACTERÍSTICAS CLAVE -->
+            <h2>{{H2_CARACTERISTICAS_TITLE}}</h2>
+            <div class="specs-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Característica</th>
+                            <th>Especificación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{SPECS_TABLE_ROWS}}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ANÁLISIS DE VALOR -->
+            <h2>{{H2_VALUE_TITLE}}</h2>
+            {{VALUE_ANALYSIS_CONTENT}}
+
+            <!-- COMPARATIVA -->
+            <h2>{{H2_COMPARISON_TITLE}}</h2>
+            {{COMPARISON_CONTENT}}
+
+            <!-- POR QUÉ COMPRAR EN CELUVENDO -->
+            <h2>¿Por qué comprarlo en Celuvendo.com?</h2>
+            <ul class="celuvendo-benefits">
+                <li><strong>📦 Envío Gratis</strong> - En compras superiores a $100.000</li>
+                <li><strong>✅ Garantía Directa</strong> - Garantía oficial del fabricante</li>
+                <li><strong>💬 Asesoría por WhatsApp</strong> - Soporte inmediato</li>
+                <li><strong>📱 Equipos Homologados</strong> - Funcionan con todas las operadoras</li>
+                <li><strong>🆕 100% Originales</strong> - Nuevos y sellados de fábrica</li>
+                <li><strong>🚀 Entrega Rápida</strong> - 24-48h en ciudades principales</li>
+            </ul>
+
+            <!-- PREGUNTAS FRECUENTES -->
+            <h2>Preguntas Frecuentes</h2>
+            <div class="faq-section">
+                {{FAQ_ITEMS}}
+            </div>
+
+            <!-- CTA FINAL -->
+            <div class="cta-box">
+                <h3>{{CTA_TITLE}}</h3>
+                <p>{{CTA_DESCRIPTION}}</p>
+                <a href="{{CTA_LINK}}" class="cta-button">{{CTA_BUTTON_TEXT}}</a>
+            </div>
+        </div>
+
+        <!-- INTERNAL LINKS SUGGESTIONS (HTML Comments) -->
+        <!--
+        Enlaces internos sugeridos:
+        {{INTERNAL_LINKS_SUGGESTIONS}}
+        -->
+    </article>
+</body>
+</html>
