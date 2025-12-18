@@ -12,7 +12,7 @@ export default function WhatsAppFloat() {
       content_name: 'WhatsApp Click'
     });
 
-    const phoneNumber = "573214029724";
+    const phoneNumber = "573168880808";
     const message = encodeURIComponent("Hola! Me gustaría obtener información sobre sus productos.");
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };

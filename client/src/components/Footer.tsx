@@ -9,13 +9,15 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           <div className="space-y-4">
             <Link href="/">
-              <a className="flex items-center gap-2">
+              <div className="flex items-center gap-2 cursor-pointer">
                 <img
                   src="/assets/logoceluvendo_nofondo.png"
                   alt="Celuvendo"
                   className="h-10 w-auto"
+                  width="120"
+                  height="40"
                 />
-              </a>
+              </div>
             </Link>
             <p className="text-sm text-muted-foreground">
               Celulares 100% originales con garantía oficial. Envíos a toda Colombia.
@@ -61,26 +63,26 @@ export default function Footer() {
           <div className="space-y-4">
             <h4 className="font-semibold">Comprar</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link href="/productos?brand=Samsung"><a onClick={() => window.scrollTo(0, 0)} className="hover:text-foreground transition-colors cursor-pointer">Samsung</a></Link></li>
-              <li><Link href="/productos?brand=Xiaomi"><a onClick={() => window.scrollTo(0, 0)} className="hover:text-foreground transition-colors cursor-pointer">Xiaomi</a></Link></li>
-              <li><Link href="/productos?brand=Motorola"><a onClick={() => window.scrollTo(0, 0)} className="hover:text-foreground transition-colors cursor-pointer">Motorola</a></Link></li>
-              <li><Link href="/productos?brand=OPPO"><a onClick={() => window.scrollTo(0, 0)} className="hover:text-foreground transition-colors cursor-pointer">OPPO</a></Link></li>
-              <li><Link href="/productos?brand=Infinix"><a onClick={() => window.scrollTo(0, 0)} className="hover:text-foreground transition-colors cursor-pointer">Infinix</a></Link></li>
-              <li><Link href="/productos?brand=TECNO"><a onClick={() => window.scrollTo(0, 0)} className="hover:text-foreground transition-colors cursor-pointer">TECNO</a></Link></li>
-              <li><Link href="/productos?ofertas=true"><a onClick={() => window.scrollTo(0, 0)} className="hover:text-foreground transition-colors cursor-pointer">Ofertas</a></Link></li>
+              <li><Link href="/productos?brand=Samsung" onClick={() => window.scrollTo(0, 0)} className="hover:text-foreground transition-colors cursor-pointer">Samsung</Link></li>
+              <li><Link href="/productos?brand=Xiaomi" onClick={() => window.scrollTo(0, 0)} className="hover:text-foreground transition-colors cursor-pointer">Xiaomi</Link></li>
+              <li><Link href="/productos?brand=Motorola" onClick={() => window.scrollTo(0, 0)} className="hover:text-foreground transition-colors cursor-pointer">Motorola</Link></li>
+              <li><Link href="/productos?brand=OPPO" onClick={() => window.scrollTo(0, 0)} className="hover:text-foreground transition-colors cursor-pointer">OPPO</Link></li>
+              <li><Link href="/productos?brand=Infinix" onClick={() => window.scrollTo(0, 0)} className="hover:text-foreground transition-colors cursor-pointer">Infinix</Link></li>
+              <li><Link href="/productos?brand=TECNO" onClick={() => window.scrollTo(0, 0)} className="hover:text-foreground transition-colors cursor-pointer">TECNO</Link></li>
+              <li><Link href="/productos?ofertas=true" onClick={() => window.scrollTo(0, 0)} className="hover:text-foreground transition-colors cursor-pointer">Ofertas</Link></li>
             </ul>
           </div>
 
           <div className="space-y-4">
             <h4 className="font-semibold">Ayuda</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link href="/blog"><a onClick={() => window.scrollTo(0, 0)} className="hover:text-foreground transition-colors cursor-pointer">Blog</a></Link></li>
-              <li><a href="/preguntas-frecuentes" className="hover:text-foreground transition-colors">Preguntas Frecuentes</a></li>
-              <li><a href="/envios-y-devoluciones" className="hover:text-foreground transition-colors">Envíos y Devoluciones</a></li>
-              <li><a href="/garantia" className="hover:text-foreground transition-colors">Garantía</a></li>
-              <li><a href="/terminos-y-condiciones" className="hover:text-foreground transition-colors">Términos y Condiciones</a></li>
-              <li><a href="/politica-de-privacidad" className="hover:text-foreground transition-colors">Política de Privacidad</a></li>
-              <li><a href="/tratamiento-de-datos" className="hover:text-foreground transition-colors">Tratamiento de Datos</a></li>
+              <li><Link href="/blog" onClick={() => window.scrollTo(0, 0)} className="hover:text-foreground transition-colors cursor-pointer">Blog</Link></li>
+              <li><Link href="/preguntas-frecuentes" className="hover:text-foreground transition-colors cursor-pointer">Preguntas Frecuentes</Link></li>
+              <li><Link href="/envios-y-devoluciones" className="hover:text-foreground transition-colors cursor-pointer">Envíos y Devoluciones</Link></li>
+              <li><Link href="/garantia" className="hover:text-foreground transition-colors cursor-pointer">Garantía</Link></li>
+              <li><Link href="/terminos-y-condiciones" className="hover:text-foreground transition-colors cursor-pointer">Términos y Condiciones</Link></li>
+              <li><Link href="/politica-de-privacidad" className="hover:text-foreground transition-colors cursor-pointer">Política de Privacidad</Link></li>
+              <li><Link href="/tratamiento-de-datos" className="hover:text-foreground transition-colors cursor-pointer">Tratamiento de Datos</Link></li>
             </ul>
           </div>
 
@@ -89,7 +91,7 @@ export default function Footer() {
             <ul className="space-y-3 text-sm text-muted-foreground">
               <li className="flex items-center gap-2">
                 <Phone className="h-4 w-4" />
-                <a href="tel:+573214029724" className="hover:text-foreground transition-colors">+57 321 402 9724</a>
+                <a href="tel:+573168880808" className="hover:text-foreground transition-colors">+57 316 888 0808</a>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4" />
@@ -117,6 +119,8 @@ export default function Footer() {
                   src="https://cdn.brandfetch.io/iddn3wqBfj/theme/dark/logo.svg"
                   alt="Bold Pagos"
                   className="h-5 w-auto"
+                  width="80"
+                  height="20"
                 />
               </div>
               <div className="flex items-center gap-2">
