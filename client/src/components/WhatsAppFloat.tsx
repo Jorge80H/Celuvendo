@@ -1,11 +1,17 @@
 import { MessageCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useEffect } from "react";
+import ReactPixel from "react-facebook-pixel";
 
 export default function WhatsAppFloat() {
   const { toast } = useToast();
 
   const handleWhatsAppClick = () => {
+    // Track Contact event with Facebook Pixel
+    ReactPixel.track('Contact', {
+      content_name: 'WhatsApp Click'
+    });
+
     const phoneNumber = "573214029724";
     const message = encodeURIComponent("Hola! Me gustaría obtener información sobre sus productos.");
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');

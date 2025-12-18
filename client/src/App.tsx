@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import { lazy, Suspense } from "react";
+import { usePixelTracker } from "@/hooks/usePixelTracker";
 
 // Eager load critical pages
 import Home from "@/pages/Home";
@@ -61,6 +62,8 @@ function Router() {
 }
 
 function App() {
+  usePixelTracker();
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>

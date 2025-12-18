@@ -10,9 +10,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ShoppingCart, Truck, Shield, Package, Star, Check, X } from "lucide-react";
 import { formatCOP } from "@/lib/utils";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { addToCartInstant } from "@/lib/cart-instant";
 import { useToast } from "@/hooks/use-toast";
+import ReactPixel from "react-facebook-pixel";
 
 export default function ProductDetail() {
   const [, params] = useRoute("/producto/:slug");
@@ -28,6 +29,20 @@ export default function ProductDetail() {
     if (!data?.products) return null;
     return data.products.find((p: any) => p.slug === slug);
   }, [data, slug]);
+
+  // Track ViewContent event when product loads
+  useEffect(() => {
+    if (product) {
+      ReactPixel.track('ViewContent', {
+        content_name: product.name,
+        content_category: product.category || 'Smartphones',
+        content_ids: [product.id],
+        content_type: 'product',
+        value: product.price,
+        currency: 'COP',
+      });
+    }
+  }, [product]);
 
   // Map color names to image indices (assuming first image is main, rest are color variants)
   const getImageIndexForColor = (colorName: string): number => {
