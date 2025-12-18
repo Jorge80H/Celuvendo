@@ -35,7 +35,7 @@ export default function Header() {
 
   const handleWhatsAppClick = () => {
     const phoneNumber = "573168880808";
-    const message = encodeURIComponent("Hola! Me gustaría obtener información sobre sus productos.");
+    const message = encodeURIComponent("Hola! Vengo de Celuvendo.com y necesito asesoría para comprar un celular.");
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };
 

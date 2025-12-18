@@ -13,7 +13,7 @@ export default function WhatsAppFloat() {
     });
 
     const phoneNumber = "573168880808";
-    const message = encodeURIComponent("Hola! Me gustaría obtener información sobre sus productos.");
+    const message = encodeURIComponent("Hola! Vengo de Celuvendo.com y me gustaría obtener información sobre celulares.");
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };
 
