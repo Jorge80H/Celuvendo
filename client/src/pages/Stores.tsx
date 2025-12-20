@@ -155,10 +155,10 @@ export default function Stores() {
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button
                 variant="default"
-                onClick={() => window.open('https://wa.me/573332725157?text=Hola! Me gustaría obtener información sobre sus tiendas físicas.', '_blank')}
+                onClick={() => window.open('https://wa.me/573168880808?text=Hola! Me gustaría obtener información sobre sus tiendas físicas.', '_blank')}
               >
                 <Phone className="h-4 w-4 mr-2" />
-                WhatsApp: +57 333 272 5157
+                WhatsApp: +57 316 888 0808
               </Button>
               <Button
                 variant="outline"
