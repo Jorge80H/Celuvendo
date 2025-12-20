@@ -8,6 +8,16 @@ import Footer from "@/components/Footer";
 // Blog articles data - En producción esto vendría de archivos .md en blog-content/
 const blogArticles = [
   {
+    slug: "celulares-regalo-navidad-colombia-2025",
+    title: "Los Mejores Celulares para Regalar en Navidad 2025 | Celuvendo Colombia",
+    excerpt: "Descubre los mejores celulares para regalar esta Navidad en Colombia. Envío rápido, precios increíbles y garantía oficial. ¡Entrega antes del 24!",
+    category: "Temporada/Especial",
+    date: "2025-12-19",
+    readTime: "18 min",
+    image: "/assets/blog/celulares-regalo-navidad-colombia-2025-hero.jpg",
+    keywords: ["celulares regalo navidad colombia", "celular regalo navidad 2025", "mejores celulares para regalar", "celulares baratos navidad colombia", "regalo navidad smartphone"]
+  },
+  {
     slug: "mejor-celular-para-trabajar-colombia-2025",
     title: "Mejor Celular para Trabajar en Colombia 2025: Guía Completa para Profesionales",
     excerpt: "¿Te quedas sin batería a mitad del día? Descubre los mejores celulares para trabajar: conductores, repartidores, vendedores y teletrabajo. Batería duradera y cámaras profesionales.",
