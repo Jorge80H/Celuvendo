@@ -11,7 +11,7 @@ const stores = [
     address: "Calle 137 # 45-21",
     neighborhood: "Alcalá, Bogotá",
     phone: "+57 316 888 0808",
-    schedule: "Lunes a Sábado: 9:00 AM - 7:00 PM\nDomingos: 10:00 AM - 5:00 PM",
+    schedule: "Lunes a Sábado: 9:00 AM - 7:00 PM",
     mapUrl: "https://maps.google.com/?q=4.722222,-74.051944",
   },
   {
@@ -29,6 +29,14 @@ const stores = [
     phone: "+57 316 888 0808",
     schedule: "Lunes a Sábado: 10:00 AM - 8:00 PM\nDomingos: 11:00 AM - 6:00 PM",
     mapUrl: "https://maps.google.com/?q=4.578264918171901,-74.13086657873517",
+  },
+  {
+    name: "Tienda Venecia",
+    address: "Diagonal 46A # 53-27",
+    neighborhood: "Barrio Venecia, Bogotá",
+    phone: "+57 316 888 0808",
+    schedule: "Lunes a Sábado: 9:00 AM - 7:00 PM",
+    mapUrl: "https://maps.app.goo.gl/ykWYBjMoUnpr6rnbA",
   },
 ];
 
@@ -48,7 +56,7 @@ export default function Stores() {
               Nuestras Tiendas Físicas
             </h1>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Visítanos en cualquiera de nuestras 3 tiendas en Bogotá. Prueba los productos,
+              Visítanos en cualquiera de nuestras 4 tiendas en Bogotá. Prueba los productos,
               recibe asesoría personalizada y lleva tu celular de inmediato.
             </p>
           </div>
