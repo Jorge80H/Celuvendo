@@ -8,6 +8,16 @@ import Footer from "@/components/Footer";
 // Blog articles data - En producción esto vendría de archivos .md en blog-content/
 const blogArticles = [
   {
+    slug: "mejor-celular-productividad-2026-colombia",
+    title: "Mejor Celular para Ser Productivo en 2026 Colombia: Guía Completa",
+    excerpt: "Descubre los mejores celulares para aumentar tu productividad en 2026. Batería de larga duración, rendimiento y herramientas profesionales desde $550.000 en Colombia.",
+    category: "Uso-Necesidad",
+    date: "2025-12-27",
+    readTime: "22 min",
+    image: "/assets/blog/mejor-celular-productividad-2026-colombia-hero.jpg",
+    keywords: ["mejor celular para ser productivo 2026", "celulares para trabajo Colombia", "smartphone productividad batería larga", "celular para trabajar desde casa"]
+  },
+  {
     slug: "celulares-regalo-navidad-colombia-2025",
     title: "Los Mejores Celulares para Regalar en Navidad 2025 | Celuvendo Colombia",
     excerpt: "Descubre los mejores celulares para regalar esta Navidad en Colombia. Envío rápido, precios increíbles y garantía oficial. ¡Entrega antes del 24!",
