@@ -159,12 +159,12 @@ export default function FAQ() {
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <a
-                href="https://wa.me/573168880808"
+                href="https://wa.me/573214029724"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
               >
-                WhatsApp: +57 316 888 0808
+                WhatsApp: +57 321 402 9724
               </a>
               <a
                 href="mailto:soporte@celuvendo.com"
