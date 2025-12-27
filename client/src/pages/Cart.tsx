@@ -168,6 +168,8 @@ export default function Cart() {
                         src={item.product?.images?.[0] || brandImages[item.product?.brand] || samsungImage}
                         alt={item.product?.name}
                         className="w-full h-full object-contain"
+                        width="96"
+                        height="96"
                         data-testid={`img-cart-product-${item.id}`}
                       />
                     </div>
